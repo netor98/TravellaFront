@@ -1,0 +1,9 @@
+::ng-deep .p-overlaypanel .p-overlaypanel-content {
+  padding: 0.1rem 0.5rem;
+}
+
+/* Style the panel's inner list items */
+::ng-deep .p-overlaypanel .p-element {
+  color: #333;
+  font-weight: 500;
+}

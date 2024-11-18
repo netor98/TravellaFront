@@ -1,0 +1,65 @@
+<div class="w-full bg-white rounded-lg shadow-lg p-4 px-12 space-y-4">
+  <h2 class="text-2xl font-bold text-gray-800 text-center md:text-left">Welcome
+    Back!</h2>
+  <p class="text-gray-600 text-center">Hey there! Ready to jump back in?</p>
+
+  <!-- Social login buttons -->
+  <div class="space-y-4">
+    <button class="w-full flex items-center justify-center space-x-2
+              border border-gray-300 rounded-md py-2 text-black
+              hover:bg-gray-800 hover:text-white transition-colors">
+      <span>Continue with Google</span>
+      <i class="pi pi-google"></i>
+    </button>
+  </div>
+
+  <!-- Divider -->
+  <div class="flex items-center justify-center">
+    <span class="text-gray-400">or</span>
+  </div>
+
+  <!--Inputs-->
+  <!-- Email and Password fields -->
+  <form (ngSubmit)="login()" class="space-y-4" [formGroup]="form">
+    <div class="relative flex items-center">
+
+      <input type="text"
+             formControlName="email"
+             placeholder="Username or Email" required
+             class="w-full px-10 py-3 border border-gray-300 rounded-md placeholder-gray-500
+             focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+      <i class="pi pi-envelope absolute left-3 h-4 w-4 text-gray-400"></i>
+    </div>
+
+    <div class="relative flex items-center">
+      <input type="password" formControlName="password" #passwordInput
+             placeholder="Password" required
+             class="w-full px-10 py-3 border border-gray-300 rounded-md placeholder-gray-500
+             focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+      <i class="pi pi-key absolute left-3 h-4 w-4 text-gray-400"></i>
+      <button class="absolute right-3 pointer"
+              (click)="showPassword(passwordInput)" type="button">
+        <i [ngClass]="passwordInput.getAttribute('type') == 'text'
+            ?'pi-eye-slash' : 'pi-eye'"
+           class="pi  h-4 w-4 text-gray-400">
+
+        </i>
+      </button>
+
+    </div>
+
+    <button type="submit"
+            class="w-full bg-black text-white py-3 rounded-md
+            hover:bg-gray-801 transition-colors"
+            [ngClass]="form.invalid ? 'bg-gray-500' : 'bg-black hover:bg-gray-800'"
+            [disabled]="form.invalid">
+      Login
+    </button>
+  </form>
+
+  <a routerLink="/auth/forgot-password"
+     class="text-sm text-gray-500 hover:underline">Forgot Your
+    Password? Let’s get you back in.</a>
+</div>

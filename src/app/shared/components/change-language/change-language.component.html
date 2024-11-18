@@ -1,0 +1,34 @@
+<div class="relative">
+  <p-button
+    (onClick)="toggleMenu($event, menuPanel)"
+    class="flex items-center hover:text-gray-300"
+    styleClass="p-button-text"
+    [ngClass]="isActiveRoute('/auth')
+                ? 'text-black' : 'text-white'"
+  >
+    <div class="p-1 rounded-full mx-1"
+         [ngClass]="isActiveRoute('/auth')
+                ? 'bg-black' : 'bg-white'"
+    >
+      <img [src]="isActiveRoute('/auth')
+      ? './assets/globe-white.svg' : './assets/globe.svg'"
+           class="w-5 h-5 text-white" alt="Globe image"/>
+    </div>
+    <span class="ml-1">{{ selectedLanguage | uppercase }}</span>
+  </p-button>
+
+  <p-overlayPanel #menuPanel class="bg-white rounded-lg shadow-lg w-24 z-20">
+    <ul>
+      <li
+        *ngFor="let lang of languages"
+        (click)="selectLanguage(lang); menuPanel.hide()"
+        class="flex items-center space-x-2 px-3 py-1
+        hover:bg-gray-200 rounded my-1 cursor-pointer"
+      >
+        <img [src]="'./assets/icons/' + lang + '.png'" alt="{{ lang }} icon"
+             class="w-8 h-8"/>
+        <span class="text-gray-900">{{ lang | uppercase }}</span>
+      </li>
+    </ul>
+  </p-overlayPanel>
+</div>

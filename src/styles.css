@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+@import "primeicons/primeicons.css";
+
+
+@layer tailwind-base, primeng, tailwind-utilities;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.colored-toast.swal2-icon-error {
+  background-color: #f27474 !important;
+  color: white;
+}
+
+.colored-toast.swal2-icon-warning {
+  background-color: #f8bb86 !important;
+  color: white;
+}
+

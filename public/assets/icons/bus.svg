@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" id="bus">
+  <path
+    d="M6.973 2.992A1.993 1.993 0 0 0 4.965 5v1.902h22.072V5c0-1.12-.887-2.008-2.008-2.008H6.973zm-2.008 4.91v9.309H15.5V7.902H4.965zm11.535 0v9.309h10.537V7.902H16.5zM2 8.873v4.182h1V9.873h1.5v-1H2zm25.5 0v1H29v3.182h1V8.873h-2.5zM4.965 18.211v2.803h22.072V18.21H4.965zm1.162.965h3v1h-3v-1zm16.691 0h3v1h-3v-1zM4 22.014v2h24v-2H4zm.965 3v1.033h22.072v-1.033H4.965zm1.963 2.033v1.478c0 .275.206.483.482.483h1.963a.471.471 0 0 0 .482-.483v-1.478H6.928zm15.218 0v1.478a.47.47 0 0 0 .481.483h1.965a.471.471 0 0 0 .482-.483v-1.478h-2.928z"
+    color="#000" font-family="sans-serif" font-weight="400" overflow="visible"
+    style="line-height:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;block-progression:tb;isolation:auto;mix-blend-mode:normal"></path>
+</svg>

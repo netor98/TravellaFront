@@ -1,18 +1,42 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClientModule,
+  provideHttpClient
+} from "@angular/common/http";
+import {SharedModule} from "./shared/shared.module";
+import {LandingPageModule} from "./ui/landing-page/landing-page.module";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {
+  TokenInterceptorServiceService
+} from "./services/token-interceptor-service.service";
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    SharedModule,
+    LandingPageModule,
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    provideHttpClient(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorServiceService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

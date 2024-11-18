@@ -1,0 +1,102 @@
+<div class="w-full bg-white rounded-lg shadow-lg p-4 px-12 space-y-3">
+  <h2 class="text-2xl font-bold text-gray-800 text-center md:text-left">Create
+    Your Account</h2>
+  <p class="text-gray-600 text-center">Join us and start your journey!</p>
+
+
+  <!-- Social signup buttons -->
+  <div class="space-y-4">
+    <button class="w-full flex items-center justify-center space-x-2
+              border border-gray-300 rounded-md py-2 text-black
+              hover:bg-gray-800 hover:text-white transition-colors">
+      <span>Sign up with Google</span>
+      <i class="pi pi-google"></i>
+    </button>
+  </div>
+
+  <!-- Divider -->
+  <div class="flex items-center justify-center">
+    <span class="text-gray-400">or</span>
+  </div>
+
+  <!-- Registration form -->
+  <form (ngSubmit)="register()" class="space-y-4" [formGroup]="form">
+
+    <!-- Name -->
+    <div class="relative flex items-center">
+      <input type="text" formControlName="name" placeholder="Full Name" required
+             class="w-full px-10 py-3 border border-gray-300 rounded-md placeholder-gray-500
+             focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <i class="pi pi-user absolute left-3 h-4 w-4 text-gray-400"></i>
+    </div>
+
+    <!-- Email -->
+    <div class="relative flex items-center">
+      <input type="email" formControlName="email" placeholder="Email Address"
+             required
+             class="w-full px-10 py-3 border border-gray-300 rounded-md placeholder-gray-500
+             focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+
+      <i class="pi pi-envelope absolute left-3 h-4 w-4 text-gray-400"></i>
+    </div>
+
+    <!-- Password -->
+
+
+    <div class="relative flex items-center">
+      <input type="password" formControlName="password" #passwordInput
+             placeholder="Password" required
+             (input)="onPasswordInput(passwordInput.value)"
+             (focus)="isPopupVisible = true; onPasswordInput(passwordInput.value)"
+             (blur)="isPopupVisible = false"
+             class="w-full px-10 py-3 border border-gray-300 rounded-md placeholder-gray-500
+             focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <i class="pi pi-key absolute left-3 h-4 w-4 text-gray-400"></i>
+
+      <button class="absolute right-3 pointer"
+              (click)="showPassword(passwordInput)" type="button">
+        <i [ngClass]="passwordInput.getAttribute('type') == 'text'
+            ?'pi-eye-slash' : 'pi-eye'"
+           class="pi  h-4 w-4 text-gray-400">
+
+        </i>
+      </button>
+
+      <password-strength
+        [isPopupVisible]="isPopupVisible"
+        [passwordValidLength]="passwordValidLength"
+        [passwordHasNumber]="passwordHasNumber"
+        [passwordHasLowerCase]="passwordHasLowerCase"
+        [passwordHasUpperCase]="passwordHasUpperCase"
+        [passwordHasSpecialChar]="passwordHasSpecialChar">
+      </password-strength>
+
+    </div>
+
+    <!-- Confirm Password -->
+    <div class="relative flex items-center">
+      <input type="password" formControlName="confirmPassword" #confirmPassword
+             placeholder="Confirm Password" required
+             class="w-full px-10 py-3 border border-gray-300 rounded-md placeholder-gray-500
+             focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <i class="pi pi-key absolute left-3 h-4 w-4 text-gray-400"></i>
+    </div>
+
+    <!-- Submit button -->
+    <button type="submit"
+            class="w-full bg-black text-white py-3 rounded-md
+            hover:bg-gray-801 transition-colors"
+            [ngClass]="form.invalid || form.get('password')?.value !== form.get('confirmPassword')?.value ? 'bg-gray-500' : 'bg-black hover:bg-gray-800'"
+            [disabled]="form.invalid || form.get('password')?.value !== form.get('confirmPassword')?.value">
+
+      Sign Up
+    </button>
+  </form>
+
+  <!-- Login link -->
+  <p class="text-sm text-gray-500 text-center">
+    Already have an account?
+    <a routerLink="/auth/login" class="text-blue-500 hover:underline">Log In</a>
+  </p>
+</div>

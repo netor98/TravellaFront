@@ -1,0 +1,30 @@
+<section
+  class="relative h-screen bg-cover
+  bg-center md:m-2 rounded font-sans"
+  style="background-image: url('./assets/hero.jpg');">
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-black bg-opacity-45 rounded"></div>
+
+  <!-- Navbar -->
+  <nav-bar class="rounded"></nav-bar>
+
+  <div
+    class="absolute inset-0 flex
+    items-center text-center z-0 rounded">
+    <!-- <h1 class="text-4xl font-bold text-white">Lorem</h1>
+     <p class="text-lg text-gray-200 mt-4">Lorem</p>
+     <a href="#" class="mt-6 bg-blue-500 text-white py-3 px-6 rounded-full hover:bg-blue-600">
+       Lorem Lorem
+     </a>-->
+    <search-trip class="w-full md:absolute bottom-3"/>
+  </div>
+
+</section>
+
+<section class="container mt-20 mx-auto w-full">
+
+  <top-routes></top-routes>
+  <info-landig></info-landig>
+</section>
+
+<app-footer></app-footer>

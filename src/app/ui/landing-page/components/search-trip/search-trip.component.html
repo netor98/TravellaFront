@@ -1,0 +1,153 @@
+<div class="mt-32 md:mt-10 mx-auto w-full justify-start
+     container px-4 md:p-0 flex flex-col items-center">
+  <h2 class="text-white text-5xl font-medium">Navigate Roads with Comfort</h2>
+
+  <div
+    class="bg-white rounded-lg container
+      shadow-md p-6 space-y-4 my-4">
+    <h2 class="text-2xl text-left">Find your bus & travel</h2>
+
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 lg:space-x-2
+      lg:grid-cols-9 gap-1 items-center  ">
+
+      <!-- From Dropdown -->
+      <div class="flex flex-col col-span-2 my-2 lg:my-0">
+
+        <label class="mb-2 text-left font-medium">From</label>
+
+        <div class="flex justify-center w-full">
+
+          <p-dropdown
+            class="dropdown-selected w-full"
+            styleClass="w-full"
+            [ngClass]="{'selected-item': selectedFrom}"
+            [options]="cities"
+            [(ngModel)]="selectedFrom"
+            optionLabel="name"
+            [filter]="true"
+            filterBy="name"
+            [showClear]="true"
+            placeholder="Select a City">
+
+
+            <ng-template pTemplate="selectedItem" let-selectedOption>
+              <div class="flex items-center gap-2 text-black">
+                <img class="w-7" src="./assets/icons/bus.svg">
+
+                <div>{{ selectedOption.code }}</div>
+              </div>
+            </ng-template>
+
+            <ng-template let-city pTemplate="item">
+              <div class="flex  gap-2">
+                <div>{{ city.name }}</div>
+              </div>
+            </ng-template>
+
+          </p-dropdown>
+        </div>
+
+      </div>
+
+      <div class="w-full justify-center lg:col-span-1 col-span-2  mx-auto items-center
+      my-2 lg:my-0">
+        <button
+          (click)="changeCities()"
+          [@cityChangeAnimation]="animationState"
+          class="rounded-full text-white bg-black w-14
+          h-14 transition-colors hover:bg-gray-500">
+          <i class="pi pi-sync"></i>
+        </button>
+
+      </div>
+
+
+      <!-- To Dropdown -->
+      <div class="flex flex-col col-span-2 my-2 lg:my-4 ">
+        <label class="mb-2 text-left font-medium">To</label>
+        <div class="flex justify-center w-full">
+          <p-dropdown
+            class="dropdown-selected w-full"
+            styleClass="w-full"
+            [ngClass]="{'selected-item': selectedTo}"
+            [options]="cities"
+            [(ngModel)]="selectedTo"
+            optionLabel="name"
+            [filter]="true"
+            filterBy="name"
+            [showClear]="true"
+            placeholder="Select a City">
+
+
+            <ng-template pTemplate="selectedItem" let-selectedOption>
+              <div class="flex items-center gap-2 text-black">
+                <img class="w-7" src="./assets/icons/bus.svg">
+
+                <div>{{ selectedOption.code }}</div>
+              </div>
+            </ng-template>
+
+
+            <ng-template let-city pTemplate="item">
+              <div class="flex  gap-2">
+                <div>{{ city.name }}</div>
+              </div>
+            </ng-template>
+
+          </p-dropdown>
+        </div>
+      </div>
+
+
+      <!-- Departure Calendar -->
+      <div class="flex flex-col  col-span-2 my-2 lg:my-0">
+
+        <label class="mb-2 text-left font-medium">Departure</label>
+        <p-calendar
+          class="calendar"
+          [ngClass]="{'bg-gray-200': departureDate}"
+          [(ngModel)]="departureDate"
+          [showIcon]="true"
+          [minDate]="minDate"
+          dateFormat="dd/mm/yy"
+
+          placeholder="Select a date"
+          styleClass="w-full">
+
+        </p-calendar>
+      </div>
+
+      <!-- Passengers Dropdown -->
+      <div class="flex flex-col col-span-2 my-2 lg:my-0">
+
+        <label class="mb-2 text-left font-medium">Passengers</label>
+        <p-dropdown
+          [options]="passengerOptions"
+          [(ngModel)]="selectedPassenger"
+          placeholder="Select passengers"
+          styleClass="w-full">
+        </p-dropdown>
+      </div>
+
+    </div>
+
+    <!-- Filters Section -->
+    <div class="flex justify-between items-center gap-2 mt-4">
+      <div>
+        <label class="text-black font-bold mr-2">Filter:</label>
+        <p-multiSelect
+          class="p-multiselect"
+          [options]="filters"
+          [(ngModel)]="selectedFilter"
+          optionLabel="name"
+          placeholder="Select Filters"/>
+      </div>
+      <p-button label="Search" icon="pi pi-search"
+                (click)="searchTrips()"
+                class="px-6 py-2 bg-black text-white
+                rounded-lg hover:bg-gray-800"></p-button>
+    </div>
+  </div>
+
+</div>
