@@ -1,62 +1,31 @@
-<div class="container mx-auto p-4 bg-gray-50">
-  <!-- Travel Type Selection -->
-  <div class="flex space-x-4 mb-6">
-    <p-button label="One way"
-              [styleClass]="travelType === 'one-way' ? 'active' : ''"
-              (click)="setTravelType('one-way')"></p-button>
-    <p-button label="Round Trip"
-              [styleClass]="travelType === 'round-trip' ? 'active' : ''"
-              (click)="setTravelType('round-trip')"></p-button>
-    <p-button label="Multi-City"
-              [styleClass]="travelType === 'multi-city' ? 'active' : ''"
-              (click)="setTravelType('multi-city')"></p-button>
-  </div>
+<nav-bar></nav-bar>
 
-  <!-- Search Filters -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
-    <p-dropdown [options]="cities" [(ngModel)]="fromLocation"
-                placeholder="From"></p-dropdown>
-    <p-dropdown [options]="cities" [(ngModel)]="toLocation"
-                placeholder="To"></p-dropdown>
+<div class="container mx-auto px-4 py-20 mt-20 flex gap-6">
+  <!-- Panel de Filtros -->
+    <app-sidebar-filters></app-sidebar-filters>
 
-    <p-calendar [(ngModel)]="departureDate" placeholder="Departure"
-                dateFormat="dd/mm/yy"></p-calendar>
-    <p-calendar *ngIf="travelType === 'round-trip'" [(ngModel)]="returnDate"
-                placeholder="Return" dateFormat="dd/mm/yy"></p-calendar>
+  <!-- Lista de Resultados -->
+  <main class="w-3/4">
+    <div *ngIf="loading" class="text-center text-gray-500">Cargando resultados...</div>
 
-    <p-dropdown [options]="passengerOptions" [(ngModel)]="passengers"
-                placeholder="Passengers"></p-dropdown>
-  </div>
+    <div *ngIf="error" class="text-center text-red-500">{{ error }}</div>
 
-  <!-- Search Button -->
-  <div class="flex justify-end mb-8">
-    <p-button label="Search Travel" icon="pi pi-search"
-              (click)="searchTravels()"></p-button>
-  </div>
-
-  <!-- Search Results -->
-  <div class="space-y-4" *ngIf="searchResults.length > 0">
-    <div *ngFor="let travel of searchResults"
-         class="border rounded-lg p-4 bg-white shadow">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-xl font-semibold">{{ travel.companyName }}</h3>
-        <span
-          class="text-lg font-bold text-blue-500">{{ travel.price | currency }}</span>
-      </div>
-
-      <div class="flex justify-between text-gray-600 mb-4">
-        <p><strong>Departure:</strong> {{ travel.departureTime }}</p>
-        <p><strong>Arrival:</strong> {{ travel.arrivalTime }}</p>
-        <p><strong>Duration:</strong> {{ travel.duration }}</p>
-      </div>
-
-      <div class="flex space-x-4">
-        <p-button label="Details" (click)="viewDetails(travel)"></p-button>
-        <p-button label="Reschedule" (click)="reschedule(travel)"></p-button>
-        <p-button label="Select Travel" icon="pi pi-check"
-                  (click)="selectTravel(travel)"
-                  styleClass="p-button-success"></p-button>
-      </div>
+    <div *ngIf="!loading && trips.length > 0" class="grid gap-6 mx-auto max-h-[400px] max-w-[500px] overflow-y-auto">
+      <app-search-details
+        *ngFor="let trip of trips"
+        [originCity]="trip.route.origin.name"
+        [destinationCity]="trip.route.destination.name"
+        [departureTime]="trip.departureTime"
+        [arrivalTime]="trip.arrivalTime"
+        [price]="trip.price.toString()"
+      ></app-search-details>
     </div>
-  </div>
+
+    <div *ngIf="!loading && trips.length === 0" class="text-center text-gray-500">
+      No se encontraron resultados para tu búsqueda.
+    </div>
+  </main>
 </div>
+
+
+<app-footer></app-footer>

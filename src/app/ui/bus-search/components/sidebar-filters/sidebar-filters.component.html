@@ -1,0 +1,57 @@
+<div class="w-full max-w-sm bg-white rounded-lg shadow-md p-4 space-y-4">
+
+  <!-- Time Panel -->
+  <p-panel header="Time" [toggleable]="true">
+    <div class="grid grid-cols-2 gap-4">
+      <input
+        type="time"
+        [(ngModel)]="startTime"
+        class="border border-gray-300 rounded-lg p-2"
+      />
+      <input
+        type="time"
+        [(ngModel)]="endTime"
+        class="border border-gray-300 rounded-lg p-2"
+      />
+    </div>
+  </p-panel>
+
+  <!-- Price Range Panel -->
+  <p-panel header="Price Range" [toggleable]="true">
+    <div class="space-y-4">
+      <div class="flex justify-between text-sm">
+        <span>Min: {{ priceRange[0] | currency }}</span>
+        <span>Max: {{ priceRange[1] | currency }}</span>
+      </div>
+      <p-slider [(ngModel)]="priceRange" [range]="true" [min]="100" [max]="1000"></p-slider>
+    </div>
+  </p-panel>
+
+  <!-- Facilities Panel -->
+  <p-panel header="Facilities" [toggleable]="true">
+    <div class="grid grid-cols-3 gap-4">
+      <div
+        class="border border-gray-300 rounded-lg p-2 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200"
+        *ngFor="let facility of facilities"
+        (click)="toggleFacility(facility)"
+        [class.bg-green-100]="selectedFacilities.includes(facility.name)"
+      >
+        <i [class]="facility.icon" class="text-xl"></i>
+        <span class="text-xs mt-1">{{ facility.name }}</span>
+      </div>
+    </div>
+    <button class="text-sm text-blue-500 hover:underline mt-2">
+      Show more
+    </button>
+  </p-panel>
+
+  <!-- Add Discount Panel -->
+  <p-panel header="Add Discount" [toggleable]="true">
+    <p-dropdown
+      [options]="discountTypes"
+      [(ngModel)]="selectedDiscount"
+      class="w-full"
+      placeholder="Type discount"
+    ></p-dropdown>
+  </p-panel>
+</div>

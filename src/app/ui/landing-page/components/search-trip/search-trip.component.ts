@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {filter} from "rxjs";
 import {BusService} from "../../../../services/bus.service";
 import {CitiesModel} from "../../../../domain/models/cities.model";
 import {CitySearchService} from "../../../../services/city-search.service";
@@ -9,6 +8,8 @@ import {
   CitiesResponse
 } from "../../../../domain/models/cities-response.interface";
 import {TripsResponse} from "../../../../domain/models/TripsRespose";
+import {SharedDataService} from "../../../../services/shared-data.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'search-trip',
@@ -30,12 +31,14 @@ export class SearchTripComponent implements OnInit {
   public animationState: string = 'default';
   public errorMessage: string | null = null;
   public minDate = new Date();
-
+  public checked: boolean = false;
   trips: TripsResponse[] = [];
 
   constructor(
     private citySearchService: CitySearchService,
-    private busService: BusService
+    private busService: BusService,
+    private sharedDataService: SharedDataService,
+    private router: Router
   ) {
   }
 
@@ -146,15 +149,18 @@ export class SearchTripComponent implements OnInit {
     const pageNumber = 1; // Número de página que estás buscando
     const pageSize = 10;
 
-    console.log('Parametros de búsqueda:', {
-      origin,
-      destination,
-      departureDate,
-      sortBy,
-      isAscending,
-      pageNumber,
-      pageSize
-    });
+    const searchParams = {
+      originCity: origin?.name || null,
+      destinationCity: destination?.name || null,
+      departureTime: departureDate || null,
+      sortBy: 'departureTime',
+      isAscending: true,
+      pageNumber: 1,
+      pageSize: 10,
+    };
+
+    this.router.navigate(['/search'], {queryParams: searchParams});
+
     this.busService
       .getFilteredTrips(
         origin!,
@@ -166,8 +172,9 @@ export class SearchTripComponent implements OnInit {
         pageSize)
       .subscribe(
         (trips) => {
-          this.trips = trips; // Store the trips in the component
-          console.log('Filtered trips:', this.trips); // For debugging
+          this.trips = trips;
+          this.sharedDataService.setTrips(trips);
+          this.sharedDataService.setSearchParams(searchParams);
         },
         (error) => {
           console.error('Error fetching trips:', error);

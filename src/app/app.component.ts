@@ -24,10 +24,8 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
-        // Show spinner on route change start
         this.loading = true;
       } else if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
-        // Hide spinner on route change end
         setTimeout(() => {
           this.loading = false;
         }, 2000)

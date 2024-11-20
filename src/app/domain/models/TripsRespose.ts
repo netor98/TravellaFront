@@ -11,4 +11,5 @@ export interface TripsResponse {
   };
   vehicle: { name: string };
   driver: { username: string };
+  price: number;
 }

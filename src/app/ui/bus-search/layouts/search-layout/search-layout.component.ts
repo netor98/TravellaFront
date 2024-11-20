@@ -1,5 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {BusService} from "../../../../services/bus.service";
+import { TripsResponse } from '../../../../domain/models/TripsRespose';
+import {ActivatedRoute} from "@angular/router";
+import {SharedDataService} from "../../../../services/shared-data.service";
+import {CitiesModel} from "../../../../domain/models/cities.model";
+
 
 @Component({
   selector: 'app-search-layout',
@@ -7,81 +12,83 @@ import {BusService} from "../../../../services/bus.service";
   styles: ``
 })
 export class SearchLayoutComponent implements OnInit {
-
-  cities: any = [];
+  trips: TripsResponse[] = [];
+  loading: boolean = true;
+  error: string | null = null;
 
   constructor(
     private busService: BusService,
-  ) {
-  }
+    private route: ActivatedRoute,
+    private sharedDataService: SharedDataService
+  ) {}
 
   ngOnInit(): void {
-    this.busService.getCitiesList().subscribe((data: any) => {
-      this.cities = data;
-      console.log(this.cities)
+    this.route.queryParams.subscribe((params) => {
+      const originCity = params['originCity'];
+      const destinationCity = params['destinationCity'];
+      const departureTime = params['departureTime'];
+      const sortBy = params['sortBy'];
+      const isAscending = params['isAscending'] === 'true';
+      const pageNumber = +params['pageNumber'] || 1;
+      const pageSize = +params['pageSize'] || 10;
+
+      console.log(params);
+      this.searchTrips({
+        originCity,
+        destinationCity,
+        departureTime,
+        sortBy,
+        isAscending,
+        pageNumber,
+        pageSize,
+      });
     });
   }
 
-  travelType: string = 'round-trip';
-  fromLocation: any;
-  toLocation: any;
-  departureDate: Date = new Date();
-  returnDate: Date = new Date();
-  passengers: number = 1;
+  searchTrips(params: any): void {
+    const origin: CitiesModel | undefined = params.originCity ? {
+      id: '',
+      code: '',
+      country: '',
+      state: '',
+      name: params.originCity,
+      cityImageUrl: null
+    } : undefined;
 
-  locations = [
-    {label: 'Jakarta', value: 'Jakarta'},
-    {label: 'Singapore', value: 'Singapore'},
-  ];
+    const destination: CitiesModel | undefined = params.destinationCity ? {
+      id: '',
+      code: '',
+      country: '',
+      state: '',
+      name: params.destinationCity,
+      cityImageUrl: null
+    } : undefined;
+    
 
-  passengerOptions = Array.from({length: 5}, (_, i) => ({
-    label: `${i + 1} Passenger(s)`,
-    value: i + 1
-  }));
 
-  searchResults = [
-    {
-      companyName: 'Garuda Indonesia',
-      departureTime: '08:35',
-      arrivalTime: '11:20',
-      duration: '2h 45m',
-      price: 567.00
-    },
-    {
-      companyName: 'Singapore Airlines',
-      departureTime: '05:25',
-      arrivalTime: '08:10',
-      duration: '2h 45m',
-      price: 530.00
-    },
-    {
-      companyName: 'Lion Air',
-      departureTime: '12:10',
-      arrivalTime: '14:55',
-      duration: '2h 45m',
-      price: 418.00
-    },
-    // Add more sample data
-  ];
-
-  setTravelType(type: string) {
-    this.travelType = type;
+    this.loading = true;
+    this.busService
+      .getFilteredTrips(
+        origin,
+        destination,
+        params.departureTime,
+        params.sortBy,
+        params.isAscending,
+        params.pageNumber,
+        params.pageSize
+      )
+      .subscribe({
+        next: (data) => {
+          this.trips = data;
+          console.log(data);
+          this.loading = false;
+        },
+        error: (err) => {
+          this.error = 'Failed to load trips.';
+          console.log(err);
+          this.loading = false;
+        },
+      });
   }
 
-  searchTravels() {
-    // Here you could perform an API call to fetch the filtered search results
-    console.log('Searching for travels:', this.fromLocation, this.toLocation, this.departureDate, this.returnDate, this.passengers);
-  }
-
-  viewDetails(travel: any) {
-    console.log('Viewing details for:', travel);
-  }
-
-  reschedule(travel: any) {
-    console.log('Rescheduling travel:', travel);
-  }
-
-  selectTravel(travel: any) {
-    console.log('Selected travel:', travel);
-  }
 }

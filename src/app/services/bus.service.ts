@@ -13,6 +13,8 @@ export class BusService {
 
   private readonly baseUrl: string = environment.BASE_URL;
 
+
+
   constructor(private http: HttpClient) {
   }
 
@@ -23,26 +25,24 @@ export class BusService {
   getFilteredTrips(
     origin?: CitiesModel,
     destination?: CitiesModel,
-    departureDate?: string, // Expecting a string, but can be Date depending on format
+    departureDate?: string,
     sortBy?: string,
     isAscending: boolean = true,
     pageNumber: number = 1,
     pageSize: number = 10
   ): Observable<TripsResponse[]> {
 
-    // Start with the base URL for trips
     let params = new HttpParams();
 
-    // Add filters to the params if they are provided
     if (origin) {
       params = params.set('originCity', origin.name!);
-      console.log(origin.name)
     }
     if (destination) {
       params = params.set('destinationCity', destination.name!);
     }
     if (departureDate) {
-      params = params.set('departureTime', departureDate);
+      const utcDate = new Date(departureDate).toISOString();
+      params = params.set('departureTime', utcDate);
     }
     if (sortBy) {
       params = params.set('sortBy', sortBy);
@@ -51,9 +51,6 @@ export class BusService {
     params = params.set('pageNumber', pageNumber.toString());
     params = params.set('pageSize', pageSize.toString());
 
-    console.log(params)
-    console.log('Final URL:', `${this.baseUrl}/Trips?${params.toString()}`);
-    // Perform the HTTP GET request with query parameters
     return this.http.get<TripsResponse[]>(`${this.baseUrl}/Trips`, {params});
   }
 }

@@ -15,6 +15,10 @@ import {CardModule} from "primeng/card";
 import {CarouselModule} from "primeng/carousel";
 import {PasswordModule} from "primeng/password";
 import {DividerModule} from "primeng/divider";
+import {InputSwitchModule} from "primeng/inputswitch";
+import {PanelMenuModule} from "primeng/panelmenu";
+import {PanelModule} from "primeng/panel";
+import {SliderModule} from "primeng/slider";
 
 
 @NgModule({
@@ -37,7 +41,10 @@ import {DividerModule} from "primeng/divider";
     CardModule,
     CarouselModule,
     PasswordModule,
-    DividerModule
+    DividerModule,
+    InputSwitchModule,
+    PanelModule,
+    SliderModule
   ]
 })
 export class PrimegnModule {

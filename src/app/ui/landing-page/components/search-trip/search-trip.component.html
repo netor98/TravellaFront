@@ -101,21 +101,33 @@
 
 
       <!-- Departure Calendar -->
-      <div class="flex flex-col  col-span-2 my-2 lg:my-0">
+      <div class="flex flex-col col-span-2 my-2 lg:my-0">
 
-        <label class="mb-2 text-left font-medium">Departure</label>
-        <p-calendar
-          class="calendar"
-          [ngClass]="{'bg-gray-200': departureDate}"
-          [(ngModel)]="departureDate"
-          [showIcon]="true"
-          [minDate]="minDate"
-          dateFormat="dd/mm/yy"
+        <div class="flex justify-between items-center">
 
-          placeholder="Select a date"
-          styleClass="w-full">
+          <label class="mb-2 text-left font-medium">Departure</label>
 
-        </p-calendar>
+          <label class="mb-2 text-gray-400 text-sm md:left-6 left-16 relative">
+            Round Trip?
+          </label>
+          <p-inputSwitch [(ngModel)]="checked"></p-inputSwitch>
+
+        </div>
+        <div>
+
+          <p-calendar
+            class="calendar"
+            [ngClass]="{'bg-gray-200': departureDate}"
+            [(ngModel)]="departureDate"
+            [showIcon]="true"
+            dateFormat="dd/mm/yy"
+
+            placeholder="Select a date"
+            styleClass="w-full">
+
+          </p-calendar>
+        </div>
+
       </div>
 
       <!-- Passengers Dropdown -->
@@ -123,13 +135,13 @@
 
         <label class="mb-2 text-left font-medium">Passengers</label>
         <p-dropdown
+
           [options]="passengerOptions"
           [(ngModel)]="selectedPassenger"
           placeholder="Select passengers"
           styleClass="w-full">
         </p-dropdown>
       </div>
-
     </div>
 
     <!-- Filters Section -->
@@ -145,6 +157,7 @@
       </div>
       <p-button label="Search" icon="pi pi-search"
                 (click)="searchTrips()"
+                routerLink="/search"
                 class="px-6 py-2 bg-black text-white
                 rounded-lg hover:bg-gray-800"></p-button>
     </div>
