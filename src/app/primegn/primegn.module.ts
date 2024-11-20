@@ -19,6 +19,7 @@ import {InputSwitchModule} from "primeng/inputswitch";
 import {PanelMenuModule} from "primeng/panelmenu";
 import {PanelModule} from "primeng/panel";
 import {SliderModule} from "primeng/slider";
+import {SplitButtonModule} from "primeng/splitbutton";
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import {SliderModule} from "primeng/slider";
     DividerModule,
     InputSwitchModule,
     PanelModule,
-    SliderModule
+    SliderModule,
+    SplitButtonModule
   ]
 })
 export class PrimegnModule {

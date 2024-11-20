@@ -9,6 +9,7 @@ export class SidebarFiltersComponent {
   startTime: string = '';
   endTime: string = '';
 
+
   // Price Range
   priceRange: number[] = [300, 800];
 

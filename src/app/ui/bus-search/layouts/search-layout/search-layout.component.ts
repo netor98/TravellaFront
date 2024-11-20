@@ -63,32 +63,35 @@ export class SearchLayoutComponent implements OnInit {
       name: params.destinationCity,
       cityImageUrl: null
     } : undefined;
-    
+
 
 
     this.loading = true;
-    this.busService
-      .getFilteredTrips(
-        origin,
-        destination,
-        params.departureTime,
-        params.sortBy,
-        params.isAscending,
-        params.pageNumber,
-        params.pageSize
-      )
-      .subscribe({
-        next: (data) => {
-          this.trips = data;
-          console.log(data);
-          this.loading = false;
-        },
-        error: (err) => {
-          this.error = 'Failed to load trips.';
-          console.log(err);
-          this.loading = false;
-        },
-      });
+    setTimeout(() => {
+
+      this.busService
+        .getFilteredTrips(
+          origin,
+          destination,
+          params.departureTime,
+          params.sortBy,
+          params.isAscending,
+          params.pageNumber,
+          params.pageSize
+        )
+        .subscribe({
+          next: (data) => {
+            this.trips = data;
+            console.log(data);
+            this.loading = false;
+          },
+          error: (err) => {
+            this.error = 'Failed to load trips.';
+            console.log(err);
+            this.loading = false;
+          },
+        });
+    }, 4000);
   }
 
 }

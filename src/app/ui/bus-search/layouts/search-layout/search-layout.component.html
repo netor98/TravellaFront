@@ -1,20 +1,29 @@
 <nav-bar></nav-bar>
 
-<div class="container mx-auto px-4 py-20 mt-20 flex gap-6">
-  <!-- Panel de Filtros -->
-    <app-sidebar-filters></app-sidebar-filters>
+<div class="container bg-gray-200 mx-auto px-4 py-20 mt-20 flex flex-col lg:flex-row gap-6">
+  <!-- Sidebar Filters -->
+  <div class="w-full lg:w-1/4">
+    <app-filters-skeleton *ngIf="loading"></app-filters-skeleton>
+    <app-sidebar-filters *ngIf="!loading"></app-sidebar-filters>
+  </div>
 
-  <!-- Lista de Resultados -->
-  <main class="w-3/4">
-    <div *ngIf="loading" class="text-center text-gray-500">Cargando resultados...</div>
+  <!-- Trip Results -->
+  <main class="w-full lg:w-3/4">
+    <div *ngIf="loading" class="grid gap-6">
+      <app-trip-skeleton *ngFor="let _ of [1, 2, 3]"></app-trip-skeleton>
+    </div>
 
     <div *ngIf="error" class="text-center text-red-500">{{ error }}</div>
 
-    <div *ngIf="!loading && trips.length > 0" class="grid gap-6 mx-auto max-h-[400px] max-w-[500px] overflow-y-auto">
+    <div *ngIf="!loading && trips.length > 0" class="grid gap-6 mx-auto overflow-y-auto">
       <app-search-details
         *ngFor="let trip of trips"
         [originCity]="trip.route.origin.name"
+        [codeOrigin]="trip.route.origin.code"
+        [stateOrigin]="trip.route.origin.state"
         [destinationCity]="trip.route.destination.name"
+        [codeDestination]="trip.route.destination.code"
+        [stateDestination]="trip.route.destination.state"
         [departureTime]="trip.departureTime"
         [arrivalTime]="trip.arrivalTime"
         [price]="trip.price.toString()"
@@ -26,6 +35,5 @@
     </div>
   </main>
 </div>
-
 
 <app-footer></app-footer>

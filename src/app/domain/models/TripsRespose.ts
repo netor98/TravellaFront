@@ -6,8 +6,16 @@ export interface TripsResponse {
   departureTime: string;
   arrivalTime: string;
   route: {
-    origin: { name: string };
-    destination: { name: string };
+    origin: {
+      name: string;
+      code: string;
+      state: string;
+    };
+    destination: {
+      name: string;
+      code: string;
+      state: string;
+    };
   };
   vehicle: { name: string };
   driver: { username: string };
