@@ -1,6 +1,12 @@
 <nav-bar></nav-bar>
+<!--
+<app-mini-search></app-mini-search>
+-->
+<search-trip [isSearchPage]="true"></search-trip>
+<div
+  class="container bg-gray-200 min-h-screen mx-auto px-4 py-10 flex flex-col lg:flex-row gap-6">
 
-<div class="container bg-gray-200 mx-auto px-4 py-20 mt-20 flex flex-col lg:flex-row gap-6">
+
   <!-- Sidebar Filters -->
   <div class="w-full lg:w-1/4">
     <app-filters-skeleton *ngIf="loading"></app-filters-skeleton>
@@ -15,9 +21,13 @@
 
     <div *ngIf="error" class="text-center text-red-500">{{ error }}</div>
 
-    <div *ngIf="!loading && trips.length > 0" class="grid gap-6 mx-auto overflow-y-auto">
+    <div *ngIf="!loading && trips.length > 0"
+         class="grid gap-6 mx-auto overflow-y-auto">
+
       <app-search-details
-        *ngFor="let trip of trips"
+        *ngFor="let trip of paginatedTrips"
+        [trip]="trip"
+        (book)="handleBooking($event)"
         [originCity]="trip.route.origin.name"
         [codeOrigin]="trip.route.origin.code"
         [stateOrigin]="trip.route.origin.state"
@@ -28,10 +38,21 @@
         [arrivalTime]="trip.arrivalTime"
         [price]="trip.price.toString()"
       ></app-search-details>
+
+      <p-paginator
+        [first]="first ? first : 0"
+        [rows]="rows ? rows : 0"
+        (onPageChange)="onPageChange($event)"
+        [totalRecords]="trips.length"
+        [showCurrentPageReport]="true"
+        [showPageLinks]="false"
+        [showJumpToPageDropdown]="false"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"/>
     </div>
 
-    <div *ngIf="!loading && trips.length === 0" class="text-center text-gray-500">
-      No se encontraron resultados para tu búsqueda.
+    <div *ngIf="!loading && trips.length === 0"
+         class="text-center flex justify-center items-center h-full text-gray-500">
+      <p>No se encontraron resultados para tu búsqueda.</p>
     </div>
   </main>
 </div>

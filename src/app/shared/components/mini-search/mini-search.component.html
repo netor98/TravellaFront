@@ -1,0 +1,80 @@
+<div
+  class="bg-white mt-24 shadow-md rounded-lg p-4 mx-auto w-full
+  flex flex-wrap items-center gap-4 sticky top-0 z-50">
+
+  <!-- From -->
+  <div class="flex items-center border rounded-lg px-3 py-2 space-x-2 flex-1">
+    <i class="pi pi-map-marker text-gray-500"></i>
+
+    <input
+      type="text"
+      [(ngModel)]="from"
+      placeholder="From"
+      class="focus:outline-none text-gray-700 w-full"
+    />
+  </div>
+
+  <!-- To -->
+  <div class="flex items-center border rounded-lg px-3 py-2 space-x-2 flex-1">
+    <i class="pi pi-map-marker text-gray-500"></i>
+    <input
+      type="text"
+      [(ngModel)]="to"
+      placeholder="To"
+      class="focus:outline-none text-gray-700 w-full"
+    />
+  </div>
+
+  <!-- Depart -->
+  <div class="flex items-center border rounded-lg px-3 py-2 space-x-2 flex-1">
+    <i class="pi pi-calendar text-gray-500"></i>
+    <p-calendar
+      [(ngModel)]="departDate"
+      placeholder="Depart"
+      class="w-full border-0 focus:ring-0"
+    ></p-calendar>
+  </div>
+
+  <!-- Return -->
+  <div class="flex items-center space-x-2">
+    <label class="text-gray-500 text-sm">Return?</label>
+    <p-inputSwitch [(ngModel)]="returnTrip"></p-inputSwitch>
+  </div>
+
+  <!-- Passengers -->
+  <div class="flex items-center border rounded-lg px-3 py-2 space-x-2 flex-1">
+    <i class="pi pi-user text-gray-500"></i>
+    <select
+      [(ngModel)]="passengers"
+      class="focus:outline-none text-gray-700 w-full"
+    >
+      <option value="1 adult">1 adult</option>
+      <option value="2 adults">2 adults</option>
+      <option value="3 adults">3 adults</option>
+      <option value="4 adults">4 adults</option>
+    </select>
+  </div>
+
+  <!-- Seat -->
+  <div class="flex items-center border rounded-lg px-3 py-2 space-x-2 flex-1">
+    <i class="pi pi-briefcase text-gray-500"></i>
+    <select
+      [(ngModel)]="seatClass"
+      class="focus:outline-none text-gray-700 w-full"
+    >
+      <option value="Economy">Economy</option>
+      <option value="Executive">Executive</option>
+      <option value="Business">Business</option>
+    </select>
+  </div>
+
+  <!-- Search Button -->
+  <div class="flex items-center">
+    <button
+      (click)="searchTicket()"
+      class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition w-full"
+    >
+      Search Ticket
+    </button>
+  </div>
+</div>

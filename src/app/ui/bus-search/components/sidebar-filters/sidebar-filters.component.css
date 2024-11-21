@@ -1,0 +1,28 @@
+
+:host ::ng-deep .p-slider .p-slider-range {
+  background-color: #4caf50 !important; /* Replace with your desired color */
+}
+
+:host ::ng-deep .p-slider .p-slider-handle {
+  background-color: #ffffff !important;
+  border: 1px solid;
+  border-color: #9d9d9d !important;
+}
+
+.p-slider .p-slider-range {
+  background-color: #ff5722 !important; /* Active range color */
+}
+
+.p-slider {
+  background-color: #f1f1f1 !important; /* Inactive range color */
+}
+
+:host ::ng-deep .p-inputtext:focus {
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1) !important; /* Color personalizado */
+  border-color: #ccc !important; /* Color de borde */
+}
+
+:host ::ng-deep .p-inputtext:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}

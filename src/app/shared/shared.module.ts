@@ -10,18 +10,28 @@ import {FormsModule} from "@angular/forms";
 import {
   PasswordStrengthPopupComponent
 } from './components/password-strength-popup/password-strength-popup.component';
+import {
+  NavBarTicketsComponent
+} from './components/nav-bar-tickets/nav-bar-tickets.component';
+import {
+  MiniSearchComponent
+} from './components/mini-search/mini-search.component';
 
 
 @NgModule({
   declarations: [
     NavBarComponent,
     ChangeLanguageComponent,
-    PasswordStrengthPopupComponent
+    PasswordStrengthPopupComponent,
+    NavBarTicketsComponent,
+    MiniSearchComponent
   ],
   exports: [
     NavBarComponent,
     ChangeLanguageComponent,
-    PasswordStrengthPopupComponent
+    PasswordStrengthPopupComponent,
+    NavBarTicketsComponent,
+    MiniSearchComponent
   ],
   imports: [
     CommonModule,

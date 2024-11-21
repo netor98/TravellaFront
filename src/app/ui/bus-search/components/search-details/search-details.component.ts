@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-search-details',
@@ -17,60 +17,24 @@ export class SearchDetailsComponent implements OnInit {
   @Input() duration: string = '';
   @Input() price: string = '';
   @Input() tripType: string = '';
+  @Input() trip: any;
+  @Output() book = new EventEmitter<any>();
 
 
   public items: any[] = [
-    { label: 'Origin City', value: this.originCity },
+    {label: 'Origin City', value: this.originCity},
   ]
 
 
   ngOnInit() {
     this.items = [
       {
-        label: 'File',
-        icon: 'pi pi-file',
-        items: [
-          {
-            label: 'New',
-            icon: 'pi pi-plus',
-            items: [
-              {
-                label: 'Document',
-                icon: 'pi pi-file'
-              },
-              {
-                label: 'Image',
-                icon: 'pi pi-image'
-              },
-              {
-                label: 'Video',
-                icon: 'pi pi-video'
-              }
-            ]
-          },
-          {
-            label: 'Open',
-            icon: 'pi pi-folder-open'
-          },
-          {
-            label: 'Print',
-            icon: 'pi pi-print'
-          }
-        ]
+        label: 'Save',
+        icon: 'pi pi-save',
       },
       {
-        label: 'Edit',
-        icon: 'pi pi-file-edit',
-        items: [
-          {
-            label: 'Copy',
-            icon: 'pi pi-copy'
-          },
-          {
-            label: 'Delete',
-            icon: 'pi pi-times'
-          }
-        ]
+        label: 'See Details',
+        icon: 'pi pi-info-circle',
       },
       {
         label: 'Search',
@@ -79,20 +43,10 @@ export class SearchDetailsComponent implements OnInit {
       {
         separator: true
       },
-      {
-        label: 'Share',
-        icon: 'pi pi-share-alt',
-        items: [
-          {
-            label: 'Slack',
-            icon: 'pi pi-slack'
-          },
-          {
-            label: 'Whatsapp',
-            icon: 'pi pi-whatsapp'
-          }
-        ]
-      }
     ]
+  }
+
+  bookTrip(trip: any) {
+    this.book.emit(trip);
   }
 }

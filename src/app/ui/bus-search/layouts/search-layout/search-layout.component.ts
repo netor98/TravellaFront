@@ -1,9 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {BusService} from "../../../../services/bus.service";
-import { TripsResponse } from '../../../../domain/models/TripsRespose';
-import {ActivatedRoute} from "@angular/router";
+import {TripsResponse} from '../../../../domain/models/TripsRespose';
+import {ActivatedRoute, Router} from "@angular/router";
 import {SharedDataService} from "../../../../services/shared-data.service";
 import {CitiesModel} from "../../../../domain/models/cities.model";
+import {PageEvent} from "../../../../domain/models/paginator.Interface"
+import {PaginatorState} from "primeng/paginator";
+import {BookingService} from "../../../../services/booking-service.service";
 
 
 @Component({
@@ -15,12 +18,18 @@ export class SearchLayoutComponent implements OnInit {
   trips: TripsResponse[] = [];
   loading: boolean = true;
   error: string | null = null;
+  first: number | undefined = 0;
+  rows: number | undefined = 3;
+  paginatedTrips: any[] = []
+
 
   constructor(
     private busService: BusService,
     private route: ActivatedRoute,
-    private sharedDataService: SharedDataService
-  ) {}
+    private router: Router,
+    private bookingService: BookingService
+  ) {
+  }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -32,7 +41,6 @@ export class SearchLayoutComponent implements OnInit {
       const pageNumber = +params['pageNumber'] || 1;
       const pageSize = +params['pageSize'] || 10;
 
-      console.log(params);
       this.searchTrips({
         originCity,
         destinationCity,
@@ -65,7 +73,6 @@ export class SearchLayoutComponent implements OnInit {
     } : undefined;
 
 
-
     this.loading = true;
     setTimeout(() => {
 
@@ -82,7 +89,7 @@ export class SearchLayoutComponent implements OnInit {
         .subscribe({
           next: (data) => {
             this.trips = data;
-            console.log(data);
+            this.updatePaginatedTrips();
             this.loading = false;
           },
           error: (err) => {
@@ -91,7 +98,30 @@ export class SearchLayoutComponent implements OnInit {
             this.loading = false;
           },
         });
-    }, 4000);
+    }, 2000);
   }
 
+
+  // pagination functionalities
+
+  updatePaginatedTrips(): void {
+    const start = this.first;
+    const end = this.first! + this.rows!;
+    this.paginatedTrips = this.trips.slice(start, end);
+  }
+
+  onPageChange(event: PaginatorState) {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+    this.first = event.first;
+    this.rows = event.rows;
+    this.updatePaginatedTrips();
+  }
+
+  public handleBooking(trip: any) {
+    this.bookingService.setTrip(trip);
+    this.router.navigate(['/booking']);
+  }
 }

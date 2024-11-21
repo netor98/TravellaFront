@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-sidebar-filters',
@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 export class SidebarFiltersComponent {
   startTime: string = '';
   endTime: string = '';
+  time: Date[] | undefined;
 
 
   // Price Range
@@ -15,12 +16,12 @@ export class SidebarFiltersComponent {
 
   // Facilities
   facilities = [
-    { name: 'Meal', icon: 'pi pi-apple' },
-    { name: 'Socket', icon: 'pi pi-plug' },
-    { name: 'Television', icon: 'pi pi-tv' },
-    { name: 'Toilet', icon: 'pi pi-camera' },
-    { name: 'Baggage', icon: 'pi pi-briefcase' },
-    { name: 'Wifi', icon: 'pi pi-wifi' },
+    {name: 'Meal', icon: 'pi pi-apple'},
+    {name: 'Socket', icon: 'pi pi-plug'},
+    {name: 'Television', icon: 'pi pi-tv'},
+    {name: 'Toilet', icon: 'pi pi-camera'},
+    {name: 'Baggage', icon: 'pi pi-briefcase'},
+    {name: 'Wifi', icon: 'pi pi-wifi'},
   ];
   selectedFacilities: string[] = [];
 
@@ -35,8 +36,8 @@ export class SidebarFiltersComponent {
 
   // Discount Dropdown
   discountTypes = [
-    { name: 'Percentage', value: 'percentage' },
-    { name: 'Flat Rate', value: 'flat_rate' },
+    {name: 'Percentage', value: 'percentage'},
+    {name: 'Flat Rate', value: 'flat_rate'},
   ];
   selectedDiscount: any;
 }

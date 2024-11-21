@@ -7,12 +7,20 @@ import {
 } from './layouts/search-layout/search-layout.component';
 import {PrimegnModule} from "../../primegn/primegn.module";
 import {FormsModule} from "@angular/forms";
-import { SearchDetailsComponent } from './components/search-details/search-details.component';
+import {
+  SearchDetailsComponent
+} from './components/search-details/search-details.component';
 import {SharedModule} from "../../shared/shared.module";
 import {LandingPageModule} from "../landing-page/landing-page.module";
-import { SidebarFiltersComponent } from './components/sidebar-filters/sidebar-filters.component';
-import { TripSkeletonComponent } from './components/trip-skeleton/trip-skeleton.component';
-import { FiltersSkeletonComponent } from './components/filters-skeleton/filters-skeleton.component';
+import {
+  SidebarFiltersComponent
+} from './components/sidebar-filters/sidebar-filters.component';
+import {
+  TripSkeletonComponent
+} from './components/trip-skeleton/trip-skeleton.component';
+import {
+  FiltersSkeletonComponent
+} from './components/filters-skeleton/filters-skeleton.component';
 
 
 @NgModule({

@@ -10,8 +10,8 @@ module.exports = {
       },
       keyframes: {
         shimmer: {
-          '0%': { backgroundPosition: '-200px 0' },
-          '100%': { backgroundPosition: '200px 0' },
+          '0%': {backgroundPosition: '-200px 0'},
+          '100%': {backgroundPosition: '200px 0'},
         },
       },
     },

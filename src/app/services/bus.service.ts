@@ -14,7 +14,6 @@ export class BusService {
   private readonly baseUrl: string = environment.BASE_URL;
 
 
-
   constructor(private http: HttpClient) {
   }
 

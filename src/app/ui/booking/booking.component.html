@@ -1,0 +1,60 @@
+<p>booking works!</p>
+<div class="container mx-auto mt-10 p-4 max-w-3xl bg-white shadow-md rounded-lg">
+  <h2 class="text-2xl font-bold mb-4">Book Your Trip</h2>
+  <form (ngSubmit)="submitBooking()">
+    <!-- Trip Details -->
+    <div class="mb-4">
+      <label class="block font-medium text-gray-700">Trip</label>
+      <p>{{ tripDetails?.route.origin.name }} to {{ tripDetails?.route.destination.name }}</p>
+    </div>
+
+    <!-- Passenger Name -->
+    <div class="mb-4">
+      <label class="block font-medium text-gray-700">Passenger Name</label>
+      <input
+        type="text"
+        [(ngModel)]="passengerName"
+        name="passengerName"
+        required
+        class="w-full border rounded-lg px-3 py-2"
+        placeholder="Enter your full name"
+      />
+    </div>
+
+    <!-- Passenger Email -->
+    <div class="mb-4">
+      <label class="block font-medium text-gray-700">Email</label>
+      <input
+        type="email"
+        [(ngModel)]="email"
+        name="email"
+        required
+        class="w-full border rounded-lg px-3 py-2"
+        placeholder="Enter your email address"
+      />
+    </div>
+
+    <!-- Passenger Phone -->
+    <div class="mb-4">
+      <label class="block font-medium text-gray-700">Phone</label>
+      <input
+        type="text"
+        [(ngModel)]="phone"
+        name="phone"
+        required
+        class="w-full border rounded-lg px-3 py-2"
+        placeholder="Enter your phone number"
+      />
+    </div>
+
+    <!-- Payment Button -->
+    <div class="mt-6">
+      <button
+        type="submit"
+        class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition w-full"
+      >
+        Proceed to Payment
+      </button>
+    </div>
+  </form>
+</div>

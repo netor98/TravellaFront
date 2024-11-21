@@ -25,7 +25,8 @@ import {
     InfoLandigComponent
   ],
   exports: [
-    FooterComponent
+    FooterComponent,
+    SearchTripComponent
   ],
   imports: [
     CommonModule,

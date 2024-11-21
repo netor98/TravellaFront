@@ -20,6 +20,8 @@ import {PanelMenuModule} from "primeng/panelmenu";
 import {PanelModule} from "primeng/panel";
 import {SliderModule} from "primeng/slider";
 import {SplitButtonModule} from "primeng/splitbutton";
+import {AccordionModule} from "primeng/accordion";
+import {PaginatorModule} from "primeng/paginator";
 
 
 @NgModule({
@@ -46,7 +48,9 @@ import {SplitButtonModule} from "primeng/splitbutton";
     InputSwitchModule,
     PanelModule,
     SliderModule,
-    SplitButtonModule
+    SplitButtonModule,
+    AccordionModule,
+    PaginatorModule
   ]
 })
 export class PrimegnModule {

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BusService} from "../../../../services/bus.service";
 import {CitiesModel} from "../../../../domain/models/cities.model";
 import {CitySearchService} from "../../../../services/city-search.service";
@@ -25,13 +25,16 @@ import {Router} from "@angular/router";
     ])
   ]
 })
-export class SearchTripComponent implements OnInit {
 
+export class SearchTripComponent implements OnInit {
+  @Input() isSearchPage: boolean = false;
   cities: CitiesModel[] = [];
   public animationState: string = 'default';
   public errorMessage: string | null = null;
   public minDate = new Date();
   public checked: boolean = false;
+  from: string = '';
+  to: string = '';
   trips: TripsResponse[] = [];
 
   constructor(
@@ -43,6 +46,7 @@ export class SearchTripComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.isSearchPage)
     this.busService.getCitiesList().subscribe((cities: CitiesResponse[]) => {
       this.cities = cities.map((city: CitiesResponse) => ({
         name: city.name,
@@ -105,27 +109,7 @@ export class SearchTripComponent implements OnInit {
     }
 
     if (this.selectedFrom === this.selectedTo) {
-      this.errorMessage = 'Please select different cities';
-
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "bottom-start",
-        customClass: {
-          popup: "colored-toast"
-        },
-        iconColor: "#fff",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        }
-      });
-      Toast.fire({
-        icon: "warning",
-        title: this.errorMessage,
-      });
+      this.errorSameCities();
       return;
     }
 
@@ -140,14 +124,21 @@ export class SearchTripComponent implements OnInit {
   }
 
 
-  public searchTrips(): void {
+  public searchTrips() {
     const origin: CitiesModel | null = this.selectedFrom;
     const destination: CitiesModel | null = this.selectedTo;
     const departureDate = this.departureDate ? this.departureDate.toISOString().split('T')[0] : null;  // Format date to YYYY-MM-DD
-    const sortBy = 'departureTime'; // Puede ser dinámico dependiendo de los requisitos
-    const isAscending = true; // Puede ser dinámico dependiendo de los requisitos
-    const pageNumber = 1; // Número de página que estás buscando
+    const sortBy = 'departureTime';
+    const isAscending = true;
+    const pageNumber = 1;
     const pageSize = 10;
+
+
+    if ((origin && destination) && origin?.name === destination?.name) {
+      this.errorSameCities();
+      return;
+    }
+
 
     const searchParams = {
       originCity: origin?.name || null,
@@ -158,7 +149,6 @@ export class SearchTripComponent implements OnInit {
       pageNumber: 1,
       pageSize: 10,
     };
-
     this.router.navigate(['/search'], {queryParams: searchParams});
 
     this.busService
@@ -180,5 +170,29 @@ export class SearchTripComponent implements OnInit {
           console.error('Error fetching trips:', error);
         }
       );
+  }
+
+  public errorSameCities() {
+    this.errorMessage = 'Please select different cities';
+
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "bottom-start",
+      customClass: {
+        popup: "colored-toast"
+      },
+      iconColor: "#fff",
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    Toast.fire({
+      icon: "warning",
+      title: this.errorMessage,
+    });
   }
 }

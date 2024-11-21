@@ -16,7 +16,7 @@ export class NavBarComponent implements OnInit {
   public isAuth: boolean = false;
   public searchQuery = '';
   public filteredCities: Observable<CitiesModel[]>;
-
+  public isAuthRoute: boolean = false;
 
   constructor(
     private router: Router,
@@ -27,6 +27,9 @@ export class NavBarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.router.events.subscribe(() => {
+      this.isAuthRoute = this.router.url.startsWith('/auth');
+    });
     this.isAuth = this.authService.authStatus()() === 'authenticated';
   }
 
@@ -34,7 +37,7 @@ export class NavBarComponent implements OnInit {
 
 
   public isActiveRoute(route: string): boolean {
-    return this.router.url.includes(route);
+    return this.router.url.startsWith(route);
   }
 
 

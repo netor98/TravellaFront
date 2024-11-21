@@ -1,57 +1,125 @@
-<div class="w-full max-w-sm bg-white rounded-lg shadow-md p-4 space-y-4">
+<p-panel header="Filters" [toggleable]="true">
 
-  <!-- Time Panel -->
-  <p-panel header="Time" [toggleable]="true">
-    <div class="grid grid-cols-2 gap-4">
-      <input
-        type="time"
-        [(ngModel)]="startTime"
-        class="border border-gray-300 rounded-lg p-2"
-      />
-      <input
-        type="time"
-        [(ngModel)]="endTime"
-        class="border border-gray-300 rounded-lg p-2"
-      />
-    </div>
-  </p-panel>
+  <div class="w-full bg-white rounded-lg space-y-4">
+    <p-accordion [multiple]="true">
+      <p-accordionTab header="Time">
 
-  <!-- Price Range Panel -->
-  <p-panel header="Price Range" [toggleable]="true">
-    <div class="space-y-4">
-      <div class="flex justify-between text-sm">
-        <span>Min: {{ priceRange[0] | currency }}</span>
-        <span>Max: {{ priceRange[1] | currency }}</span>
-      </div>
-      <p-slider [(ngModel)]="priceRange" [range]="true" [min]="100" [max]="1000"></p-slider>
-    </div>
-  </p-panel>
 
-  <!-- Facilities Panel -->
-  <p-panel header="Facilities" [toggleable]="true">
-    <div class="grid grid-cols-3 gap-4">
-      <div
-        class="border border-gray-300 rounded-lg p-2 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200"
-        *ngFor="let facility of facilities"
-        (click)="toggleFacility(facility)"
-        [class.bg-green-100]="selectedFacilities.includes(facility.name)"
-      >
-        <i [class]="facility.icon" class="text-xl"></i>
-        <span class="text-xs mt-1">{{ facility.name }}</span>
-      </div>
-    </div>
-    <button class="text-sm text-blue-500 hover:underline mt-2">
-      Show more
-    </button>
-  </p-panel>
+        <div class="flex flex-col justify-center items-center gap-2 text-sm">
+          <div class="flex flex-col">
+            <span class="text-md">Start Time</span>
+            <p-calendar
+              placeholder="00:00"
+              [showIcon]="true"
+              class="border border-gray-300 px-2 p-1 rounded-lg font-bold"
+              inputId="calendar-timeonly"
+              [(ngModel)]="startTime"
+              [timeOnly]="true"/>
+          </div>
 
-  <!-- Add Discount Panel -->
-  <p-panel header="Add Discount" [toggleable]="true">
-    <p-dropdown
-      [options]="discountTypes"
-      [(ngModel)]="selectedDiscount"
-      class="w-full"
-      placeholder="Type discount"
-    ></p-dropdown>
-  </p-panel>
-</div>
+          <span
+            class="pi pi-arrow-right text-black p-2 bg-gray-200 rounded-full"></span>
+          <div class="flex flex-col">
+            <span class="text-md">End time</span>
+            <p-calendar
+              placeholder="00:00"
+              [showIcon]="true"
+              class="border border-gray-300 px-2 p-1 rounded-lg font-bold "
+              inputId="calendar-timeonly"
+              [(ngModel)]="endTime"
+              [timeOnly]="true"/>
+          </div>
+          <!--
+                    <input
+                      type="time"
+                      [(ngModel)]="startTime"
+                      class="border border-gray-300 rounded-lg p-2"
+                    />
+          -->
+        </div>
+      </p-accordionTab>
+
+
+      <p-accordionTab header="Price Range">
+        <div class="mb-4">
+          <div class="flex justify-between items-center mb-2">
+
+            <div class="text-sm flex flex-col items-center justify-center">
+
+              <label for="min-price" class="text-gray-500">Min:</label>
+              <input id="min-price"
+                     class="p-2 px-4 border w-8/12 rounded font-bold"
+                     [value]="priceRange[0]">
+            </div>
+
+            <span
+              class="pi pi-arrow-right text-black p-2 bg-gray-200 rounded-full"></span>
+
+            <div class="text-sm flex flex-col items-center justify-center ">
+              <label for="max-price" class="text-gray-500">Max:</label>
+              <input id="max-price" class="p-2 border w-8/12 rounded font-bold"
+                     [value]="priceRange[1]">
+            </div>
+
+          </div>
+
+          <!--
+                    <div class="flex items-center justify-between mt-4">
+                      <div class="h-10 w-4 bg-gray-300"></div>
+                      <div class="h-14 w-4 bg-green-500"></div>
+                      <div class="h-16 w-4 bg-green-500"></div>
+                      <div class="h-10 w-4 bg-green-500"></div>
+                      <div class="h-12 w-4 bg-gray-300"></div>
+                      <div class="h-10 w-4 bg-gray-300"></div>
+                      <div class="h-8 w-4 bg-gray-300"></div>
+                    </div>
+          -->
+
+
+          <div class="mt-4">
+            <p-slider
+
+              [(ngModel)]="priceRange"
+              [range]="true"
+              [min]="100"
+              [max]="1000"
+              [style]="{ width: '100%'}"
+            ></p-slider>
+          </div>
+
+          <!-- Histogram (Mocked for now) -->
+        </div>
+
+      </p-accordionTab>
+
+
+      <p-accordionTab header="Facilities">
+        <div class="grid grid-cols-3 gap-4">
+          <div
+            class="border border-gray-300 rounded-lg p-2 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200"
+            *ngFor="let facility of facilities"
+            (click)="toggleFacility(facility)"
+            [class.bg-green-100]="selectedFacilities.includes(facility.name)"
+          >
+            <i [class]="facility.icon" class="text-xl"></i>
+            <span class="text-xs mt-1">{{ facility.name }}</span>
+          </div>
+        </div>
+        <button class="text-sm text-blue-500 hover:underline mt-2">
+          Show more
+        </button>
+      </p-accordionTab>
+
+      <p-accordionTab header="Add Discount">
+        <p-dropdown
+          [options]="discountTypes"
+          [(ngModel)]="selectedDiscount"
+          class="w-full"
+          placeholder="Type discount"
+        ></p-dropdown>
+      </p-accordionTab>
+    </p-accordion>
+
+
+  </div>
+</p-panel>

@@ -5,6 +5,7 @@ import {
 } from "./guards/is-authenticated-guard.guard";
 import {roleGuard} from "./guards/role.guard";
 import {isNotAuthenticatedGuard} from "./guards/is-not-authenticated.guard";
+import {BookingComponent} from "./ui/booking/booking.component";
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
     path: 'search',
     loadChildren: () => import('./ui/bus-search/bus-search.module')
       .then(m => m.BusSearchModule)
+  },
+  {
+    path: 'booking',
+    component: BookingComponent
   },
   {
     path: '**',
