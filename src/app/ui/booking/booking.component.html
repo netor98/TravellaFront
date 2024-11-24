@@ -1,60 +1,143 @@
-<p>booking works!</p>
-<div class="container mx-auto mt-10 p-4 max-w-3xl bg-white shadow-md rounded-lg">
-  <h2 class="text-2xl font-bold mb-4">Book Your Trip</h2>
-  <form (ngSubmit)="submitBooking()">
-    <!-- Trip Details -->
-    <div class="mb-4">
-      <label class="block font-medium text-gray-700">Trip</label>
-      <p>{{ tripDetails?.route.origin.name }} to {{ tripDetails?.route.destination.name }}</p>
-    </div>
+<nav-bar></nav-bar>
+<div
+  class="container flex flex-wrap md:flex-nowrap justify-between mx-auto my-20 mt-32 p-9 max-w-4xl bg-white shadow-md rounded-lg">
 
-    <!-- Passenger Name -->
-    <div class="mb-4">
-      <label class="block font-medium text-gray-700">Passenger Name</label>
-      <input
-        type="text"
-        [(ngModel)]="passengerName"
-        name="passengerName"
-        required
-        class="w-full border rounded-lg px-3 py-2"
-        placeholder="Enter your full name"
-      />
-    </div>
 
-    <!-- Passenger Email -->
-    <div class="mb-4">
-      <label class="block font-medium text-gray-700">Email</label>
-      <input
-        type="email"
-        [(ngModel)]="email"
-        name="email"
-        required
-        class="w-full border rounded-lg px-3 py-2"
-        placeholder="Enter your email address"
-      />
-    </div>
+  <!-- Booking Form -->
+  <div class="w-full md:w-2/3 mb-8 md:mb-0 md:pr-6">
+    <h2 class="text-2xl font-bold mb-4">Book Your Trip</h2>
+    <form (ngSubmit)="submitBooking()" [formGroup]="form">
 
-    <!-- Passenger Phone -->
-    <div class="mb-4">
-      <label class="block font-medium text-gray-700">Phone</label>
-      <input
-        type="text"
-        [(ngModel)]="phone"
-        name="phone"
-        required
-        class="w-full border rounded-lg px-3 py-2"
-        placeholder="Enter your phone number"
-      />
-    </div>
 
-    <!-- Payment Button -->
-    <div class="mt-6">
-      <button
-        type="submit"
-        class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition w-full"
-      >
-        Proceed to Payment
-      </button>
-    </div>
-  </form>
+      <!-- Trip Details -->
+      <div class="mb-5">
+        <!--
+              {{ tripDetails | json }}
+        -->
+        <h1
+          class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-2xl lg:text-2xl">
+          <span class="underline underline-offset-8
+            decoration-2 decoration-gray-400">
+            {{ tripDetails?.route.origin.name }}
+          </span>
+          <span>to</span>
+          <span class="underline underline-offset-8
+            decoration-2 decoration-gray-400">
+            {{ tripDetails?.route.destination.name }}
+          </span>
+        </h1>
+        <span>{{ departureDate }}</span>
+      </div>
+
+
+      <div class="mb-4 relative group">
+        <label for="select"
+               class="block mb-2 text-sm font-medium text-gray-900">Select
+          passenger</label>
+
+        <div (click)="toggleMenu($event, menuPanel)" id="select"
+             class="w-full p-2 border bg-gray-100 text-gray-700">
+          {{ options[selectedOption].name }}
+        </div>
+
+        <p class="flex items-center mt-2 text-xs text-slate-500">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="w-5 h-5 mr-2"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+          Please login to gain access to your saved bookings and apply for
+          discounts.
+        </p>
+
+
+        <div class="relative">
+          <p-overlayPanel #menuPanel class="p-0">
+            <ul>
+              <li
+                *ngFor="let option of options; let i = index"
+                (click)="menuPanel.hide(); selectOption(option)"
+                class="flex items-center space-x-2 px-3 py-1
+                hover:bg-gray-200 rounded my-1 cursor-pointer"
+                [ngClass]=" i > 0  ? 'border-t-2' : '' "
+              >
+                <span class="text-gray-900">{{ option.name }}</span>
+              </li>
+            </ul>
+          </p-overlayPanel>
+
+        </div>
+
+      </div>
+
+
+      <!-- Passenger Name -->
+      <div class="mb-4">
+        <label for="fullName"
+               class="block mb-2 text-sm font-medium text-gray-900">Full
+          Name</label>
+        <p-inputGroup>
+          <p-inputGroupAddon>
+            <i class="pi pi-user"></i>
+          </p-inputGroupAddon>
+          <input pInputText placeholder="Username" formControlName="fullName"
+                 class="border w-full p-2" id="fullName"/>
+
+        </p-inputGroup>
+      </div>
+
+      <!-- Passenger Email -->
+      <div class="mb-4">
+        <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
+        <p-inputGroup>
+          <p-inputGroupAddon>
+            <i class="pi pi-envelope"></i>
+          </p-inputGroupAddon>
+          <input pInputText placeholder="Ej. admin@gmail.com"
+                 formControlName="email"
+                 class="border w-full p-2" id="email"/>
+        </p-inputGroup>
+      </div>
+
+      <!-- Passenger Phone -->
+      <!--
+            <div class="mb-4">
+              <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">Phone</label>
+              <p-inputGroup>
+                <p-inputGroupAddon>
+                  <i class="pi pi-phone"></i>
+                </p-inputGroupAddon>
+                <input pInputText placeholder="Ej. 66812305412" class="border w-full p-2" id="phone" />
+              </p-inputGroup>
+            </div>
+      -->
+
+      <!-- Payment Button -->
+      <div class="mt-6">
+        <button
+          [ngClass]="form.invalid ? 'bg-gray-400' : 'bg-black hover:bg-gray-800 transition '"
+          [disabled]="form.invalid"
+          type="submit"
+          class="text-white px-6 py-2 rounded-lg w-full"
+        >
+          Proceed to Payment
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Seat Map -->
+  <div class="w-full md:w-1/3">
+    <app-seat-map [tripId]="tripDetails?.id"
+                  (seatSelected)="onSeatSelection($event)"></app-seat-map>
+  </div>
+
 </div>
+<app-footer></app-footer>

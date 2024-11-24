@@ -35,7 +35,8 @@ const routes: Routes = [
   },
   {
     path: 'booking',
-    component: BookingComponent
+    loadChildren: () => import('./ui/booking/booking.module')
+      .then(m => m.BookingModule)
   },
   {
     path: '**',

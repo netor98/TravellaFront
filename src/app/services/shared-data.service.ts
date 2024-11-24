@@ -24,10 +24,10 @@ export class SharedDataService {
 
   setSearchParams(params: any): void {
     this.searchParamsSubject.next(params);
-    localStorage.setItem('searchParams', JSON.stringify(params)); // Save params in localStorage
+    localStorage.setItem('searchParams', JSON.stringify(params));
   }
 
-  private getSavedSearchParams(): any {
+  public getSavedSearchParams(): any {
     const savedParams = localStorage.getItem('searchParams');
     return savedParams ? JSON.parse(savedParams) : null;
   }

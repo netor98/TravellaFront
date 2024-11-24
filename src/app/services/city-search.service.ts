@@ -21,9 +21,6 @@ export class CitySearchService {
     this.searchQuerySubject.next(query);
   }
 
-  getSearchQuery(): Observable<string> {
-    return this.searchQuerySubject.asObservable();
-  }
 
   getFilteredCities(query: string): Observable<CitiesModel[]> {
     return this.getCities().pipe(

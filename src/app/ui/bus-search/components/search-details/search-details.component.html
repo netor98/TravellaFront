@@ -9,7 +9,9 @@
         <span
           class="bg-black text-white text-xs font-semibold px-2 py-1 rounded-full">Recommended</span>
         <span
-          class="bg-gray-400 text-white text-xs font-semibold px-2 py-1 rounded-full">30 seats left</span>
+          class="bg-gray-400 text-white text-xs font-semibold px-2 py-1 rounded-full">
+          {{ totalSeats - reservedSeats }} Seats left
+        </span>
       </div>
 
       <button
@@ -90,10 +92,7 @@
                 class="bg-black p-3 px-4 rounded text-white block">
 
       </p-button>
-      <!--
-            <p class="text-sm line-through text-gray-400">$450</p>
-            <p class="text-xs text-gray-500">Includes tax & fees</p>
-      -->
+
     </div>
   </div>
 </div>

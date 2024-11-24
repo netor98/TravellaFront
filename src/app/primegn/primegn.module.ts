@@ -50,7 +50,9 @@ import {PaginatorModule} from "primeng/paginator";
     SliderModule,
     SplitButtonModule,
     AccordionModule,
-    PaginatorModule
+    PaginatorModule,
+    InputGroupModule,
+    InputGroupAddonModule
   ]
 })
 export class PrimegnModule {

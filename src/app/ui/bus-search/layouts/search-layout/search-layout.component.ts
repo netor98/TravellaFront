@@ -19,7 +19,7 @@ export class SearchLayoutComponent implements OnInit {
   loading: boolean = true;
   error: string | null = null;
   first: number | undefined = 0;
-  rows: number | undefined = 3;
+  rows: number | undefined = 4;
   paginatedTrips: any[] = []
 
 
@@ -89,6 +89,7 @@ export class SearchLayoutComponent implements OnInit {
         .subscribe({
           next: (data) => {
             this.trips = data;
+            console.log(this.trips)
             this.updatePaginatedTrips();
             this.loading = false;
           },

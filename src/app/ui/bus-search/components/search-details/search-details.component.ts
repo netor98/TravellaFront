@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {BusService} from "../../../../services/bus.service";
 
 @Component({
   selector: 'app-search-details',
@@ -19,14 +20,19 @@ export class SearchDetailsComponent implements OnInit {
   @Input() tripType: string = '';
   @Input() trip: any;
   @Output() book = new EventEmitter<any>();
+  @Input() tripId!: string;
+  availableSeats: number[] = [];
+  totalSeats: number = 0;
+  reservedSeats: number = 0;
+  public items: any[] = []
 
 
-  public items: any[] = [
-    {label: 'Origin City', value: this.originCity},
-  ]
-
+  constructor(private busService: BusService) {
+  }
 
   ngOnInit() {
+
+    this.fetchAvailableSeats();
     this.items = [
       {
         label: 'Save',
@@ -48,5 +54,18 @@ export class SearchDetailsComponent implements OnInit {
 
   bookTrip(trip: any) {
     this.book.emit(trip);
+  }
+
+  fetchAvailableSeats(): void {
+    this.busService.getAvailableSeats(this.tripId).subscribe({
+      next: (data) => {
+        this.availableSeats = data.availableSeats;
+        this.totalSeats = data.totalCapacity;
+        this.reservedSeats = data.reservedCount;
+      },
+      error: (err) => {
+        console.error('Error fetching available seats:', err);
+      },
+    });
   }
 }

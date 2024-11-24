@@ -96,7 +96,7 @@ export class AuthService {
       this._authStatus.set(AuthStatus.authenticated);
       this._currentUser.set(JSON.parse(savedUser!));
     } else {
-      console.log("asd")
+      console.log(savedUser)
       this._authStatus.set(AuthStatus.notAuthenticated);
     }
   }

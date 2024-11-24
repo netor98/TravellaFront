@@ -14,14 +14,14 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {
   TokenInterceptorServiceService
 } from "./services/token-interceptor-service.service";
-import { BookingComponent } from './ui/booking/booking.component';
+import {BookingComponent} from './ui/booking/booking.component';
 import {FormsModule} from "@angular/forms";
+import {BookingModule} from "./ui/booking/booking.module";
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    BookingComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,7 +30,8 @@ import {FormsModule} from "@angular/forms";
     LandingPageModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BookingModule
   ],
   providers: [
     provideHttpClient(),

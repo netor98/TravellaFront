@@ -1,0 +1,35 @@
+<div class="seat-map flex flex-col items-center space-y-4">
+
+  <h2 class="text-2xl font-bold mb-4">Select your seat</h2>
+  <!-- Seat Map Grid -->
+  <div class="grid grid-cols-4 gap-4 max-h-96 overflow-y-scroll">
+    <div
+      *ngFor="let seat of seats"
+      [ngClass]="{
+        'bg-green-100 hover:bg-green-200 cursor-pointer': seat.status === 'available',
+        'bg-red-600 cursor-not-allowed': seat.status === 'reserved',
+        'bg-green-400 text-white': seat.status === 'selected'
+      }"
+      class="w-12 h-12 flex items-center justify-center
+       border rounded-full shadow-md transition-colors"
+      (click)="selectSeat(seat)"
+    >
+
+      <img src="/assets/icons/seat.svg">
+    </div>
+  </div>
+
+  <!-- Selected Seat Info -->
+  <div class="text-center">
+    <p *ngIf="selectedSeat" class="text-lg">
+      Selected Seat: <strong>{{ selectedSeat.number }}</strong>
+    </p>
+    <button
+      *ngIf="selectedSeat"
+      (click)="confirmSeat()"
+      class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition"
+    >
+      Confirm Seat
+    </button>
+  </div>
+</div>

@@ -1,4 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output
+} from '@angular/core';
 import {BusService} from "../../../../services/bus.service";
 import {CitiesModel} from "../../../../domain/models/cities.model";
 import {CitySearchService} from "../../../../services/city-search.service";
@@ -36,6 +43,7 @@ export class SearchTripComponent implements OnInit {
   from: string = '';
   to: string = '';
   trips: TripsResponse[] = [];
+  scrolled: boolean = false;
 
   constructor(
     private citySearchService: CitySearchService,
@@ -46,7 +54,27 @@ export class SearchTripComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.isSearchPage)
+
+    const savedState = localStorage.getItem('searchTripState');
+    if (savedState) {
+
+      const state = JSON.parse(savedState);
+      this.selectedFrom = state.selectedFrom || null;
+      this.selectedTo = state.selectedTo || null;
+      this.departureDate = state.departureDate ? new Date(state.departureDate) : new Date();
+      this.selectedPassenger = state.selectedPassenger || 1;
+    }
+    this.fetchCities();
+  }
+
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const scrollY = window.scrollY || document.documentElement.scrollTop;
+    this.scrolled = scrollY > 50;
+  }
+
+  fetchCities() {
     this.busService.getCitiesList().subscribe((cities: CitiesResponse[]) => {
       this.cities = cities.map((city: CitiesResponse) => ({
         name: city.name,
@@ -68,17 +96,11 @@ export class SearchTripComponent implements OnInit {
     // Add more options if needed
   ];
 
-  filters = [
-    {name: 'Economy Bus'},
-    {name: 'Executive Bus'},
-    {name: 'Luxury Bus'},
-  ];
 
   selectedFrom: CitiesModel | null = null;
   selectedTo: CitiesModel | null = null;
   departureDate: Date | null = new Date();
   selectedPassenger = 1;
-  selectedFilter: string | null = null;
 
 
   public changeCities(): void {
@@ -131,7 +153,7 @@ export class SearchTripComponent implements OnInit {
     const sortBy = 'departureTime';
     const isAscending = true;
     const pageNumber = 1;
-    const pageSize = 10;
+    const pageSize = 100;
 
 
     if ((origin && destination) && origin?.name === destination?.name) {
@@ -146,8 +168,8 @@ export class SearchTripComponent implements OnInit {
       departureTime: departureDate || null,
       sortBy: 'departureTime',
       isAscending: true,
-      pageNumber: 1,
-      pageSize: 10,
+      pageNumber,
+      pageSize
     };
     this.router.navigate(['/search'], {queryParams: searchParams});
 
@@ -165,6 +187,14 @@ export class SearchTripComponent implements OnInit {
           this.trips = trips;
           this.sharedDataService.setTrips(trips);
           this.sharedDataService.setSearchParams(searchParams);
+          const state = {
+            selectedFrom: this.selectedFrom,
+            selectedTo: this.selectedTo,
+            departureDate: this.departureDate?.toISOString(),
+            selectedPassenger: this.selectedPassenger,
+          };
+
+          localStorage.setItem('searchTripState', JSON.stringify(state));
         },
         (error) => {
           console.error('Error fetching trips:', error);
@@ -195,4 +225,5 @@ export class SearchTripComponent implements OnInit {
       title: this.errorMessage,
     });
   }
+
 }

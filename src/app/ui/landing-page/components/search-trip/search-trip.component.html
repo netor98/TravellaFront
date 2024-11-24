@@ -1,23 +1,27 @@
-<div [ngClass]="{
-    'shadow-md rounded-lg mt-24 p-4 flex flex-wrap items-center gap-4 sticky ':
+<div tabindex="0"
+     [ngClass]="{
+    'shadow-md rounded-lg  flex flex-wrap items-center gap-2 z-50':
       isSearchPage,
-    'rounded-lg container shadow-md p-6 space-y-4 my-4':
-      !isSearchPage
+    'rounded-lg container shadow-md p-2 space-y-4 my-4':
+      !isSearchPage,
+    'opacity-10 ': scrolled && isSearchPage,
+    'opacity-100': !scrolled && isSearchPage
   }"
-     class="md:mt-10 mx-auto w-full justify-start
-     container px-4 md:p-0 flex flex-col items-center">
+     class="md:mt-10 mx-auto w-full justify-start transition-opacity duration-300
+     px-4 md:p-0 flex flex-col items-center">
 
-  <h2 *ngIf="!isSearchPage" class="text-white text-5xl font-medium text-left">Navigate Roads with Comfort</h2>
+  <h2 *ngIf="!isSearchPage" class="text-white text-5xl font-medium text-left">
+    Navigate Roads with Comfort</h2>
 
   <div
-    class="bg-white rounded-lg container
-      shadow-md p-6 space-y-4 my-4 mt-10">
+    class="bg-white rounded-lg w-full
+      shadow-md p-3 space-y-4 my-4 mt-10">
 
     <h2 *ngIf="!isSearchPage" class="text-2xl text-left">Find your bus &
       travel</h2>
 
     <div
-      class="grid grid-cols-1 sm:grid-cols-2 lg:space-x-2
+      class="grid grid-cols-1 lg:space-x-2
        gap-1 items-center my-auto"
       [ngClass]="{
       'lg:grid-cols-10': isSearchPage,
@@ -65,6 +69,7 @@
       </div>
 
       <div class="justify-center flex items-center
+      mx-auto
       my-2 lg:my-0">
         <button
           (click)="changeCities()"
@@ -158,17 +163,15 @@
       </div>
 
 
-
       <div class="flex justify-between flex-col items-center">
 
         <label class="mb-2 text-left font-medium">.</label>
         <p-button label="Search" icon="pi pi-search"
                   (click)="searchTrips()"
-                  class="px-6 py-2 bg-black text-white
+                  class="px-6 py-2 bg-black text-white w-full cursor-pointer
                 rounded-lg hover:bg-gray-800"></p-button>
       </div>
     </div>
-
 
 
   </div>

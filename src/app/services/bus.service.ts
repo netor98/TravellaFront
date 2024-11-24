@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpParams} from "@angular/common/http";
 import {environment} from "../../environments/environment.development";
-import {Observable} from "rxjs";
+import {catchError, Observable, retry, throwError} from "rxjs";
 import {TripsResponse} from "../domain/models/TripsRespose";
 import {CitiesResponse} from "../domain/models/cities-response.interface";
 import {CitiesModel} from "../domain/models/cities.model";
@@ -18,7 +18,15 @@ export class BusService {
   }
 
   getCitiesList(): Observable<CitiesResponse[]> {
-    return this.http.get<CitiesResponse[]>(`${this.baseUrl}/Cities`);
+    return this.http.get<CitiesResponse[]>(`${this.baseUrl}/Cities`).pipe(
+      retry({
+        count: 6,
+        delay: 3000,
+      }),
+      catchError((error: HttpErrorResponse) => {
+        return throwError(error);
+      })
+    )
   }
 
   getFilteredTrips(
@@ -28,7 +36,7 @@ export class BusService {
     sortBy?: string,
     isAscending: boolean = true,
     pageNumber: number = 1,
-    pageSize: number = 10
+    pageSize: number = 100
   ): Observable<TripsResponse[]> {
 
     let params = new HttpParams();
@@ -46,10 +54,14 @@ export class BusService {
     if (sortBy) {
       params = params.set('sortBy', sortBy);
     }
+
     params = params.set('isAscending', isAscending.toString());
     params = params.set('pageNumber', pageNumber.toString());
     params = params.set('pageSize', pageSize.toString());
-
     return this.http.get<TripsResponse[]>(`${this.baseUrl}/Trips`, {params});
+  }
+
+  public getAvailableSeats(tripId: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/trips/${tripId}/available-seats`);
   }
 }

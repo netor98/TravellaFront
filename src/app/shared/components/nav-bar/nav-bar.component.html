@@ -1,7 +1,7 @@
 <nav class="absolute bg-black top-0 left-0 w-full z-10"
      [ngClass]="{
      'bg-white': isActiveRoute('/auth'),
-     'bg-black': isActiveRoute('/search')
+     'bg-black': isActiveRoute('/search') || isActiveRoute('/booking')
      }"
 >
   <div class="container mx-auto flex items-center justify-between py-1">
@@ -106,13 +106,20 @@
           </div>
         </ng-template>
       </div>
+
+    </div>
+
+
+    <div class="">
+
+
     </div>
 
     <!-- Log In and Sign Up -->
     <div class="hidden lg:flex items-center space-x-6 md:mr-5" *ngIf="!isAuth">
       <!-- Language Selector -->
-      <change-language></change-language>
 
+      <change-language></change-language>
       <a routerLink="/auth/login" [ngClass]="isActiveRoute('/auth')
                 ? 'text-black' : 'text-white'"
          class="hover:text-gray-300">Log In</a>
@@ -126,20 +133,25 @@
     </div>
 
 
-    <div *ngIf="isAuth" class="text-black bg-white rounded-full">
-      <ng-container *ngIf="!loading; else loadingSpinner">
-        <p-button icon="pi pi-user" [rounded]="true" [text]="true"
-                  [raised]="true" severity="info"
-                  (click)="onLogOut()"></p-button>
-      </ng-container>
+    <div *ngIf="isAuth" class="flex gap-4 items-center">
+      <change-language></change-language>
 
-      <ng-template #loadingSpinner>
-        <div
-          class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div class="text-black bg-white rounded-full">
+
+        <ng-container *ngIf="!loading; else loadingSpinner">
+          <p-button icon="pi pi-user" [rounded]="true" [text]="true"
+                    [raised]="true" severity="info"
+                    (click)="onLogOut()"></p-button>
+        </ng-container>
+
+        <ng-template #loadingSpinner>
           <div
-            class="animate-spin w-12 h-12 border-4 border-white border-t-transparent rounded-full"></div>
-        </div>
-      </ng-template>
+            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div
+              class="animate-spin w-12 h-12 border-4 border-white border-t-transparent rounded-full"></div>
+          </div>
+        </ng-template>
+      </div>
     </div>
   </div>
 

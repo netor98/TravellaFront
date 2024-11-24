@@ -28,6 +28,7 @@
         *ngFor="let trip of paginatedTrips"
         [trip]="trip"
         (book)="handleBooking($event)"
+        [tripId]="trip.id"
         [originCity]="trip.route.origin.name"
         [codeOrigin]="trip.route.origin.code"
         [stateOrigin]="trip.route.origin.state"
