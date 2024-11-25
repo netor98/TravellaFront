@@ -1,3 +1,5 @@
+import {RouteModel} from "./Route";
+
 export interface TripDetails {
   id: string;
   vehicleId: string;

@@ -7,6 +7,7 @@ import {CitiesModel} from "../../../../domain/models/cities.model";
 import {PageEvent} from "../../../../domain/models/paginator.Interface"
 import {PaginatorState} from "primeng/paginator";
 import {BookingService} from "../../../../services/booking-service.service";
+import {FiltersTripsService} from "../../../../services/filters-trips.service";
 
 
 @Component({
@@ -16,10 +17,11 @@ import {BookingService} from "../../../../services/booking-service.service";
 })
 export class SearchLayoutComponent implements OnInit {
   trips: TripsResponse[] = [];
+  filteredTrips: TripsResponse[] = [];
   loading: boolean = true;
   error: string | null = null;
   first: number | undefined = 0;
-  rows: number | undefined = 4;
+  rows: number | undefined = 10;
   paginatedTrips: any[] = []
 
 
@@ -27,6 +29,7 @@ export class SearchLayoutComponent implements OnInit {
     private busService: BusService,
     private route: ActivatedRoute,
     private router: Router,
+    private filterService: FiltersTripsService,
     private bookingService: BookingService
   ) {
   }
@@ -50,6 +53,11 @@ export class SearchLayoutComponent implements OnInit {
         pageNumber,
         pageSize,
       });
+    });
+
+
+    this.filterService.filters$.subscribe((filters) => {
+      this.applyFilters(filters);
     });
   }
 
@@ -89,7 +97,7 @@ export class SearchLayoutComponent implements OnInit {
         .subscribe({
           next: (data) => {
             this.trips = data;
-            console.log(this.trips)
+            this.filteredTrips = this.trips;
             this.updatePaginatedTrips();
             this.loading = false;
           },
@@ -108,7 +116,7 @@ export class SearchLayoutComponent implements OnInit {
   updatePaginatedTrips(): void {
     const start = this.first;
     const end = this.first! + this.rows!;
-    this.paginatedTrips = this.trips.slice(start, end);
+    this.paginatedTrips = this.filteredTrips.slice(start, end);
   }
 
   onPageChange(event: PaginatorState) {
@@ -124,5 +132,41 @@ export class SearchLayoutComponent implements OnInit {
   public handleBooking(trip: any) {
     this.bookingService.setTrip(trip);
     this.router.navigate(['/booking']);
+  }
+
+
+  //TODO: APPLY FOR THE MINUTES AS WELL
+  public applyFilters(filters: any): void {
+    console.log(this.trips)
+    this.filteredTrips = this.trips.filter((trip) => {
+
+      const tripDepartureTime = new Date(trip.departureTime);
+      const tripArrivalTime = new Date(trip.arrivalTime);
+      const tripDepartureHour = tripDepartureTime.getHours();
+      const tripArrivalHour = tripArrivalTime.getHours();
+
+      const startHour = filters.timeRange[0] ? new Date(filters.timeRange[0]).getHours() : null;
+      const endHour = filters.timeRange[1] ? new Date(filters.timeRange[1]).getHours() : null;
+
+
+      const matchesTime =
+        (!startHour || tripDepartureHour >= startHour) &&
+        (!endHour || tripArrivalHour <= endHour);
+
+      console.log({
+        tripDepartureHour,
+        tripArrivalHour,
+        startHour,
+        endHour,
+        matchesTime
+      })
+      const matchesPrice =
+        trip.price >= filters.priceRange[0] && trip.price <= filters.priceRange[1];
+
+      console.log(matchesPrice && matchesTime)
+      return matchesPrice && matchesTime;
+    });
+    this.updatePaginatedTrips();
+    console.log('Filtered Trips:', this.filteredTrips);
   }
 }

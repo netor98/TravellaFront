@@ -93,7 +93,7 @@
       </p-accordionTab>
 
 
-      <p-accordionTab header="Facilities">
+      <!--<p-accordionTab header="Facilities">
         <div class="grid grid-cols-3 gap-4">
           <div
             class="border border-gray-300 rounded-lg p-2 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200"
@@ -108,7 +108,7 @@
         <button class="text-sm text-blue-500 hover:underline mt-2">
           Show more
         </button>
-      </p-accordionTab>
+      </p-accordionTab>-->
 
       <p-accordionTab header="Add Discount">
         <p-dropdown
@@ -121,5 +121,13 @@
     </p-accordion>
 
 
+    <div class="flex justify-end">
+
+      <p-button label="Apply" icon="pi pi-filter" (onClick)="updateFilters()"
+                class="bg-green-700 text-white p-2 rounded my-5">
+
+      </p-button>
+    </div>
   </div>
+
 </p-panel>

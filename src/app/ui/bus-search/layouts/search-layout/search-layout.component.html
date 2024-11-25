@@ -1,7 +1,4 @@
 <nav-bar></nav-bar>
-<!--
-<app-mini-search></app-mini-search>
--->
 <search-trip [isSearchPage]="true"></search-trip>
 <div
   class="container bg-gray-200 min-h-screen mx-auto px-4 py-10 flex flex-col lg:flex-row gap-6">
@@ -44,7 +41,7 @@
         [first]="first ? first : 0"
         [rows]="rows ? rows : 0"
         (onPageChange)="onPageChange($event)"
-        [totalRecords]="trips.length"
+        [totalRecords]="filteredTrips.length"
         [showCurrentPageReport]="true"
         [showPageLinks]="false"
         [showJumpToPageDropdown]="false"

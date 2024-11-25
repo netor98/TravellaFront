@@ -38,9 +38,16 @@ const routes: Routes = [
     loadChildren: () => import('./ui/booking/booking.module')
       .then(m => m.BookingModule)
   },
+
+  {
+    path: 'my-bookings',
+    loadChildren: () => import('./ui/my-bookings/my-bookings.module')
+      .then(m => m.MyBookingsModule),
+    canActivate: [isAuthenticatedGuard]
+  },
   {
     path: '**',
-    redirectTo: 'auth'
+    redirectTo: ''
   }
 ];
 

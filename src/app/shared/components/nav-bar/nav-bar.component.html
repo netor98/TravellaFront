@@ -1,7 +1,7 @@
 <nav class="absolute bg-black top-0 left-0 w-full z-10"
      [ngClass]="{
      'bg-white': isActiveRoute('/auth'),
-     'bg-black': isActiveRoute('/search') || isActiveRoute('/booking')
+     'bg-black': isActiveRoute('/search') || isActiveRoute('/booking') || isActiveRoute('/my-bookings')
      }"
 >
   <div class="container mx-auto flex items-center justify-between py-1">
@@ -25,13 +25,22 @@
 
 
       <!-- Nav Links -->
-      <div class="hidden lg:flex space-x-4"
+      <div *ngIf="isAuth" class="hidden lg:flex space-x-4"
            [ngClass]="isActiveRoute('/auth')
                       ? 'text-black' : 'text-white'"
       >
-        <a href="#" class="hover:text-gray-300">Hotel</a>
-        <a href="#" class="hover:text-gray-300">Travel</a>
-        <a href="#" class="hover:text-gray-300">Best Travels</a>
+        <a routerLink="/my-bookings" class="hover:text-gray-300">My bookings</a>
+        <a href="#" class="hover:text-gray-300">Complaints</a>
+        <a href="#" class="hover:text-gray-300">Saved Routes</a>
+
+      </div>
+
+      <div *ngIf="!isAuth" class="hidden lg:flex space-x-4"
+           [ngClass]="isActiveRoute('/auth')
+                      ? 'text-black' : 'text-white'">
+
+        <a href="#" class="hover:text-gray-300">Top routes</a>
+        <a href="#" class="hover:text-gray-300">Saved Routes</a>
       </div>
     </div>
 

@@ -199,4 +199,8 @@ export class AuthService {
       }
     });
   }
+
+  public hideLoadingSpinner(): void {
+    Swal.close();
+  }
 }

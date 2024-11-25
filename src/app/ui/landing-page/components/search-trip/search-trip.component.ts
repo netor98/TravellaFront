@@ -56,6 +56,7 @@ export class SearchTripComponent implements OnInit {
   ngOnInit() {
 
     const savedState = localStorage.getItem('searchTripState');
+    console.log(savedState)
     if (savedState) {
 
       const state = JSON.parse(savedState);
@@ -153,7 +154,7 @@ export class SearchTripComponent implements OnInit {
     const sortBy = 'departureTime';
     const isAscending = true;
     const pageNumber = 1;
-    const pageSize = 100;
+    const pageSize = 500;
 
 
     if ((origin && destination) && origin?.name === destination?.name) {

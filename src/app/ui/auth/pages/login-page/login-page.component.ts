@@ -42,7 +42,10 @@ export class LoginPageComponent {
     this.authService.showLoadingSpinner('Logging in...');
     this.authService.login(email!, password!)
       .subscribe({
-        next: () => this.router.navigate(['/dashboard']),
+        next: () => {
+          this.router.navigate(['/']);
+          this.authService.hideLoadingSpinner();
+        },
         error: (err) => {
           this.form.get('password')?.reset();
           const errorMessage = err.error;

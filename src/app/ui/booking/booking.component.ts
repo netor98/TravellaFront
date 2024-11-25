@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {BookingService} from "../../services/booking-service.service";
 import {AuthService} from "../../services/auth.service";
@@ -10,6 +10,7 @@ import {
   HarmCategory
 } from "@google/generative-ai";
 import {environment} from "../../../environments/environment.development";
+import Swal from "sweetalert2";
 
 
 @Component({
@@ -24,6 +25,7 @@ export class BookingComponent implements OnInit {
   selectedOption: number = 0;
   isCreatingNewUser: boolean = false;
   departureDate: string | undefined;
+  titleText = 'Thank you for your purchase!';
   options: any[] = [
     {
       id: 0,
@@ -44,6 +46,7 @@ export class BookingComponent implements OnInit {
     private authService: AuthService
   ) {
   }
+
 
   ngOnInit(): void {
     this.tripDetails = this.bookingService.getTrip();
@@ -79,7 +82,23 @@ export class BookingComponent implements OnInit {
 
   }
 
+  public typeText(element: HTMLElement | null, text: string, speed: number): void {
+    if (!element) return;
+
+    let index = 0;
+    const interval = setInterval(() => {
+      if (index < text.length) {
+        element.innerText += text[index];
+        index++;
+      } else {
+        clearInterval(interval); // Stop typing when complete
+      }
+    }, speed);
+  }
+
+
   public async submitBooking() {
+    this.authService.showLoadingSpinner('Booking your trip...');
     const genAI = new GoogleGenerativeAI(environment.API_KEY);
     const generationConfig = {
       safetySettings: [
@@ -99,13 +118,31 @@ export class BookingComponent implements OnInit {
       ...generationConfig,
     });
 
-    const prompt = `I'll visit ${this.tripDetails.route.destination.name} in the next days, can you tell me places to visit?`;
+    const prompt = `I'll visit ${this.tripDetails.route.destination.name}
+    in the next days, can you tell me places to visit?. only plain text, and no more than 5 places but with their description. no more than 80 words `;
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    console.log(response.text());
+    const responseText = response.text();
+    const textPlain = this.removeAsteriks(responseText);
+    const formattedResponse = this.formatResponse(textPlain);
+    console.log(formattedResponse);
+    this.authService.hideLoadingSpinner();
+
+    Swal.fire({
+      html: formattedResponse,
+      icon: 'success',
+      confirmButtonText: 'Close',
+      customClass: {
+        popup: 'bg-white rounded-lg shadow-lg',
+        title: 'text-lg font-semibold text-gray-700 mb-4',
+        htmlContainer: 'text-gray-600 text-sm',
+      }
+    });
+
+    const typingTextElement = document.getElementById('typing-text');
+    this.typeText(typingTextElement, this.titleText, 100);
 
     const {email, fullName, seats} = this.form.value;
-    alert(`Booking submitted for ${fullName} with email ${email} for ${seats} seats`);
 
   }
 
@@ -116,6 +153,40 @@ export class BookingComponent implements OnInit {
   public toggleMenu(event: Event, menuPanel: OverlayPanel): void {
     menuPanel.toggle(event);
   }
+
+  public formatResponse = (response: string): string => {
+    const items = response.split('\n');
+    return `
+        <div class="p-4">
+           <h2 class="text-7xl font-bold text-gray-800 flex">
+            <span id="typing-title" class="whitespace-pre text-7xl"></span>
+            <span class="border-r-2 border-gray-800 animate-blink"></span>
+        </h2>
+
+
+        <!-- Typing Text with Larger Font -->
+        <div class="text-gray-800 text-3xl mt-4">
+            <span id="typing-text" class="whitespace-pre"></span>
+            <span class="border-r-2 border-gray-800 animate-blink"></span>
+        </div>
+
+        <!-- Subheading -->
+        <p class="text-gray-600 text-lg font-semibold mt-4">Recommended Places:</p>
+    </div>
+
+    <ul class="list-disc list-inside text-left space-y-2">
+      ${items
+      .filter(item => item.trim())
+      .map(item => `<li>${item.trim()}</li>`)
+      .join('')}
+    </ul>
+  `;
+  };
+
+  public removeAsteriks = (text: string): string => {
+    return text.replace(/\*\*/g, '').replace(/\*/g, '');
+  }
+
 
   public selectOption(option: any): void {
     console.log(option)
