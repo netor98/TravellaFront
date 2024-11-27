@@ -3,9 +3,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {
   isAuthenticatedGuard,
 } from "./guards/is-authenticated-guard.guard";
-import {roleGuard} from "./guards/role.guard";
 import {isNotAuthenticatedGuard} from "./guards/is-not-authenticated.guard";
-import {BookingComponent} from "./ui/booking/booking.component";
+
 
 const routes: Routes = [
   {
@@ -25,8 +24,8 @@ const routes: Routes = [
     */
     path: 'dashboard',
     canActivate: [isAuthenticatedGuard],
-    loadChildren: () => import('./ui/dashboard/dashboard.module')
-      .then(m => m.DashboardModule)
+    loadChildren: () => import('./ui/admin/admin.module')
+      .then(m => m.AdminModule)
   },
   {
     path: 'search',
@@ -44,6 +43,17 @@ const routes: Routes = [
     loadChildren: () => import('./ui/my-bookings/my-bookings.module')
       .then(m => m.MyBookingsModule),
     canActivate: [isAuthenticatedGuard]
+  },
+  {
+    path: 'complaints',
+    loadChildren: () => import('./ui/my-complaints/my-complaints.module')
+      .then(m => m.MyComplaintsModule),
+    canActivate: [isAuthenticatedGuard]
+  },
+  {
+    path: 'dashboard',
+    loadChildren: () => import('./ui/admin/admin.module')
+      .then(m => m.AdminModule),
   },
   {
     path: '**',

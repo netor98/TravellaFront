@@ -3,6 +3,7 @@ import {AuthService} from "../../../../services/auth.service";
 import {TicketsService} from "../../../../services/tickets.service";
 import {Ticket} from "../../../../domain/models/Ticket";
 import Swal from "sweetalert2";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-my-bookings',
@@ -20,7 +21,11 @@ export class MyBookingsComponent {
   @ViewChild('ticketInfo', {static: false}) ticketInfoRef!: ElementRef;
   items: any[] = []
 
-  constructor(private ticketsService: TicketsService, private authService: AuthService) {
+  constructor(
+    private ticketsService: TicketsService,
+    private authService: AuthService,
+    private router: Router
+    ) {
   }
 
   ngOnInit(): void {
@@ -55,7 +60,11 @@ export class MyBookingsComponent {
       },
       {
         label: 'Make complaint',
-        icon: 'pi pi-flag-fill'
+        icon: 'pi pi-flag-fill',
+        command: () => {
+          const trip = JSON.parse(this.ticketInfoRef.nativeElement.value);
+          this.navigateToComplaint(trip.id);
+        }
       },
       {
         separator: true
@@ -92,4 +101,12 @@ export class MyBookingsComponent {
     this.rows = event.rows;
     this.updatePaginatedTickets();
   }
+
+
+  public navigateToComplaint(ticketID: string): void {
+    console.log(ticketID)
+    this.router.navigate(['/complaints', ticketID]);
+  }
+
+
 }

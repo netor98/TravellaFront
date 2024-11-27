@@ -25,6 +25,7 @@ export class BookingComponent implements OnInit {
   selectedOption: number = 0;
   isCreatingNewUser: boolean = false;
   departureDate: string | undefined;
+  isLoading: boolean = false;
   titleText = 'Thank you for your purchase!';
   options: any[] = [
     {
@@ -49,6 +50,7 @@ export class BookingComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.tripDetails = this.bookingService.getTrip();
 
     this.selectedUser = this.authService.currentUser()();
@@ -80,6 +82,10 @@ export class BookingComponent implements OnInit {
       ]
     }
 
+    setTimeout(() => {
+
+      this.isLoading = false;
+    }, 1500)
   }
 
   public typeText(element: HTMLElement | null, text: string, speed: number): void {
@@ -99,6 +105,9 @@ export class BookingComponent implements OnInit {
 
   public async submitBooking() {
     this.authService.showLoadingSpinner('Booking your trip...');
+
+   /** */
+
     const genAI = new GoogleGenerativeAI(environment.API_KEY);
     const generationConfig = {
       safetySettings: [
@@ -110,21 +119,26 @@ export class BookingComponent implements OnInit {
       temperature: 0.9,
       top_p: 1,
       top_k: 32,
-      maxOutputTokens: 100, // limit output
+      maxOutputTokens: 100,
     };
 
     const model = genAI.getGenerativeModel({
-      model: 'gemini-pro', // or 'gemini-pro-vision'
+      model: 'gemini-pro',
       ...generationConfig,
     });
 
     const prompt = `I'll visit ${this.tripDetails.route.destination.name}
     in the next days, can you tell me places to visit?. only plain text, and no more than 5 places but with their description. no more than 80 words `;
     const result = await model.generateContent(prompt);
+
     const response = await result.response;
+
     const responseText = response.text();
+
     const textPlain = this.removeAsteriks(responseText);
+
     const formattedResponse = this.formatResponse(textPlain);
+
     console.log(formattedResponse);
     this.authService.hideLoadingSpinner();
 
@@ -164,13 +178,11 @@ export class BookingComponent implements OnInit {
         </h2>
 
 
-        <!-- Typing Text with Larger Font -->
         <div class="text-gray-800 text-3xl mt-4">
             <span id="typing-text" class="whitespace-pre"></span>
             <span class="border-r-2 border-gray-800 animate-blink"></span>
         </div>
 
-        <!-- Subheading -->
         <p class="text-gray-600 text-lg font-semibold mt-4">Recommended Places:</p>
     </div>
 
@@ -198,5 +210,6 @@ export class BookingComponent implements OnInit {
       this.selectedOption = 0;
     }
   }
+
 
 }

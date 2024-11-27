@@ -10,13 +10,17 @@ import {
 } from "@angular/common/http";
 import {SharedModule} from "./shared/shared.module";
 import {LandingPageModule} from "./ui/landing-page/landing-page.module";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {
+  BrowserAnimationsModule,
+  provideAnimations
+} from "@angular/platform-browser/animations";
 import {
   TokenInterceptorServiceService
 } from "./services/token-interceptor-service.service";
 import {BookingComponent} from './ui/booking/booking.component';
 import {FormsModule} from "@angular/forms";
 import {BookingModule} from "./ui/booking/booking.module";
+import {AppLayoutModule} from "./layout/app.layout.module";
 
 
 @NgModule({
@@ -31,7 +35,8 @@ import {BookingModule} from "./ui/booking/booking.module";
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
-    BookingModule
+    BookingModule,
+    AppLayoutModule,
   ],
   providers: [
     provideHttpClient(),
@@ -39,7 +44,8 @@ import {BookingModule} from "./ui/booking/booking.module";
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorServiceService,
       multi: true
-    }
+    },
+    provideAnimations()
   ],
   bootstrap: [AppComponent]
 })

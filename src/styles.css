@@ -1,12 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "primeng/resources/themes/lara-light-blue/theme.css";
-@import "primeng/resources/primeng.css";
+/*
+@import "src/app/assets/layout/styles/layout/layout.css";
+*/
 
+@import "assets/layout/styles/layout/layout.css";
+@import "primeng/resources/primeng.css";
+@import "primeflex/primeflex.min.css";
 @import "primeicons/primeicons.css";
 
-
-@layer tailwind-base, primeng, tailwind-utilities;
 
 @tailwind base;
 @tailwind components;
@@ -23,3 +25,14 @@
   color: white;
 }
 
+:root {
+  font-size: 15px; /* Ajusta el tamaño global */
+}
+
+body {
+  font-size: 1.1rem; /* Aumenta el tamaño del texto general */
+}
+
+.dashboard-class h1 {
+  font-size: 2rem;
+}

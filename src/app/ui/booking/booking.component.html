@@ -3,14 +3,32 @@
 <div
   class="container flex flex-wrap md:flex-nowrap justify-between mx-auto my-20 mt-32 p-9 max-w-4xl bg-white shadow-md rounded-lg">
 
+  <div *ngIf="isLoading" class="w-full md:w-2/3 mb-8 md:mb-0 md:pr-6">
+    <div class="animate-pulse space-y-4">
+      <!-- Placeholder for Title -->
+      <div class="h-8 bg-gray-300 rounded w-3/4 mb-4"></div>
+      <!-- Placeholder for Origin to Destination -->
+      <div class="h-6 bg-gray-300 rounded w-1/2 mb-4"></div>
+      <!-- Placeholder for Form Fields -->
+      <div class="h-10 bg-gray-300 rounded w-full mb-4"></div>
+      <div class="h-10 bg-gray-300 rounded w-full mb-4"></div>
+      <div class="h-10 bg-gray-300 rounded w-full mb-4"></div>
+      <!-- Placeholder for Button -->
+      <div class="h-12 bg-gray-300 rounded w-full"></div>
+    </div>
+  </div>
+
+
+
 
   <!-- Booking Form -->
-  <div class="w-full md:w-2/3 mb-8 md:mb-0 md:pr-6">
+  <div *ngIf="!isLoading" class="w-full md:w-2/3 mb-8 md:mb-0 md:pr-6">
+
+
     <h2 class="text-2xl font-bold mb-4">Book Your Trip</h2>
     <form (ngSubmit)="submitBooking()" [formGroup]="form">
 
 
-      <!-- Trip Details -->
       <div class="mb-5">
         <!--
               {{ tripDetails | json }}

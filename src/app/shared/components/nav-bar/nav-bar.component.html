@@ -1,7 +1,10 @@
-<nav class="absolute bg-black top-0 left-0 w-full z-10"
+<nav class="absolute top-0 left-0 w-full z-10"
      [ngClass]="{
      'bg-white': isActiveRoute('/auth'),
-     'bg-black': isActiveRoute('/search') || isActiveRoute('/booking') || isActiveRoute('/my-bookings')
+     'bg-black': isActiveRoute('/search') ||
+                 isActiveRoute('/booking') ||
+                 isActiveRoute('/my-bookings') ||
+                  isActiveRoute('/complaints')
      }"
 >
   <div class="container mx-auto flex items-center justify-between py-1">
@@ -18,20 +21,37 @@
                       ? './assets/logo-black.png' : './assets/logo.png'"
                alt="logo"
                class="w-20 h-auto">
-          <h1 class="-left-4 relative">Travella</h1>
+          <h1 class="-left-4 text-3xl text-white relative">Travella</h1>
         </a>
 
       </div>
 
 
       <!-- Nav Links -->
-      <div *ngIf="isAuth" class="hidden lg:flex space-x-4"
+      <div *ngIf="isAuth" class="hidden lg:flex space-x-4 p-2 text-[1.1rem]"
            [ngClass]="isActiveRoute('/auth')
                       ? 'text-black' : 'text-white'"
       >
-        <a routerLink="/my-bookings" class="hover:text-gray-300">My bookings</a>
-        <a href="#" class="hover:text-gray-300">Complaints</a>
-        <a href="#" class="hover:text-gray-300">Saved Routes</a>
+        <a routerLink="/my-bookings"
+           routerLinkActive="after:scale-x-100"
+           class="relative w-fit block after:block after:content-[''] after:absolute after:h-[2px]
+           after:bg-white after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition
+           after:duration-300 after:origin-center">My bookings</a>
+
+<!--
+        <a routerLink="/complaints"
+           routerLinkActive="after:scale-x-100"
+           class="relative w-fit block after:block after:content-[''] after:absolute after:h-[2px]
+           after:bg-white after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition
+           after:duration-300 after:origin-center">Complaints</a>
+-->
+
+
+        <a routerLink="/routes"
+           routerLinkActive="after:scale-x-100"
+           class="relative w-fit block after:block after:content-[''] after:absolute after:h-[2px]
+           after:bg-white after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition
+           after:duration-300 after:origin-center">Saved Routes</a>
 
       </div>
 
@@ -74,7 +94,7 @@
         [(ngModel)]="searchQuery"
         (input)="onSearchChange()"
         placeholder="Search destination..."
-        class="py-2 pl-3 pr-28  bg-opacity-45
+        class="py-2  pl-3 pr-28  bg-opacity-45
           focus:outline-none rounded-sm
           focus:ring-2 focus:ring-blue-400"
         [ngClass]="isActiveRoute('/auth')
@@ -118,11 +138,6 @@
 
     </div>
 
-
-    <div class="">
-
-
-    </div>
 
     <!-- Log In and Sign Up -->
     <div class="hidden lg:flex items-center space-x-6 md:mr-5" *ngIf="!isAuth">

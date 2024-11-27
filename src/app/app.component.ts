@@ -1,4 +1,11 @@
-import {Component, computed, effect, inject, OnInit} from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  OnInit,
+  ViewEncapsulation
+} from '@angular/core';
 import {AuthService} from "./services/auth.service";
 import {
   NavigationCancel,
@@ -10,7 +17,8 @@ import {
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+
 })
 export class AppComponent implements OnInit {
   public loading: boolean = false;
@@ -22,6 +30,14 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        const isDashboard = event.url === '/dashboard';
+        this.toggleDashboardStyles(isDashboard);
+      }
+    })
+
+
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.loading = true;
@@ -32,4 +48,19 @@ export class AppComponent implements OnInit {
       }
     });
   }
+  public toggleDashboardStyles(enable: boolean): void {
+    const themeId = 'theme-css';
+    let themeLink = document.getElementById(themeId) as HTMLLinkElement;
+    const defaultTheme = 'assets/layout/styles/theme/lara-light-indigo/theme.css';
+
+
+      if (defaultTheme !== themeLink.getAttribute('href')) {
+        themeLink.setAttribute('href', defaultTheme);
+        console.log(themeLink)
+      }
+  }
+
+
 }
+
+
