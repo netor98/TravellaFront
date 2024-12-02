@@ -32,7 +32,7 @@ export class SearchDetailsComponent implements OnInit {
   trips: any[] = [];
   isRoundTrip: boolean = false; // Indica si es un viaje redondo
   selectedOutboundTrip: any = null;
-  statusActive: string = '671f882f-4b09-4a60-8a6c-c4d5de7ad942';
+  statusActive: string = 'abcd223d-0bb6-4867-9185-07bb4b661048';
 
 
   private readonly mapBoxToken: string = environment.MAPBOX_KEY;

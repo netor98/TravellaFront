@@ -15,6 +15,7 @@ import {environment} from "../../../environments/environment.development";
 import Swal from "sweetalert2";
 import {Order} from "../../domain/models/Order";
 import {OrderDto} from "../../domain/models/OrderDto";
+import {SeatMapService} from "../../services/seat-map.service";
 
 
 @Component({
@@ -55,7 +56,8 @@ export class BookingComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private bookingService: BookingService,
-    private authService: AuthService
+    private authService: AuthService,
+    private seatMapService: SeatMapService,
   ) {
   }
 
@@ -207,6 +209,7 @@ export class BookingComponent implements OnInit {
         this.returnTripDetails = this.bookingService.getReturnTripDetails(); // Asegúrate de que este método funcione correctamente
         this.tripDetails = this.returnTripDetails;
 
+        this.updateSeatMap();
         this.form.reset();
         this.form.patchValue({ email: this.form.value.email }); // Mantener el email
 
@@ -619,6 +622,17 @@ export class BookingComponent implements OnInit {
       this.selectedOption = 0;
     }
   }
+
+  public updateSeatMap(): void {
+    if (this.currentTrip?.id) {
+      console.log(`Updating seat map for trip ID: ${this.currentTrip.id}`);
+      this.seatMapService.updateSeatMap(this.currentTrip.id);
+    } else {
+      console.warn('No trip ID available for seat map update.');
+    }
+  }
+
+
 
 
 }

@@ -48,7 +48,7 @@ export class SearchTripComponent implements OnInit {
   isRoundTrip: boolean = false;
   public selectedOutboundTrip: TripsResponse | null = null;
 
-  statusActive = '671f882f-4b09-4a60-8a6c-c4d5de7ad942'
+  statusActive = 'abcd223d-0bb6-4867-9185-07bb4b661048';
 
   constructor(
     private citySearchService: CitySearchService,
@@ -99,7 +99,6 @@ export class SearchTripComponent implements OnInit {
     {label: '1 adult', value: 1},
     {label: '2 adults', value: 2},
     {label: '3 adults', value: 3},
-    // Add more options if needed
   ];
 
 
@@ -203,7 +202,6 @@ export class SearchTripComponent implements OnInit {
       }));
 
 
-    this.router.navigate(['/search'], {queryParams: searchParams});
 
     if (this.isRoundTrip) {
       var intermedio = origin;
@@ -224,8 +222,10 @@ export class SearchTripComponent implements OnInit {
       .subscribe(
         (trips) => {
           this.trips = trips;
+          console.log(this.trips);
           this.sharedDataService.setTrips(trips);
           this.sharedDataService.setSearchParams(searchParams);
+          this.router.navigate(['/search'], {queryParams: searchParams});
         },
         (error) => {
           console.error('Error fetching trips:', error);

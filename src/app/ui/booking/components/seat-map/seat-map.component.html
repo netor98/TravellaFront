@@ -4,7 +4,7 @@
   <!-- Seat Map Grid -->
   <div class="grid grid-cols-4 gap-4 max-h-96 overflow-y-scroll">
     <div
-      *ngFor="let seat of seats"
+      *ngFor="let seat of currentSeats"
       [ngClass]="{
         'bg-green-100 hover:bg-green-200 cursor-pointer': seat.status === 'available',
         'bg-red-600 cursor-not-allowed': seat.status === 'reserved',

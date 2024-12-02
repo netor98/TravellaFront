@@ -31,7 +31,7 @@ export class AppMenuComponent implements OnInit {
           {
             label: 'Trips',
             icon: 'pi pi-receipt',
-            routerLink: ['/dashboard/charts']
+            routerLink: ['/dashboard/trips']
           },
           {
             label: 'Routes',

@@ -8,7 +8,6 @@
 
 @import "primeng/resources/primeng.min.css";
 @import "primeicons/primeicons.css";
-
 @tailwind base;
 
 @tailwind components;

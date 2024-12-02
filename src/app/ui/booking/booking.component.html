@@ -154,6 +154,7 @@
   <!-- Seat Map -->
   <div class="w-full md:w-1/3">
     <app-seat-map [tripId]="tripDetails?.id"
+                  [isReturnTrip]="completedOutbound"
                   (seatSelected)="onSeatSelection($event)"></app-seat-map>
   </div>
 

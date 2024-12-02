@@ -1,28 +1,40 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BusService} from "../../../../services/bus.service";
+import {SeatMapService} from "../../../../services/seat-map.service";
 
 @Component({
   selector: 'app-seat-map',
   templateUrl: './seat-map.component.html',
   styleUrl: './seat-map.component.css'
 })
-export class SeatMapComponent {
+export class SeatMapComponent implements OnInit {
   @Input() tripId!: string;
+  @Input() isReturnTrip: boolean = false; // Indica si es viaje de regreso
   @Output() seatSelected: EventEmitter<number> = new EventEmitter<number>();
 
 
   seats: any[] = [];
   selectedSeat: any = null;
+  returnSeats: any[] = [];
+  outboundSeats: any[] = [];
 
-  constructor(private busService: BusService) {
+  constructor(private busService: BusService,
+              private seatMapService: SeatMapService) {
   }
 
   ngOnInit(): void {
-    this.loadSeatData();
+    this.loadSeatData(this.tripId);
+    this.seatMapService.seatMapUpdate$.subscribe((tripId) => {
+      if (tripId) {
+        console.log('Seat map updated for trip:', tripId);
+        this.tripId = tripId;
+        this.loadSeatData(tripId);
+      }
+    });
   }
 
-  loadSeatData(): void {
-    this.busService.getAvailableSeats(this.tripId).subscribe({
+  loadSeatData(tripId: string): void {
+    this.busService.getAvailableSeats(tripId).subscribe({
       next: (data) => {
         const totalCapacity = data.totalCapacity;
         console.log(data)
@@ -35,7 +47,11 @@ export class SeatMapComponent {
             status: availableSeats.has(seatNumber) ? 'available' : 'reserved',
           };
         });
-        console.log('Seats loaded:', this.seats);
+        if (this.isReturnTrip) {
+          this.returnSeats = this.seats;
+        } else {
+          this.outboundSeats = this.seats;
+        }
       },
       error: (err) => {
         console.error('Error loading seat data:', err);
@@ -62,5 +78,10 @@ export class SeatMapComponent {
   confirmSeat(): void {
     alert(`You have selected seat number ${this.selectedSeat.number}`);
     // Send the selected seat back to the parent or book it directly
+  }
+
+  get currentSeats(): any[] {
+    // Devuelve los asientos según el viaje actual
+    return this.isReturnTrip ? this.returnSeats : this.outboundSeats;
   }
 }

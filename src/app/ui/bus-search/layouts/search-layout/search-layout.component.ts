@@ -44,6 +44,7 @@ export class SearchLayoutComponent implements OnInit {
       const pageNumber = +params['pageNumber'] || 1;
       const pageSize = +params['pageSize'] || 10;
       const status = params['statusId'];
+      console.log(status)
 
       this.searchTrips({
         originCity,
@@ -57,6 +58,11 @@ export class SearchLayoutComponent implements OnInit {
       });
     });
 
+    const state = localStorage.getItem('searchTripState');
+    if (state) {
+      const searchState = JSON.parse(state);
+      console.log(searchState.selectedPassenger);
+    }
 
     this.filterService.filters$.subscribe((filters) => {
       this.applyFilters(filters);
@@ -81,7 +87,7 @@ export class SearchLayoutComponent implements OnInit {
       name: params.destinationCity,
       cityImageUrl: null
     } : undefined;
-
+  console.log(params)
 
     this.loading = true;
     setTimeout(() => {
@@ -95,7 +101,7 @@ export class SearchLayoutComponent implements OnInit {
           params.isAscending,
           params.pageNumber,
           params.pageSize,
-          params.statusId
+          params.status
         )
         .subscribe({
           next: (data) => {

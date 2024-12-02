@@ -22,6 +22,7 @@ import {
   ComplaintsComponent
 } from './components/pages/complaints/complaints.component';
 import {RoutesComponent} from './components/pages/routes/routes.component';
+import {CheckboxModule} from "primeng/checkbox";
 
 
 @NgModule({
@@ -35,16 +36,17 @@ import {RoutesComponent} from './components/pages/routes/routes.component';
     ComplaintsComponent,
     RoutesComponent
   ],
-  imports: [
-    CommonModule,
-    AdminRoutingModule,
-    ButtonDirective,
-    ChartModule,
-    MenuModule,
-    PrimeTemplate,
-    TableModule,
-    Ripple,
-  ]
+    imports: [
+        CommonModule,
+        AdminRoutingModule,
+        ButtonDirective,
+        ChartModule,
+        MenuModule,
+        PrimeTemplate,
+        TableModule,
+        Ripple,
+        CheckboxModule,
+    ]
 })
 export class AdminModule {
 }
