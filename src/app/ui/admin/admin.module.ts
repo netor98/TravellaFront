@@ -23,6 +23,8 @@ import {
 } from './components/pages/complaints/complaints.component';
 import {RoutesComponent} from './components/pages/routes/routes.component';
 import {CheckboxModule} from "primeng/checkbox";
+import {DialogModule} from "primeng/dialog";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -36,17 +38,19 @@ import {CheckboxModule} from "primeng/checkbox";
     ComplaintsComponent,
     RoutesComponent
   ],
-    imports: [
-        CommonModule,
-        AdminRoutingModule,
-        ButtonDirective,
-        ChartModule,
-        MenuModule,
-        PrimeTemplate,
-        TableModule,
-        Ripple,
-        CheckboxModule,
-    ]
+  imports: [
+    CommonModule,
+    AdminRoutingModule,
+    ButtonDirective,
+    ChartModule,
+    MenuModule,
+    PrimeTemplate,
+    TableModule,
+    Ripple,
+    CheckboxModule,
+    DialogModule,
+    ReactiveFormsModule,
+  ]
 })
 export class AdminModule {
 }

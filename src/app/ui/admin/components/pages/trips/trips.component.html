@@ -1,6 +1,20 @@
 <div class="p-4 bg-white shadow-md rounded-lg">
   <div class="flex justify-between items-center mb-4">
     <h2 class="text-xl font-bold">Manage Products</h2>
+
+    <div class="flex space-x-4">
+      <button
+        (click)="openModal()"
+        class="bg-green-500 text-white font-bold py-2 px-4 rounded-md hover:bg-green-600 flex items-center"
+      >
+        <i class="pi pi-plus mr-2"></i> New
+      </button>
+      <button
+        class="bg-red-500 text-white font-bold py-2 px-4 rounded-md hover:bg-red-600 flex items-center"
+      >
+        <i class="pi pi-trash mr-2"></i> Delete
+      </button>
+    </div>
     <div>
       <button pButton type="button" label="Import" icon="pi pi-upload" class="p-3 bg-blue-500 rounded mr-2 text-white"></button>
       <button pButton type="button" label="Export" icon="pi pi-download" class=" p-3 bg-green-500 text-white rounded"></button>
@@ -95,63 +109,48 @@
 
 
 
-  <p-table
-    [value]="products"
-    [paginator]="true"
-    [rows]="5"
-    [rowsPerPageOptions]="[5, 10, 20]"
-    [responsiveLayout]="'scroll'"
-    class="text-sm"
+
+  <p-dialog
+    [(visible)]="displayModal"
+    header="New Item"
+    [modal]="true"
+    [closable]="true"
+    [style]="{ width: '500px' }"
+    [contentStyle]="{ 'max-height': '400px', overflow: 'auto' }"
   >
-    <ng-template pTemplate="header">
-      <tr>
-        <th class="w-1">
-          <p-checkbox binary="true"></p-checkbox>
-        </th>
-        <th pSortableColumn="code">Code <p-sortIcon field="code"></p-sortIcon></th>
-        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
-        <th>Image</th>
-        <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
-        <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon></th>
-        <th pSortableColumn="reviews">Reviews <p-sortIcon field="reviews"></p-sortIcon></th>
-        <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
-      </tr>
-    </ng-template>
-
-    <ng-template pTemplate="body" let-product>
-      <tr>
-        <td>
-          <p-checkbox binary="true"></p-checkbox>
-        </td>
-        <td>{{ product.code }}</td>
-        <td>{{ product.name }}</td>
-        <td>
-          <img [src]="product.image" alt="{{ product.name }}" class="w-12 h-12 rounded-md" />
-        </td>
-        <td>{{ product.price | currency }}</td>
-        <td>{{ product.category }}</td>
-        <td>
-          <span *ngFor="let star of [1, 2, 3, 4, 5]" [ngClass]="star <= product.reviews ? 'text-yellow-500' : 'text-gray-300'">
-            <i class="pi pi-star"></i>
-          </span>
-        </td>
-        <td>
-          <span
-            class="px-2 py-1 rounded text-white"
-            [ngClass]="{
-              'bg-green-500': product.status === 'IN',
-              'bg-yellow-500': product.status === 'LOW',
-              'bg-red-500': product.status === 'OUT'
-            }"
-          >
-            {{ product.status }}
-          </span>
-        </td>
-      </tr>
-    </ng-template>
-
-    <ng-template pTemplate="paginatorleft">
-      <button pButton type="button" icon="pi pi-refresh" class="p-button-text"></button>
-    </ng-template>
-  </p-table>
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+      <div class="mb-4">
+        <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+        <input
+          id="name"
+          formControlName="name"
+          type="text"
+          class="mt-1 p-2 border rounded-md w-full"
+        />
+      </div>
+      <div class="mb-4">
+        <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          class="mt-1 p-2 border rounded-md w-full"
+        ></textarea>
+      </div>
+      <div class="flex justify-end space-x-2">
+        <button
+          type="button"
+          (click)="closeModal()"
+          class="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </p-dialog>
 </div>

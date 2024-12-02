@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-trips',
@@ -44,5 +45,35 @@ export class TripsComponent {
       status: 'IN',
     },
   ];
+
+  displayModal: boolean = false;
+  form: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.form = this.fb.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required]
+    });
+  }
+
+  openModal(): void {
+    this.displayModal = true;
+  }
+
+  closeModal(): void {
+    this.displayModal = false;
+    this.form.reset();
+  }
+
+  onSubmit(): void {
+    if (this.form.valid) {
+      console.log('Form submitted:', this.form.value);
+      this.closeModal();
+    } else {
+      console.error('Form is invalid');
+    }
+  }
+
+
 
 }
