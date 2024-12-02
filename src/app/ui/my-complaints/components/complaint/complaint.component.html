@@ -1,0 +1,260 @@
+<nav-bar></nav-bar>
+
+<div class="bg-blue-50 mt-20 min-h-screen flex items-center justify-center p-6">
+  <div
+    *ngIf="loading"
+    class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-6 bg-white rounded-lg shadow-lg animate-pulse">
+    <!-- Complaint Information Skeleton -->
+    <div class="p-8">
+      <div class="h-8 bg-gray-200 rounded w-3/4 mb-4"></div>
+      <div class="h-4 bg-gray-200 rounded w-1/2 mb-4"></div>
+      <div class="h-4 bg-gray-200 rounded w-full mb-2"></div>
+      <div class="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+      <div class="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
+    </div>
+
+    <!-- Complaint Form Skeleton -->
+    <div class="bg-gray-100 p-8 rounded-r-lg">
+      <div class="h-6 bg-gray-200 rounded w-1/3 mb-4"></div>
+      <div class="h-4 bg-gray-200 rounded w-full mb-4"></div>
+      <div class="h-4 bg-gray-200 rounded w-full mb-4"></div>
+      <div class="h-32 bg-gray-200 rounded w-full mb-4"></div>
+      <div class="h-10 bg-gray-200 rounded w-1/2 mx-auto"></div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div
+    *ngIf="!loading"
+    class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-6 bg-white rounded-lg shadow-lg">
+    <!-- Complaint Information Section -->
+    <div class="p-8">
+      <h2 class="text-3xl font-bold text-gray-800 mb-4">Submit a Complaint</h2>
+      <p class="text-gray-600 mb-4">
+        Share your feedback about your trip experience. We're here to help
+        resolve any issues or concerns.
+      </p>
+      <ul class="list-disc pl-5 text-gray-600">
+        <li><strong>Order ID:</strong> {{ order.id }}</li>
+        <li><strong>Purchase
+          Date:</strong> {{ order.purchaseTime | date: 'shortDate' }}
+        </li>
+        <li><strong>Total:</strong> {{ totalAmount | currency }}</li>
+      </ul>
+      <div class="border-t-green-200 border-dotted border-t-2"></div>
+      <h3 class="text-md font-semibold mt-4 mb-2">Tickets</h3>
+      <ul class="list-disc pl-5 text-gray-600">
+        <li *ngFor="let ticket of order.tickets">
+          <div class="mb-2 border-b-2 border-black-alpha-10">
+            <strong>From:</strong> {{ ticket.trip.route.origin.name }} <br>
+            <strong>To:</strong> {{ ticket.trip.route.destination.name }} <br>
+            <strong>Seat Number:</strong> {{ ticket.seatNumber }} <br>
+            <strong>Departure:</strong> {{ ticket.trip.departureTime | date: 'short' }}
+          </div>
+        </li>
+      </ul>
+
+      <p class="text-gray-800 font-medium mt-4">Need Assistance?</p>
+      <ul class="text-gray-600 mt-2">
+        <li>Email: support&#64;travella.com</li>
+        <li>Phone: +1 (800) 555-1234</li>
+      </ul>
+    </div>
+
+    <!-- Complaint Form -->
+    <div class="bg-gray-100 p-8 rounded-r-lg">
+      <h3 class="text-xl font-semibold text-gray-800 mb-4">Let Us Know Your
+        Concern</h3>
+      <form (ngSubmit)="submitComplaint()" [formGroup]="complaintForm">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+          <!-- First Name -->
+          <div>
+            <label for="firstName"
+                   class="block text-sm font-medium text-gray-700">First
+              Name</label>
+            <input
+              id="firstName"
+              type="text"
+              formControlName="firstName"
+              placeholder="John"
+              class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            />
+          </div>
+          <!-- Last Name -->
+          <div>
+            <label for="lastName"
+                   class="block text-sm font-medium text-gray-700">Last
+              Name</label>
+            <input
+              id="lastName"
+              type="text"
+              formControlName="lastName"
+              placeholder="Doe"
+              class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-4">
+          <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            placeholder="john.doe@example.com"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+          />
+        </div>
+
+        <!-- Complaint -->
+        <div class="mb-4">
+          <label for="complaint"
+                 class="block text-sm font-medium text-gray-700">Complaint</label>
+          <textarea
+            id="complaint"
+            formControlName="complaint"
+            placeholder="Describe the issue here..."
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md h-32"
+            maxlength="500"
+          ></textarea>
+          <p
+            class="text-sm text-gray-500 text-right">{{ complaintForm.controls['complaint'].value?.length || 0 }}
+            /500</p>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center">
+          <button
+            type="submit"
+            [disabled]="complaintForm.invalid"
+            class="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 disabled:bg-gray-400"
+          >
+            Submit Complaint
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>
+
+
+<!--
+<nav-bar></nav-bar>
+
+<div class="bg-blue-50 mt-20 min-h-screen flex items-center justify-center p-6">
+  <div
+    class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-6 bg-white rounded-lg shadow-lg">
+    &lt;!&ndash; Complaint Information Section &ndash;&gt;
+    <div class="p-8">
+      <h2 class="text-3xl font-bold text-gray-800 mb-4">Submit a Complaint</h2>
+      <p class="text-gray-600 mb-4">
+        Share your feedback about your trip experience. We're here to help
+        resolve any issues or concerns.
+      </p>
+      <ul class="list-disc pl-5 text-gray-600">
+        <li><strong>Order ID:</strong> {{ order.id }}</li>
+        <li><strong>Purchase Date:</strong> {{ order.purchaseTime | date: 'shortDate' }}</li>
+      </ul>
+      <p class="text-gray-800 font-medium mb-2">Trip Details</p>
+
+      <h3 class="text-md font-semibold mt-4 mb-2">Tickets</h3>
+      <ul class="list-disc pl-5 text-gray-600">
+        <li *ngFor="let ticket of order.tickets">
+          <div class="mb-2">
+            <strong>From:</strong> {{ ticket.trip.route.origin.name }} <br>
+            <strong>To:</strong> {{ ticket.trip.route.destination.name }} <br>
+            <strong>Seat Number:</strong> {{ ticket.seatNumber }} <br>
+            <strong>Departure:</strong> {{ ticket.trip.departureTime | date: 'short' }}
+          </div>
+        </li>
+      </ul>
+
+
+      <p class="text-gray-800 font-medium mt-4">Need Assistance?</p>
+      <ul class="text-gray-600 mt-2">
+        <li>Email: support&#64;travella.com</li>
+        <li>Phone: +1 (800) 555-1234</li>
+      </ul>
+    </div>
+
+    &lt;!&ndash; Complaint Form &ndash;&gt;
+    <div class="bg-gray-100 p-8 rounded-r-lg">
+      <h3 class="text-xl font-semibold text-gray-800 mb-4">Let Us Know Your
+        Concern</h3>
+      <form (ngSubmit)="submitComplaint()" [formGroup]="complaintForm">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+          &lt;!&ndash; First Name &ndash;&gt;
+          <div>
+            <label for="firstName"
+                   class="block text-sm font-medium text-gray-700">First
+              Name</label>
+            <input
+              id="firstName"
+              type="text"
+              formControlName="firstName"
+              placeholder="John"
+              class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            />
+          </div>
+          &lt;!&ndash; Last Name &ndash;&gt;
+          <div>
+            <label for="lastName"
+                   class="block text-sm font-medium text-gray-700">Last
+              Name</label>
+            <input
+              id="lastName"
+              type="text"
+              formControlName="lastName"
+              placeholder="Doe"
+              class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            />
+          </div>
+        </div>
+
+        &lt;!&ndash; Email &ndash;&gt;
+        <div class="mb-4">
+          <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            placeholder="john.doe@example.com"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+          />
+        </div>
+
+        &lt;!&ndash; Complaint &ndash;&gt;
+        <div class="mb-4">
+          <label for="complaint"
+                 class="block text-sm font-medium text-gray-700">Complaint</label>
+          <textarea
+            id="complaint"
+            formControlName="complaint"
+            placeholder="Describe the issue here..."
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md h-32"
+            maxlength="500"
+          ></textarea>
+          <p
+            class="text-sm text-gray-500 text-right">{{ complaintForm.controls['complaint'].value?.length || 0 }}
+            /500</p>
+        </div>
+
+        &lt;!&ndash; Submit Button &ndash;&gt;
+        <div class="text-center">
+          <button
+            type="submit"
+            [disabled]="complaintForm.invalid"
+            class="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 disabled:bg-gray-400"
+          >
+            Submit Complaint
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
+-->

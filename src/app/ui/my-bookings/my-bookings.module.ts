@@ -6,6 +6,7 @@ import {MyBookingsComponent} from './layouts/my-bookings/my-bookings.component';
 import {PrimegnModule} from "../../primegn/primegn.module";
 import {SharedModule} from "../../shared/shared.module";
 import {LandingPageModule} from "../landing-page/landing-page.module";
+import {ToggleButtonModule} from "primeng/togglebutton";
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {LandingPageModule} from "../landing-page/landing-page.module";
     MyBookingsRoutingModule,
     PrimegnModule,
     SharedModule,
-    LandingPageModule
+    LandingPageModule,
+    ToggleButtonModule
   ]
 })
 export class MyBookingsModule {

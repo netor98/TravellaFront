@@ -53,7 +53,7 @@
               <div class="flex items-center gap-2 text-black">
                 <img class="w-7" src="./assets/icons/bus.svg">
 
-                <div>{{ selectedOption.code }}</div>
+                <div class="text-xl">{{ selectedOption.code }}</div>
               </div>
             </ng-template>
 
@@ -70,7 +70,7 @@
 
       <div class="justify-center flex items-center
       mx-auto
-      my-2 lg:my-0">
+      my-2 relative -bottom-3 lg:my-0">
         <button
           (click)="changeCities()"
           [@cityChangeAnimation]="animationState"
@@ -88,7 +88,7 @@
         <label class="mb-2 text-left font-medium">To</label>
         <div class="flex justify-center w-full">
           <p-dropdown
-            class="dropdown-selected w-full"
+            class="dropdown-selected w-full text-lg"
             styleClass="w-full"
             [ngClass]="{'selected-item': selectedTo}"
             [options]="cities"
@@ -104,7 +104,7 @@
               <div class="flex items-center gap-2 text-black">
                 <img class="w-7" src="./assets/icons/bus.svg">
 
-                <div>{{ selectedOption.code }}</div>
+                <div class="text-xl">{{ selectedOption.code }}</div>
               </div>
             </ng-template>
 
@@ -130,7 +130,7 @@
           <label class="mb-2 text-gray-400 text-sm md:left-6 left-16 relative">
             Round Trip?
           </label>
-          <p-inputSwitch [(ngModel)]="checked"></p-inputSwitch>
+          <p-inputSwitch [(ngModel)]="isRoundTrip"></p-inputSwitch>
 
         </div>
         <div>
@@ -143,8 +143,22 @@
             dateFormat="dd/mm/yy"
 
             placeholder="Select a date"
-            styleClass="w-full">
+            styleClass="w-full text-black text-md">
 
+          </p-calendar>
+        </div>
+        <div *ngIf="isRoundTrip" class="mt-2 flex flex-col items-start">
+          <div class="">
+            <label class="mb-2 text-left font-medium ">Return</label>
+          </div>
+          <p-calendar
+            class="calendar"
+            [ngClass]="{'bg-gray-200': returnDate}"
+            [(ngModel)]="returnDate"
+            [showIcon]="true"
+            dateFormat="dd/mm/yy"
+            placeholder="Select a return date"
+            styleClass="w-full text-black text-md">
           </p-calendar>
         </div>
 

@@ -1,21 +1,23 @@
-<nav-bar>
-
-</nav-bar>
+<nav-bar></nav-bar>
 
 <div
   class="container mt-20 bg-gray-200 min-h-screen mx-auto px-4 py-10 flex flex-col lg:flex-row gap-6">
 
+  <!-- Sidebar -->
   <div class="w-full lg:w-2/4">
     <div *ngIf="!loading">
-      <h3 class="text-lg font-bold mb-2">Your Bookings Summary</h3>
+      <h3 class="text-lg font-bold mb-2">Your Orders Summary</h3>
       <p class="text-gray-700 mb-4">Total
-        Tickets: {{ tickets?.length || 0 }}</p>
-
+        Orders: {{ orders?.length || 0 }}</p>
 
       <p-accordion [multiple]="true">
         <p-accordionTab header="Filter Date (min-max)">
           <p-calendar selectionMode="range" class="w-full"
-                      [inline]="true"></p-calendar>
+                      [(ngModel)]="dateRange"
+                      [minDate]="minDate"
+                      [maxDate]="maxDate"
+                      [inline]="true"
+                      (onSelect)="filterOrdersByDate()"></p-calendar>
         </p-accordionTab>
       </p-accordion>
     </div>
@@ -30,6 +32,7 @@
     </div>
   </div>
 
+  <!-- Orders -->
   <main class="w-full lg:w-3/4">
     <div *ngIf="loading" class="grid gap-6">
       <div *ngFor="let _ of [1, 2, 3]"
@@ -42,49 +45,53 @@
 
     <div *ngIf="error" class="text-center text-red-500">{{ error }}</div>
 
-    <div *ngIf="!loading && paginatedTickets.length > 0"
+    <div *ngIf="!loading && paginatedOrders.length > 0"
          class="grid gap-6 mx-auto overflow-y-auto">
-      <div *ngFor="let ticket of paginatedTickets"
+      <div class="flex gap-4 items-center">
+        <h3 class="text-lg">Sort:</h3>
+
+        <p-toggleButton
+          [(ngModel)]="sort"
+          (click)="filterOrdersByDate()"
+          onLabel="Sort"
+          offLabel="Off"/>
+
+      </div>
+      <div *ngFor="let order of paginatedOrders"
            class="bg-white shadow-md rounded-lg p-4">
         <div
           class="flex justify-between items-center border-b-2 border-b-gray-100 border-dashed">
 
-          <h4 class="font-bold text-lg">{{ ticket.trip.route.origin.name }}
-            to {{ ticket.trip.route.destination.name }}</h4>
+          <h4 class="font-bold text-lg">Order #{{ order.id }}</h4>
 
           <button
             class="border p-0.5 my-2 px-2 rounded focus:outline-none focus:ring-2 focus:ring-gray-400"
-            (click)="menu.toggle($event)"
+            (click)="onMenuToggle(menu, order, $event)"
           >
             <i class="pi pi-ellipsis-h"></i>
           </button>
-
         </div>
 
-        <p-tieredMenu #menu [model]="items" [popup]="true"/>
-        <input #ticketInfo type="hidden" [value]="ticket| json"
-               id="ticketInfo">
+        <p-tieredMenu #menu [popup]="true"></p-tieredMenu>
 
-        <p class="text-sm text-gray-500">
-          Departure: {{ ticket.trip.departureTime | date: 'short' }}</p>
-        <p class="text-sm text-gray-500">Seat
-          Number: {{ ticket.seatNumber }}</p>
-        <p class="text-sm text-gray-500">
-          Price: {{ ticket.trip.price | currency }}</p>
+        <p class="text-sm text-gray-500">Purchase
+          Time: {{ order.purchaseTime | date: 'short' }}</p>
+        <p class="text-sm text-gray-500">Total
+          Tickets: {{ order.tickets?.length }}</p>
       </div>
 
       <p-paginator
         [first]="first ? first : 0"
         [rows]="rows ? rows : 0"
         (onPageChange)="onPageChange($event)"
-        [totalRecords]="tickets.length"
+        [totalRecords]="filteredOrders.length"
         [showCurrentPageReport]="true"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"/>
     </div>
 
-    <div *ngIf="!loading && paginatedTickets.length === 0"
+    <div *ngIf="!loading && paginatedOrders.length === 0"
          class="text-center text-gray-500">
-      <p>No tickets found.</p>
+      <p>No orders found.</p>
     </div>
   </main>
 </div>

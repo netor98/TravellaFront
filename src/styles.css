@@ -5,12 +5,12 @@
 */
 
 @import "assets/layout/styles/layout/layout.css";
-@import "primeng/resources/primeng.css";
-@import "primeflex/primeflex.min.css";
+
+@import "primeng/resources/primeng.min.css";
 @import "primeicons/primeicons.css";
 
-
 @tailwind base;
+
 @tailwind components;
 @tailwind utilities;
 

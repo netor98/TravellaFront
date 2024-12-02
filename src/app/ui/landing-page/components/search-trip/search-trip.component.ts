@@ -44,6 +44,11 @@ export class SearchTripComponent implements OnInit {
   to: string = '';
   trips: TripsResponse[] = [];
   scrolled: boolean = false;
+  returnDate: Date | null = null;
+  isRoundTrip: boolean = false;
+  public selectedOutboundTrip: TripsResponse | null = null;
+
+  statusActive = '671f882f-4b09-4a60-8a6c-c4d5de7ad942'
 
   constructor(
     private citySearchService: CitySearchService,
@@ -56,7 +61,6 @@ export class SearchTripComponent implements OnInit {
   ngOnInit() {
 
     const savedState = localStorage.getItem('searchTripState');
-    console.log(savedState)
     if (savedState) {
 
       const state = JSON.parse(savedState);
@@ -77,6 +81,7 @@ export class SearchTripComponent implements OnInit {
 
   fetchCities() {
     this.busService.getCitiesList().subscribe((cities: CitiesResponse[]) => {
+      console.log('cities:', cities);
       this.cities = cities.map((city: CitiesResponse) => ({
         name: city.name,
         country: city.country,
@@ -148,9 +153,10 @@ export class SearchTripComponent implements OnInit {
 
 
   public searchTrips() {
-    const origin: CitiesModel | null = this.selectedFrom;
-    const destination: CitiesModel | null = this.selectedTo;
+    let origin: CitiesModel | null = this.selectedFrom;
+    let destination: CitiesModel | null = this.selectedTo;
     const departureDate = this.departureDate ? this.departureDate.toISOString().split('T')[0] : null;  // Format date to YYYY-MM-DD
+    const returnDate = this.returnDate ? this.returnDate.toISOString().split('T')[0] : null; // Format return date
     const sortBy = 'departureTime';
     const isAscending = true;
     const pageNumber = 1;
@@ -168,12 +174,42 @@ export class SearchTripComponent implements OnInit {
       destinationCity: destination?.name || null,
       departureTime: departureDate || null,
       sortBy: 'departureTime',
+      returnTime: this.isRoundTrip ? returnDate : null,
       isAscending: true,
       pageNumber,
-      pageSize
+      pageSize,
+      statusId: this.statusActive
     };
+
+    const state = {
+      selectedFrom: this.selectedFrom,
+      selectedTo: this.selectedTo,
+      departureDate: this.departureDate?.toISOString(),
+      returnDate: this.returnDate?.toISOString(),
+      isRoundTrip: this.isRoundTrip,
+      selectedPassenger: this.selectedPassenger,
+    };
+
+    localStorage.setItem(
+      'searchTripState',
+      JSON.stringify({
+        selectedFrom: this.selectedFrom,
+        selectedTo: this.selectedTo,
+        departureDate: this.departureDate?.toISOString(),
+        returnDate: this.returnDate?.toISOString(),
+        isRoundTrip: this.isRoundTrip,
+        selectedPassenger: this.selectedPassenger,
+        statusId: this.statusActive
+      }));
+
+
     this.router.navigate(['/search'], {queryParams: searchParams});
 
+    if (this.isRoundTrip) {
+      var intermedio = origin;
+      origin = destination;
+      destination = intermedio;
+    }
     this.busService
       .getFilteredTrips(
         origin!,
@@ -182,20 +218,14 @@ export class SearchTripComponent implements OnInit {
         sortBy,
         isAscending,
         pageNumber,
-        pageSize)
+        pageSize,
+        this.statusActive
+        )
       .subscribe(
         (trips) => {
           this.trips = trips;
           this.sharedDataService.setTrips(trips);
           this.sharedDataService.setSearchParams(searchParams);
-          const state = {
-            selectedFrom: this.selectedFrom,
-            selectedTo: this.selectedTo,
-            departureDate: this.departureDate?.toISOString(),
-            selectedPassenger: this.selectedPassenger,
-          };
-
-          localStorage.setItem('searchTripState', JSON.stringify(state));
         },
         (error) => {
           console.error('Error fetching trips:', error);
@@ -226,5 +256,4 @@ export class SearchTripComponent implements OnInit {
       title: this.errorMessage,
     });
   }
-
 }

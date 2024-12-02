@@ -19,8 +19,6 @@
   </div>
 
 
-
-
   <!-- Booking Form -->
   <div *ngIf="!isLoading" class="w-full md:w-2/3 mb-8 md:mb-0 md:pr-6">
 
@@ -45,7 +43,8 @@
             {{ tripDetails?.route.destination.name }}
           </span>
         </h1>
-        <span>{{ departureDate }}</span>
+        <span *ngIf="completedOutbound"> {{ returnDate }}</span>
+        <span *ngIf="!completedOutbound">{{ departureDate }}</span>
       </div>
 
 

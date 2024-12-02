@@ -43,6 +43,7 @@ export class SearchLayoutComponent implements OnInit {
       const isAscending = params['isAscending'] === 'true';
       const pageNumber = +params['pageNumber'] || 1;
       const pageSize = +params['pageSize'] || 10;
+      const status = params['statusId'];
 
       this.searchTrips({
         originCity,
@@ -52,6 +53,7 @@ export class SearchLayoutComponent implements OnInit {
         isAscending,
         pageNumber,
         pageSize,
+        status
       });
     });
 
@@ -92,7 +94,8 @@ export class SearchLayoutComponent implements OnInit {
           params.sortBy,
           params.isAscending,
           params.pageNumber,
-          params.pageSize
+          params.pageSize,
+          params.statusId
         )
         .subscribe({
           next: (data) => {

@@ -36,7 +36,8 @@ export class BusService {
     sortBy?: string,
     isAscending: boolean = true,
     pageNumber: number = 1,
-    pageSize: number = 10
+    pageSize: number = 10,
+    status?: string
   ): Observable<TripsResponse[]> {
 
     let params = new HttpParams();
@@ -53,6 +54,10 @@ export class BusService {
     }
     if (sortBy) {
       params = params.set('sortBy', sortBy);
+    }
+
+    if (status) {
+      params = params.set('status', status);
     }
 
     params = params.set('isAscending', isAscending.toString());

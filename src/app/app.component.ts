@@ -48,16 +48,17 @@ export class AppComponent implements OnInit {
       }
     });
   }
+
   public toggleDashboardStyles(enable: boolean): void {
     const themeId = 'theme-css';
     let themeLink = document.getElementById(themeId) as HTMLLinkElement;
     const defaultTheme = 'assets/layout/styles/theme/lara-light-indigo/theme.css';
 
 
-      if (defaultTheme !== themeLink.getAttribute('href')) {
-        themeLink.setAttribute('href', defaultTheme);
-        console.log(themeLink)
-      }
+    if (defaultTheme !== themeLink.getAttribute('href')) {
+      themeLink.setAttribute('href', defaultTheme);
+      console.log(themeLink)
+    }
   }
 
 

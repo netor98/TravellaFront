@@ -66,4 +66,5 @@ export class NavBarComponent implements OnInit {
     //TODO: search the destination without origin
     this.citySearchService.setSearchQuery('');
   }
+
 }
