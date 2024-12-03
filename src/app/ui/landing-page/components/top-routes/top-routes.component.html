@@ -1,4 +1,4 @@
-<div class="mt-8">
+<div class="p-2 container mx-auto w-full px-4">
 
   <h2 class="text-3xl">
     Top Routes this mouth (testing no terminado)
@@ -9,28 +9,31 @@
 
   <div class="">
     <p-carousel
-      [value]="products"
+      [value]="routes"
       [numVisible]="3"
       [numScroll]="3"
       [circular]="false"
       [responsiveOptions]="responsiveOptions">
-      <ng-template let-product pTemplate="item">
+      <ng-template let-route pTemplate="item">
         <div class="border border-gray-300 rounded m-2 p-3">
           <div class="mb-3">
             <div class="relative mx-auto">
               <img
                 src="https://primefaces.org/cdn/primeng/images/demo/product/bamboo-watch.jpg"
-                [alt]="product.name"
+                [alt]="route.origin"
                 class="w-full border-round"/>
 
             </div>
           </div>
-          <div class="mb-3 font-medium">
-            {{ product.name }}
-          </div>
-          <div class="flex justify-content-between align-items-center">
-            <div class="mt-0 font-semibold text-xl">
-              {{ '$' + product.id }}
+          <a routerLink="/search" [queryParams]="{ originCity: route.origin, destinationCity: route.destination }"
+             class="mb-3 font-medium underline">
+            {{ route.origin }} - {{ route.destination }}
+          </a >
+
+          <div class="flex-col justify-content-between align-items-center text-black">
+            <span class="text-sm">Starts from</span>
+            <div class="mt-0 font-bold text-xl">
+              {{ '$' + route.price }}
             </div>
             <span>
                             <p-button icon="pi pi-heart" severity="secondary"

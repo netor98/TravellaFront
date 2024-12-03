@@ -14,6 +14,8 @@ import {FooterComponent} from './components/footer/footer.component';
 import {
   InfoLandigComponent
 } from './components/info-landig/info-landig.component';
+import { DestinationLinkComponent } from './components/destination-link/destination-link.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
 @NgModule({
@@ -22,7 +24,8 @@ import {
     SearchTripComponent,
     TopRoutesComponent,
     FooterComponent,
-    InfoLandigComponent
+    InfoLandigComponent,
+    DestinationLinkComponent
   ],
   exports: [
     FooterComponent,
@@ -34,7 +37,7 @@ import {
     SharedModule,
     PrimegnModule,
     FormsModule,
-    SharedModule
+    SharedModule,
   ]
 })
 export class LandingPageModule {

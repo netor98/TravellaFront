@@ -1,6 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from "../../../../services/auth.service";
-import {TicketsService} from "../../../../services/tickets.service";
 import {Ticket} from "../../../../domain/models/Ticket";
 import Swal from "sweetalert2";
 import {Router} from "@angular/router";
@@ -38,7 +37,6 @@ export class MyBookingsComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private complaintsService: ComplaintsService,
-    private ticketsService: TicketsService
   ) {
 
     this.maxDate = new Date();
