@@ -1,23 +1,23 @@
 <div class="p-2 container mx-auto w-full px-4">
   <h1 class="text-2xl mb-2">Ready for your next journey?</h1>
   <p class="text-gray-600 mb-6">
-    Discover the most affordable bus and travel options to popular destinations below.
+    Discover the most affordable bus and travel options to popular destinations
+    below.
   </p>
-
 
 
   <div
     [@toggleAnimation]="showAll ? 'expanded' : 'collapsed'"
     class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4"
   >
-      <a *ngFor="let destination of visibleDestinations"
-        [routerLink]="'/search'"
-        [queryParams]="{ destinationCity: destination }"
-        routerLinkActive="active"
-        class="block text-center py-2 text-black px-4 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-100 transition cursor-pointer"
-      >
-        Travel to {{ destination }}
-      </a>
+    <a *ngFor="let destination of visibleDestinations"
+       [routerLink]="'/search'"
+       [queryParams]="{ destinationCity: destination }"
+       routerLinkActive="active"
+       class="block text-center py-2 text-black px-4 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-100 transition cursor-pointer"
+    >
+      Travel to {{ destination }}
+    </a>
   </div>
 
   <div class="mt-4 text-center">

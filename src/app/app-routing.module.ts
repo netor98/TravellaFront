@@ -4,9 +4,16 @@ import {
   isAuthenticatedGuard,
 } from "./guards/is-authenticated-guard.guard";
 import {isNotAuthenticatedGuard} from "./guards/is-not-authenticated.guard";
+import {
+  TicketDetailsComponent
+} from "./ui/ticket-details/ticket-details.component";
 
 
 const routes: Routes = [
+  {
+    path: 'thank-you',
+    component: TicketDetailsComponent
+  },
   {
     path: '',
     loadChildren: () => import('./ui/landing-page/landing-page.module')

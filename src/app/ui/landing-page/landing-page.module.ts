@@ -14,8 +14,11 @@ import {FooterComponent} from './components/footer/footer.component';
 import {
   InfoLandigComponent
 } from './components/info-landig/info-landig.component';
-import { DestinationLinkComponent } from './components/destination-link/destination-link.component';
+import {
+  DestinationLinkComponent
+} from './components/destination-link/destination-link.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {OffersComponent} from './components/offers/offers.component';
 
 
 @NgModule({
@@ -25,7 +28,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     TopRoutesComponent,
     FooterComponent,
     InfoLandigComponent,
-    DestinationLinkComponent
+    DestinationLinkComponent,
+    OffersComponent
   ],
   exports: [
     FooterComponent,

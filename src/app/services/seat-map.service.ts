@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SeatMapService {
+
   private seatMapUpdateSource = new BehaviorSubject<string | null>(null);
   public seatMapUpdate$ = this.seatMapUpdateSource.asObservable();
 
@@ -13,6 +14,6 @@ export class SeatMapService {
     console.log('Seat map updated:', tripId);
   }
 
-
-  constructor() { }
+  constructor() {
+  }
 }

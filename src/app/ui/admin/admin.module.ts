@@ -25,6 +25,7 @@ import {RoutesComponent} from './components/pages/routes/routes.component';
 import {CheckboxModule} from "primeng/checkbox";
 import {DialogModule} from "primeng/dialog";
 import {ReactiveFormsModule} from "@angular/forms";
+import { CitiesComponent } from './components/pages/cities/cities.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     MaintenanceComponent,
     ReportsComponent,
     ComplaintsComponent,
-    RoutesComponent
+    RoutesComponent,
+    CitiesComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,156 @@
+<div class="p-4 bg-white shadow-md rounded-lg">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-xl font-bold">Manage Cities</h2>
+    <div class="flex space-x-4">
+      <button
+        (click)="openModal()"
+        class="bg-green-500 text-white font-bold py-2 px-4 rounded-md hover:bg-green-600 flex items-center"
+      >
+        <i class="pi pi-plus mr-2"></i> New
+      </button>
+    </div>
+  </div>
+
+  <p-table
+    [value]="cities"
+    [paginator]="true"
+    [rows]="5"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [responsiveLayout]="'scroll'"
+    class="text-sm border border-gray-300 shadow-lg rounded-lg"
+  >
+    <ng-template pTemplate="header">
+      <tr class="bg-gray-50">
+        <th pSortableColumn="name"
+            class="border-b border-gray-300 ">
+          Name
+          <p-sortIcon field="name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="code"
+            class="border-b border-gray-300">
+          Code
+          <p-sortIcon field="code"></p-sortIcon>
+        </th>
+
+        <th pSortableColumn="country"
+            class="border-b border-gray-300">
+          Country
+          <p-sortIcon field="country"></p-sortIcon>
+        </th>
+        <th pSortableColumn="state"
+            class="border-b border-gray-300">
+          State
+          <p-sortIcon field="state"></p-sortIcon>
+        </th>
+
+        <th class="border-b border-gray-300">Image</th>
+
+        <th class="border-b border-gray-300">Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-city>
+      <tr class="hover:bg-gray-100 border-t border-gray-300">
+        <td>{{ city.name }}</td>
+        <td>{{ city.code }}</td>
+        <td>{{ city.state }}</td>
+        <td>{{ city.country }}</td>
+        <td class="">
+          <img
+            [src]="baseUrl + '/' + city.cityImageUrl"
+
+            alt="{{ city.name }}"
+            class="w-20 h-20 rounded-md shadow-md"
+          />
+        </td>
+        <td>
+          <button
+            (click)="editCity(city)"
+            class="bg-green-500 text-white p-4 mx-2 rounded-full hover:bg-green-600"
+          >
+            <i class="pi pi-pencil"></i>
+          </button>
+          <button
+            (click)="deleteCity(city.id)"
+
+            class="bg-red-500 text-white p-4 rounded-full hover:bg-red-600"
+          >
+
+            <i class="pi pi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-dialog
+    [(visible)]="displayModal"
+    header="{{ modalTitle }}"
+    [modal]="true"
+    [closable]="true"
+    [style]="{ width: '500px' }"
+  >
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+      <div class="mb-4">
+        <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+        <input
+          id="name"
+          formControlName="name"
+          type="text"
+          class="mt-1 p-2 border rounded-md w-full"
+        />
+      </div>
+      <div class="mb-4">
+        <label for="code" class="block text-sm font-medium text-gray-700">Code</label>
+        <input
+          id="code"
+          formControlName="code"
+          type="text"
+          class="mt-1 p-2 border rounded-md w-full"
+        />
+      </div>
+      <div class="mb-4">
+        <label for="state" class="block text-sm font-medium text-gray-700">State</label>
+        <input
+          id="state"
+          formControlName="state"
+          type="text"
+          class="mt-1 p-2 border rounded-md w-full"
+        />
+      </div>
+      <div class="mb-4">
+        <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
+        <input
+          id="country"
+          formControlName="country"
+          type="text"
+          class="mt-1 p-2 border rounded-md w-full"
+        />
+      </div>
+      <div class="mb-4">
+        <label for="cityImage" class="block text-sm font-medium text-gray-700">Image</label>
+        <input
+          id="cityImage"
+          type="file"
+          (change)="onFileChange($event)"
+          class="mt-1 p-2 border rounded-md w-full"
+        />
+      </div>
+      <div class="flex justify-end space-x-2">
+        <button
+          type="button"
+          (click)="closeModal()"
+          class="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </p-dialog>
+</div>

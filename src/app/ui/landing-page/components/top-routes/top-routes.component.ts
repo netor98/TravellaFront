@@ -7,7 +7,7 @@ import {TopRoutesDto} from "../../../../domain/models/TopRoutesDto";
   templateUrl: './top-routes.component.html',
   styleUrl: './top-routes.component.css'
 })
-export class TopRoutesComponent implements OnInit{
+export class TopRoutesComponent implements OnInit {
   responsiveOptions: any[] = [
     {
       breakpoint: '1024px',
@@ -69,7 +69,7 @@ export class TopRoutesComponent implements OnInit{
       imageUrl: 'assets/images/new-york.jpg'
     }
   ]
-  routes: TopRoutesDto[] = [] ;
+  routes: TopRoutesDto[] = [];
 
   constructor(private routesService: RoutesService) {
   }

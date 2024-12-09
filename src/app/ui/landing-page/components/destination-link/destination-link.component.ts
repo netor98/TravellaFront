@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
@@ -31,7 +31,6 @@ export class DestinationLinkComponent {
   showAll: boolean = false;
 
 
-
   destinations: string[] = [
     'Ciudad de México',
     'Bali',
@@ -55,7 +54,7 @@ export class DestinationLinkComponent {
     'Ambon',
   ];
 
- get visibleDestinations(): string[] {
+  get visibleDestinations(): string[] {
     return this.showAll ? this.destinations : this.destinations.slice(0, 4);
   }
 

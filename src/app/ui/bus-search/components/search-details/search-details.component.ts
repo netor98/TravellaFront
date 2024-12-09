@@ -36,6 +36,7 @@ export class SearchDetailsComponent implements OnInit {
 
 
   private readonly mapBoxToken: string = environment.MAPBOX_KEY;
+
   constructor(private busService: BusService, private router: Router) {
   }
 
@@ -105,7 +106,8 @@ export class SearchDetailsComponent implements OnInit {
       // Confirmar viaje redondo o sencillo
       const bookingDetails = {
         outboundTrip: state.selectedOutboundTrip || trip, // Viaje de ida
-        returnTrip: state.isRoundTrip ? trip : null,      // Viaje de vuelta, si aplica
+        returnTrip: state.isRoundTrip ? trip : null, // Viaje de vuelta, si aplica
+        passengersCount: state.selectedPassenger
       };
       localStorage.setItem('bookingDetails', JSON.stringify(bookingDetails));
 
@@ -162,7 +164,7 @@ export class SearchDetailsComponent implements OnInit {
           center: originCoords,
           zoom: 6,
           dragPan: false,
-         interactive: false
+          interactive: false
         });
 
         new mapboxgl.Marker().setLngLat(originCoords).addTo(map);
@@ -171,7 +173,7 @@ export class SearchDetailsComponent implements OnInit {
         // Fit bounds
         const bounds = new mapboxgl.LngLatBounds();
         bounds.extend(originCoords).extend(destinationCoords);
-        map.fitBounds(bounds, { padding: 50 });
+        map.fitBounds(bounds, {padding: 50});
       }
     });
   }

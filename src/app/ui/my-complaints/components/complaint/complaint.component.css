@@ -1,0 +1,32 @@
+/* Asegura que el contenedor principal del dropdown ocupe el 100% del ancho */
+p-dropdown {
+  display: block;
+  width: 100% !important;
+}
+
+/* Ajusta el panel del dropdown cuando se despliega */
+p-dropdown .p-dropdown-panel {
+  width: 100% !important;
+  min-width: 100% !important;
+  box-sizing: border-box;
+}
+
+/* Ajusta el campo de entrada visible del dropdown */
+p-dropdown .p-dropdown-label-container {
+  display: flex;
+  align-items: center;
+  width: 100% !important;
+  padding: 0.5rem;
+  box-sizing: border-box;
+}
+
+/* Asegura que los elementos desplegados ocupen el 100% */
+p-dropdown .p-dropdown-items-wrapper {
+  width: 100% !important;
+}
+
+/* Adicional para evitar recortes en navegadores */
+p-dropdown .p-dropdown-items {
+  width: 100% !important;
+  box-sizing: border-box;
+}

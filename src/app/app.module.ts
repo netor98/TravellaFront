@@ -21,11 +21,16 @@ import {BookingComponent} from './ui/booking/booking.component';
 import {FormsModule} from "@angular/forms";
 import {BookingModule} from "./ui/booking/booking.module";
 import {AppLayoutModule} from "./layout/app.layout.module";
+import {
+  TicketDetailsComponent
+} from './ui/ticket-details/ticket-details.component';
+import {QRCodeModule} from "angularx-qrcode";
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    TicketDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,6 +42,7 @@ import {AppLayoutModule} from "./layout/app.layout.module";
     FormsModule,
     BookingModule,
     AppLayoutModule,
+    QRCodeModule,
   ],
   providers: [
     provideHttpClient(),

@@ -4,7 +4,8 @@
      'bg-black': isActiveRoute('/search') ||
                  isActiveRoute('/booking') ||
                  isActiveRoute('/my-bookings') ||
-                  isActiveRoute('/complaints')
+                  isActiveRoute('/complaints') ||
+                  isActiveRoute('/thank-you')
      }"
 >
   <div class="container mx-auto flex items-center justify-between py-1">
@@ -69,6 +70,7 @@
 
     <!-- Hamburger menu(mobile and tablets)-->
     <div class="lg:hidden">
+
       <button id="menu-toggle" (click)="toggleMenu()"
               class="focus:outline-none
                 transition-transform duration-300"
@@ -91,6 +93,7 @@
 
     <!-- Search bar and Right Side Links -->
     <div class="hidden lg:flex relative">
+
       <input
         type="text"
         [(ngModel)]="searchQuery"
@@ -159,9 +162,8 @@
     </div>
 
 
-    <div *ngIf="isAuth" class="flex gap-4 items-center">
-      <change-language></change-language>
-
+    <div *ngIf="isAuth" class="gap-4 items-center hidden lg:flex">
+        <change-language></change-language>
       <div class="text-black bg-white rounded-full">
 
         <ng-container *ngIf="!loading; else loadingSpinner">

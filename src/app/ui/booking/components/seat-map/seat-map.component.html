@@ -19,17 +19,17 @@
     </div>
   </div>
 
-  <!-- Selected Seat Info -->
-  <div class="text-center">
-    <p *ngIf="selectedSeat" class="text-lg">
-      Selected Seat: <strong>{{ selectedSeat.number }}</strong>
-    </p>
-    <button
-      *ngIf="selectedSeat"
-      (click)="confirmSeat()"
-      class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition"
+  <!-- Selected Seat -->
+  <div *ngIf="selectedSeat" class="flex items-center space-x-4">
+    <span class="text-lg font-bold">Selected Seat:</span>
+    <div
+      [ngClass]="{
+        'bg-green-400 text-white': selectedSeat.status === 'selected'
+      }"
+      class="w-12 h-12 flex items-center justify-center
+       border rounded-full shadow-md transition-colors"
     >
-      Confirm Seat
-    </button>
+      <span>{{ selectedSeat.number }}</span>
+    </div>
+
   </div>
-</div>

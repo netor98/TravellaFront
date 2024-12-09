@@ -12,6 +12,7 @@ import {
 import {ReportsComponent} from "./components/pages/reports/reports.component";
 import {RoutesComponent} from "./components/pages/routes/routes.component";
 import {TripsComponent} from "./components/pages/trips/trips.component";
+import {CitiesComponent} from "./components/pages/cities/cities.component";
 
 const routes: Routes = [
   {
@@ -35,17 +36,17 @@ const routes: Routes = [
         component: ComplaintsComponent
       },
       {
-        path: 'reports',
-        component: ReportsComponent
+        path: 'cities',
+        component: CitiesComponent
       },
       {
         path: 'routes',
         component: RoutesComponent
       },
       {
-      path: 'trips',
-  component:TripsComponent
-}
+        path: 'trips',
+        component: TripsComponent
+      }
 
     ]
   }

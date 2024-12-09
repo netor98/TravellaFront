@@ -1,0 +1,39 @@
+<nav-bar></nav-bar>
+
+<div *ngIf="loading" class="flex justify-center items-center h-screen">
+  <p class="text-lg font-medium">Cargando detalles de su orden...</p>
+</div>
+
+<div *ngIf="!loading && order"
+     class="container mx-auto p-6 py-20 my-6 transform transition-transform duration-700 ease-out animate-slide-in-from-top">
+  <h1 class="text-3xl text-center my-12">Thank you for the purchase!</h1>
+
+  <!-- Content Section -->
+  <div class="flex flex-col lg:flex-row lg:justify-between items-center gap-6">
+    <!-- Left Container -->
+    <div class="w-full lg:w-1/2 bg-gray-100 p-4 rounded-lg shadow-md">
+      <p class="text-xl font-medium text-gray-700 mb-2">Recommended Places to Visit</p>
+      <div [innerHTML]="geminiResponseHtml" class="text-md text-gray-700"></div>
+    </div>
+
+    <!-- Right Container -->
+    <div class="w-full lg:w-1/2 flex flex-col justify-center items-center space-y-4">
+      <!-- QR Code Placeholder -->
+      <img
+        src="assets/qrCode.png"
+        alt="QR Code for Ticket"
+        class="w-48 h-48 sm:w-64 sm:h-64"
+      />
+
+      <!-- Download Button -->
+      <button
+        (click)="generatePDF()"
+        class="bg-black hover:bg-gray-400 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition"
+      >
+        Download Tickets
+      </button>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

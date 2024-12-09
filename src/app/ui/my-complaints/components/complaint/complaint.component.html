@@ -46,10 +46,16 @@
       <ul class="list-disc pl-5 text-gray-600">
         <li *ngFor="let ticket of order.tickets">
           <div class="mb-2 border-b-2 border-black-alpha-10">
+
+            <strong>Route:</strong> {{ ticket.routeName }} <br>
+<!--
             <strong>From:</strong> {{ ticket.trip.route.origin.name }} <br>
             <strong>To:</strong> {{ ticket.trip.route.destination.name }} <br>
+-->
             <strong>Seat Number:</strong> {{ ticket.seatNumber }} <br>
+<!--
             <strong>Departure:</strong> {{ ticket.trip.departureTime | date: 'short' }}
+-->
           </div>
         </li>
       </ul>
@@ -62,77 +68,46 @@
     </div>
 
     <!-- Complaint Form -->
-    <div class="bg-gray-100 p-8 rounded-r-lg">
+    <div class="bg-gray-100 p-8 rounded-r-lg w-full">
       <h3 class="text-xl font-semibold text-gray-800 mb-4">Let Us Know Your
         Concern</h3>
-      <form (ngSubmit)="submitComplaint()" [formGroup]="complaintForm">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-          <!-- First Name -->
-          <div>
-            <label for="firstName"
-                   class="block text-sm font-medium text-gray-700">First
-              Name</label>
-            <input
-              id="firstName"
-              type="text"
-              formControlName="firstName"
-              placeholder="John"
-              class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-            />
-          </div>
-          <!-- Last Name -->
-          <div>
-            <label for="lastName"
-                   class="block text-sm font-medium text-gray-700">Last
-              Name</label>
-            <input
-              id="lastName"
-              type="text"
-              formControlName="lastName"
-              placeholder="Doe"
-              class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-            />
-          </div>
-        </div>
 
-        <!-- Email -->
-        <div class="mb-4">
-          <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-          <input
-            id="email"
-            type="email"
-            formControlName="email"
-            placeholder="john.doe@example.com"
-            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-          />
-        </div>
 
-        <!-- Complaint -->
-        <div class="mb-4">
-          <label for="complaint"
-                 class="block text-sm font-medium text-gray-700">Complaint</label>
-          <textarea
-            id="complaint"
-            formControlName="complaint"
-            placeholder="Describe the issue here..."
-            class="mt-1 block w-full p-2 border border-gray-300 rounded-md h-32"
-            maxlength="500"
-          ></textarea>
-          <p
-            class="text-sm text-gray-500 text-right">{{ complaintForm.controls['complaint'].value?.length || 0 }}
-            /500</p>
-        </div>
+    <!-- Complaint -->
+      <form [formGroup]="complaintForm" (ngSubmit)="submitComplaint()" class="space-y-4">
 
-        <!-- Submit Button -->
-        <div class="text-center">
-          <button
-            type="submit"
-            [disabled]="complaintForm.invalid"
-            class="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 disabled:bg-gray-400"
+        <label for="complaintType" class="block text-sm font-medium text-gray-700">Complaint Type</label>
+        <div class="w-full">
+          <p-dropdown id="complaintType"
+                      [options]="complaintTypes"
+                      optionLabel="name"
+                      formControlName="complaintType"
+                      placeholder="Select a complaint type"
+                      class="mt-1 block w-full rounded-md"
+                      [ngStyle]="{ 'width': '100%'}"
           >
-            Submit Complaint
-          </button>
+          </p-dropdown>
+
         </div>
+
+
+
+        <textarea
+      formControlName="description"
+      placeholder="Describe your complaint"
+      class="w-full h-32 border rounded-md p-2"
+    ></textarea>
+        <div *ngIf="complaintForm.get('description')?.touched && complaintForm.get('description')?.invalid" class="text-red-600">
+          Description is required (minimum 10 characters).
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="complaintForm.invalid"
+          class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 disabled:opacity-50"
+        >
+          Submit Complaint
+        </button>
       </form>
     </div>
   </div>

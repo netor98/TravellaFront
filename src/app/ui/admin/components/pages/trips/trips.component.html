@@ -16,8 +16,10 @@
       </button>
     </div>
     <div>
-      <button pButton type="button" label="Import" icon="pi pi-upload" class="p-3 bg-blue-500 rounded mr-2 text-white"></button>
-      <button pButton type="button" label="Export" icon="pi pi-download" class=" p-3 bg-green-500 text-white rounded"></button>
+      <button pButton type="button" label="Import" icon="pi pi-upload"
+              class="p-3 bg-blue-500 rounded mr-2 text-white"></button>
+      <button pButton type="button" label="Export" icon="pi pi-download"
+              class=" p-3 bg-green-500 text-white rounded"></button>
     </div>
   </div>
 
@@ -65,7 +67,8 @@
     <ng-template pTemplate="body" let-product>
       <tr class="hover:bg-gray-100 border-t border-gray-300">
         <td class="border-r border-gray-300">
-          <p-checkbox binary="true" class="border border-gray-400 rounded-lgkk"></p-checkbox>
+          <p-checkbox binary="true"
+                      class="border border-gray-400 rounded-lgkk"></p-checkbox>
         </td>
         <td class="">{{ product.code }}</td>
         <td class="">{{ product.name }}</td>
@@ -73,7 +76,6 @@
           <img
             [src]="product.image"
             alt="{{ product.name }}"
-            class="w-12 h-12 rounded-md"
           />
         </td>
         <td class="">{{ product.price | currency }}</td>
@@ -102,12 +104,10 @@
     </ng-template>
 
     <ng-template pTemplate="paginatorleft">
-      <button pButton type="button" icon="pi pi-refresh" class="p-button-text"></button>
+      <button pButton type="button" icon="pi pi-refresh"
+              class="p-button-text"></button>
     </ng-template>
   </p-table>
-
-
-
 
 
   <p-dialog
@@ -120,7 +120,8 @@
   >
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
       <div class="mb-4">
-        <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+        <label for="name"
+               class="block text-sm font-medium text-gray-700">Name</label>
         <input
           id="name"
           formControlName="name"
@@ -129,7 +130,8 @@
         />
       </div>
       <div class="mb-4">
-        <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+        <label for="description"
+               class="block text-sm font-medium text-gray-700">Description</label>
         <textarea
           id="description"
           formControlName="description"

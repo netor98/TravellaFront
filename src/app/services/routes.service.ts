@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment.development";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
@@ -12,7 +12,8 @@ export class RoutesService {
 
   constructor(
     private http: HttpClient
-  ) { }
+  ) {
+  }
 
   getTopRoutes(): Observable<TopRoutesDto[]> {
     return this.http.get<TopRoutesDto[]>(`${this.baseUrl}/Routes/10`);

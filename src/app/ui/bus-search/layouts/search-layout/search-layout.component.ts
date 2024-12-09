@@ -87,7 +87,7 @@ export class SearchLayoutComponent implements OnInit {
       name: params.destinationCity,
       cityImageUrl: null
     } : undefined;
-  console.log(params)
+    console.log(params)
 
     this.loading = true;
     setTimeout(() => {

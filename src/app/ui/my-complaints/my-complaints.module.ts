@@ -6,6 +6,7 @@ import {ComplaintComponent} from './components/complaint/complaint.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SharedModule} from "../../shared/shared.module";
 import {LandingPageModule} from "../landing-page/landing-page.module";
+import {PrimegnModule} from "../../primegn/primegn.module";
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {LandingPageModule} from "../landing-page/landing-page.module";
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    LandingPageModule
+    LandingPageModule,
+    PrimegnModule
   ]
 })
 export class MyComplaintsModule {

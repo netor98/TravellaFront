@@ -118,13 +118,14 @@ export class MyBookingsComponent implements OnInit {
       {
 
         label: 'Cancel Order',
-        icon: 'pi pi-times'}
-       /* disabled: order.tickets?.some(ticket => {
-          const departureTime = new Date(ticket.trip.departureTime).getTime();
-          return departureTime <= currentDate.getTime();
-        }),
-        command: () => this.cancelOrder(order)
-      }*/
+        icon: 'pi pi-times'
+      }
+      /* disabled: order.tickets?.some(ticket => {
+         const departureTime = new Date(ticket.trip.departureTime).getTime();
+         return departureTime <= currentDate.getTime();
+       }),
+       command: () => this.cancelOrder(order)
+     }*/
     ];
   }
 

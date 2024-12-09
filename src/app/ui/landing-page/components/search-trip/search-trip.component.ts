@@ -38,7 +38,6 @@ export class SearchTripComponent implements OnInit {
   cities: CitiesModel[] = [];
   public animationState: string = 'default';
   public errorMessage: string | null = null;
-  public minDate = new Date();
   public checked: boolean = false;
   from: string = '';
   to: string = '';
@@ -46,7 +45,6 @@ export class SearchTripComponent implements OnInit {
   scrolled: boolean = false;
   returnDate: Date | null = null;
   isRoundTrip: boolean = false;
-  public selectedOutboundTrip: TripsResponse | null = null;
 
   statusActive = 'abcd223d-0bb6-4867-9185-07bb4b661048';
 
@@ -96,9 +94,9 @@ export class SearchTripComponent implements OnInit {
   }
 
   passengerOptions = [
-    {label: '1 adult', value: 1},
-    {label: '2 adults', value: 2},
-    {label: '3 adults', value: 3},
+    {label: '1 Ticket', value: 1},
+    {label: '2 Tickets', value: 2},
+    {label: '3 Tickets', value: 3},
   ];
 
 
@@ -202,7 +200,6 @@ export class SearchTripComponent implements OnInit {
       }));
 
 
-
     if (this.isRoundTrip) {
       var intermedio = origin;
       origin = destination;
@@ -218,7 +215,7 @@ export class SearchTripComponent implements OnInit {
         pageNumber,
         pageSize,
         this.statusActive
-        )
+      )
       .subscribe(
         (trips) => {
           this.trips = trips;

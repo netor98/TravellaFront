@@ -25,12 +25,14 @@
 
             </div>
           </div>
-          <a routerLink="/search" [queryParams]="{ originCity: route.origin, destinationCity: route.destination }"
+          <a routerLink="/search"
+             [queryParams]="{ originCity: route.origin, destinationCity: route.destination }"
              class="mb-3 font-medium underline">
             {{ route.origin }} - {{ route.destination }}
-          </a >
+          </a>
 
-          <div class="flex-col justify-content-between align-items-center text-black">
+          <div
+            class="flex-col justify-content-between align-items-center text-black">
             <span class="text-sm">Starts from</span>
             <div class="mt-0 font-bold text-xl">
               {{ '$' + route.price }}
