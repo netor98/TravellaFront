@@ -26,16 +26,8 @@ export class AdminService {
     return this.http.get<number>(`${this.baseUrl}/Orders/revenue`);
   }
 
-  getOrdersCountByMonth(): Observable<{
-    month: number,
-    year: number,
-    count: number
-  }[]> {
-    return this.http.get<{
-      month: number,
-      year: number,
-      count: number
-    }[]>(`${this.baseUrl}/Orders/count-by-month`);
+  getOrdersCountByMonth(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/Orders/count-by-month`);
   }
 
 

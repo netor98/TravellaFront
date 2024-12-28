@@ -13,6 +13,7 @@ import {ReportsComponent} from "./components/pages/reports/reports.component";
 import {RoutesComponent} from "./components/pages/routes/routes.component";
 import {TripsComponent} from "./components/pages/trips/trips.component";
 import {CitiesComponent} from "./components/pages/cities/cities.component";
+import {SalesComponent} from "./components/pages/sales/sales.component";
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
       {
         path: '',
         component: MyPageComponent
+      },
+      {
+        path: 'sales',
+        component: SalesComponent
       },
       {
         path: 'maintenance',
@@ -46,6 +51,10 @@ const routes: Routes = [
       {
         path: 'trips',
         component: TripsComponent
+      },
+      {
+        path: 'reports',
+        component:ReportsComponent
       }
 
     ]

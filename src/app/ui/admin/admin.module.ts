@@ -26,7 +26,10 @@ import {CheckboxModule} from "primeng/checkbox";
 import {DialogModule} from "primeng/dialog";
 import {ReactiveFormsModule} from "@angular/forms";
 import { CitiesComponent } from './components/pages/cities/cities.component';
-
+import {ToastModule} from "primeng/toast";
+import { SalesComponent } from './components/pages/sales/sales.component';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import {PrimegnModule} from "../../primegn/primegn.module";
 
 @NgModule({
   declarations: [
@@ -38,7 +41,8 @@ import { CitiesComponent } from './components/pages/cities/cities.component';
     ReportsComponent,
     ComplaintsComponent,
     RoutesComponent,
-    CitiesComponent
+    CitiesComponent,
+    SalesComponent
   ],
   imports: [
     CommonModule,
@@ -52,6 +56,9 @@ import { CitiesComponent } from './components/pages/cities/cities.component';
     CheckboxModule,
     DialogModule,
     ReactiveFormsModule,
+    ToastModule,
+    ZXingScannerModule,
+    PrimegnModule
   ]
 })
 export class AdminModule {

@@ -30,6 +30,9 @@ export class TicketDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.loading) {
+      this.authService.showLoadingSpinner('Loading ticket details...');
+    }
     const orderId = this.route.snapshot.queryParamMap.get('orderId');
     if (orderId) {
       this.fetchOrderDetails(orderId);
@@ -45,6 +48,7 @@ export class TicketDetailsComponent implements OnInit {
       (error) => {
         console.error('Error fetching order details:', error);
         this.loading = false;
+        this.authService.hideLoadingSpinner();
       }
     );
   }
@@ -58,7 +62,6 @@ export class TicketDetailsComponent implements OnInit {
       return routeA.localeCompare(routeB);
     });
     sortedTickets.forEach((ticket: any, index: number) => {
-      console.log(ticket);
       // Draw header background (black rectangle)
       doc.setFillColor(0, 0, 0); // Black color
       doc.rect(0, 0, doc.internal.pageSize.width, 30, 'F'); // Full-width rectangle
@@ -137,6 +140,8 @@ export class TicketDetailsComponent implements OnInit {
       this.geminiResponseHtml = this.formatResponseAsHtmlList(response.text());
 
       this.loading = false;
+
+      this.authService.hideLoadingSpinner();
     } catch (error) {
       console.error('Error fetching Gemini response:', error);
       this.geminiResponse = 'No se pudo obtener información sobre lugares para visitar.';

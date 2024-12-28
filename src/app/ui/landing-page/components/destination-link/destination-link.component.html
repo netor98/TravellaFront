@@ -1,5 +1,5 @@
 <div class="p-2 container mx-auto w-full px-4">
-  <h1 class="text-2xl mb-2">Ready for your next journey?</h1>
+  <h2 class="text-3xl">Ready for your next journey?</h2>
   <p class="text-gray-600 mb-6">
     Discover the most affordable bus and travel options to popular destinations
     below.
@@ -12,11 +12,11 @@
   >
     <a *ngFor="let destination of visibleDestinations"
        [routerLink]="'/search'"
-       [queryParams]="{ destinationCity: destination }"
+       [queryParams]="{ destinationCity: destination.name }"
        routerLinkActive="active"
        class="block text-center py-2 text-black px-4 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-100 transition cursor-pointer"
     >
-      Travel to {{ destination }}
+      Travel to {{ destination.name }}
     </a>
   </div>
 

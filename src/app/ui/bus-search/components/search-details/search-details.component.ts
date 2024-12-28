@@ -19,7 +19,6 @@ export class SearchDetailsComponent implements OnInit {
   @Input() codeDestination: string = '';
   @Input() departureTime: string = '';
   @Input() arrivalTime: string = '';
-  @Input() duration: string = '';
   @Input() price: string = '';
   @Input() tripType: string = '';
   @Input() trip: any;
@@ -33,6 +32,7 @@ export class SearchDetailsComponent implements OnInit {
   isRoundTrip: boolean = false; // Indica si es un viaje redondo
   selectedOutboundTrip: any = null;
   statusActive: string = 'abcd223d-0bb6-4867-9185-07bb4b661048';
+  duration: string = '';
 
 
   private readonly mapBoxToken: string = environment.MAPBOX_KEY;
@@ -45,22 +45,13 @@ export class SearchDetailsComponent implements OnInit {
     this.fetchAvailableSeats();
     this.items = [
       {
-        label: 'Save',
-        icon: 'pi pi-save',
-      },
-      {
         label: 'See Details',
         icon: 'pi pi-info-circle',
         command: () => this.viewOrderDetails(this.trip),
-      },
-      {
-        label: 'Search',
-        icon: 'pi pi-search'
-      },
-      {
-        separator: true
-      },
+      }
     ]
+
+    this.calculateDuration();
   }
 
   bookTrip(trip: any) {
@@ -185,5 +176,20 @@ export class SearchDetailsComponent implements OnInit {
     const data = await response.json();
     const [lng, lat] = data.features[0].center;
     return [lng, lat];
+  }
+
+  calculateDuration(): void {
+    const departure = new Date(this.departureTime);
+    const arrival = new Date(this.arrivalTime);
+
+    if (departure && arrival && arrival > departure) {
+      const diffMs = arrival.getTime() - departure.getTime(); // Difference in milliseconds
+      const diffHours = Math.floor(diffMs / (1000 * 60 * 60)); // Convert to hours
+      const diffMinutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60)); // Remainder in minutes
+
+      this.duration = `${diffHours}h ${diffMinutes}m`;
+    } else {
+      this.duration = 'Invalid times'; // Handle invalid or reversed times
+    }
   }
 }

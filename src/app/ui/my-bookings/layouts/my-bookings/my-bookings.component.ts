@@ -41,7 +41,8 @@ export class MyBookingsComponent implements OnInit {
 
     this.maxDate = new Date();
     this.minDate = new Date();
-    this.minDate.setMonth(this.minDate.getMonth() - 3);
+    this.minDate.setMonth(this.minDate.getMonth() - 6);
+    this.maxDate.setMonth(this.maxDate.getMonth() + 3);
   }
 
   ngOnInit(): void {
@@ -115,11 +116,13 @@ export class MyBookingsComponent implements OnInit {
         disabled: this.hasComplaintForOrder(order.id),
         command: () => this.navigateToComplaint(order.id)
       },
+/*
       {
 
         label: 'Cancel Order',
         icon: 'pi pi-times'
       }
+*/
       /* disabled: order.tickets?.some(ticket => {
          const departureTime = new Date(ticket.trip.departureTime).getTime();
          return departureTime <= currentDate.getTime();

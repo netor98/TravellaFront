@@ -1,1 +1,128 @@
-<p>complaints works!</p>
+<p-toast></p-toast>
+
+<div class="p-4 bg-white shadow-md rounded-lg">
+  <h2 class="text-xl font-bold mb-4">Manage Complaints</h2>
+
+  <p-table
+    [value]="complaints"
+    [paginator]="true"
+    [rows]="5"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [responsiveLayout]="'scroll'"
+    class="text-sm border border-gray-300 shadow-lg rounded-lg"
+  >
+    <ng-template pTemplate="header">
+      <tr class="bg-gray-300">
+        <th pSortableColumn="description">
+          Description <p-sortIcon field="description"></p-sortIcon>
+          <p-columnFilter field="description" matchMode="contains"></p-columnFilter>
+        </th>
+        <th pSortableColumn="userId">
+          User ID <p-sortIcon field="userId"></p-sortIcon>
+          <p-columnFilter field="userId" matchMode="contains"></p-columnFilter>
+        </th>
+        <th pSortableColumn="complaintType.name">
+          Complaint Type
+          <p-columnFilter field="complaintType.name" matchMode="contains"></p-columnFilter>
+        </th>
+        <th pSortableColumn="status.name">
+          Status <p-sortIcon field="status.name"></p-sortIcon>
+          <p-columnFilter field="status.name" matchMode="contains"></p-columnFilter>
+        </th>
+        <th pSortableColumn="dateSubmitted">
+          Date Submitted <p-sortIcon field="dateSubmitted"></p-sortIcon>
+          <p-columnFilter field="dateSubmitted" matchMode="equals"></p-columnFilter>
+        </th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-complaint>
+
+      <tr class="hover:bg-gray-100 border-t border-gray-300">
+        <td class="font-bold">{{ complaint.description }}</td>
+        <td>{{ complaint.userId }}</td>
+        <td>{{ complaint.complaintType.name }}</td>
+        <td>{{ complaint.status.name }}</td>
+        <td>{{ complaint.dateSubmitted | date }}</td>
+        <td>
+          <button
+            *ngIf="complaint.status.name === 'Pending'"
+            (click)="openResponseModal(complaint.id)"
+            class="bg-blue-500 text-white py-1 px-2 rounded-md hover:bg-blue-600"
+          >
+            Respond
+          </button>
+          <button
+            *ngIf="complaint.status.name === 'Resolved'"
+            (click)="openViewModal(complaint.id)"
+            class="bg-green-500 text-white py-1 px-2 rounded-md hover:bg-green-600"
+          >
+            View Response
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <!-- Response Modal -->
+  <p-dialog
+    [(visible)]="displayResponseModal"
+    header="Respond to Complaint"
+    [modal]="true"
+    [closable]="true"
+    [style]="{ width: '500px' }"
+  >
+    <form [formGroup]="form" (ngSubmit)="submitResponse()">
+      <div class="mb-4">
+        <label for="resolutionDetails" class="block text-sm font-medium">Resolution Details</label>
+        <textarea
+          id="resolutionDetails"
+          formControlName="resolutionDetails"
+          class="mt-1 p-2 border rounded-md w-full"
+        ></textarea>
+      </div>
+      <div class="flex justify-end space-x-2">
+        <button
+          type="button"
+          (click)="displayResponseModal = false"
+          class="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </p-dialog>
+
+
+  <!-- View Modal -->
+  <p-dialog
+    [(visible)]="displayViewModal"
+    header="Complaint Response Details"
+    [modal]="true"
+    [closable]="true"
+    [style]="{ width: '500px' }"
+  >
+    <div *ngIf="selectedComplaint">
+      <p><strong>Description:</strong> {{ selectedComplaint.description }}</p>
+      <p><strong>Date Resolved:</strong> {{ selectedComplaint.dateResolved | date: 'medium' }}</p>
+      <p><strong>Resolution Details:</strong></p>
+      <p>{{ selectedComplaint.resolutionDetails }}</p>
+    </div>
+    <div class="flex justify-end mt-4">
+      <button
+        type="button"
+        (click)="closeModals()"
+        class="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400"
+      >
+        Close
+      </button>
+    </div>
+  </p-dialog>
+</div>

@@ -4,9 +4,6 @@
     <div>
       <h3 class="text-gray-600 font-medium">Orders</h3>
       <p class="text-gray-900 text-xl">{{ ordersCount | number }}</p>
-      <span class="text-green-500 text-sm">+24 new</span>
-      <br>
-      <span class="text-gray-500">since last visit</span>
     </div>
     <div class="w-12 h-12 flex items-center justify-center bg-blue-100 rounded">
       <i class="pi pi-shopping-cart text-blue-500 text-2xl"></i>
@@ -18,9 +15,6 @@
     <div>
       <h3 class="text-gray-600 font-medium">Revenue</h3>
       <p class="text-gray-900 text-xl ">{{ revenue | currency }}</p>
-      <span class="text-green-500 text-sm">+%52</span>
-      <br>
-      <span class="text-gray-500">since last week</span>
     </div>
     <div
       class="w-12 h-12 flex items-center justify-center bg-orange-100 rounded">
@@ -33,9 +27,6 @@
     <div>
       <h3 class="text-gray-600 font-medium">Customers</h3>
       <p class="text-gray-900 text-xl ">{{ customersCount }}</p>
-      <span class="text-green-500 text-sm">+520</span>
-      <br>
-      <span class="text-gray-500">newly registered</span>
     </div>
     <div class="w-12 h-12 flex items-center justify-center bg-cyan-100 rounded">
       <i class="pi pi-inbox text-cyan-500 text-2xl"></i>
@@ -45,11 +36,8 @@
   <!-- Card 4: Comments -->
   <div class="bg-white border rounded-lg p-6 flex justify-between items-center">
     <div>
-      <h3 class="text-gray-600 font-medium">Comments</h3>
-      <p class="text-gray-900 text-xl">152 Unread</p>
-      <span class="text-green-500 text-sm">85</span>
-      <br>
-      <span class="text-gray-500">responded</span>
+      <h3 class="text-gray-600 font-medium">Complaints</h3>
+      <p class="text-gray-900 text-xl">{{complaintsCount}}</p>
     </div>
     <div
       class="w-12 h-12 flex items-center justify-center bg-purple-100 rounded">
@@ -58,44 +46,58 @@
   </div>
 </div>
 
+
+
+<!-- Recent Tickets Section -->
+
+
+
+
+
+
+
 <!-- Recent Sales Section -->
 <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 p-6">
-  <div class="bg-white border rounded-lg p-6">
-    <h4 class="text-lg font-bold mb-4">Recent Sales</h4>
 
-    <p-table [value]="products" [paginator]="true" [rows]="5"
-             responsiveLayout="scroll">
+  <div class="bg-white border rounded-lg p-6">
+    <h4 class="text-lg font-bold mb-4">Recent Tickets</h4>
+
+    <p-table [value]="recentTickets" [paginator]="true" [rows]="5" responsiveLayout="scroll">
       <ng-template pTemplate="header">
-        <tr>
-          <th>Image</th>
-          <th pSortableColumn="name">Name
-            <p-sortIcon field="name"></p-sortIcon>
-          </th>
-          <th pSortableColumn="price">Price
-            <p-sortIcon field="price"></p-sortIcon>
-          </th>
-          <th>View</th>
+        <tr class="bg-gray-100 text-gray-700 uppercase text-sm leading-normal">
+          <th class="py-3 px-6 border border-gray-300">Passenger Name</th>
+          <th class="py-3 px-6 border border-gray-300">Route</th>
+          <th class="py-3 px-6 border border-gray-300">Status</th>
+          <th class="py-3 px-6 border border-gray-300">Date</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-product>
-        <tr>
-          <td style="width: 15%; min-width: 5rem;">
-            <img src="assets/demo/images/product/{{product.image}}"
-                 class="shadow-4" alt="{{product.name}}" width="50">
+      <ng-template pTemplate="body" let-ticket>
+        <tr class="hover:bg-gray-200 border-t border-gray-300">
+          <td class="border border-gray-300">
+            {{ ticket.user?.fullName || 'Guest' }}
           </td>
-          <td style="width: 35%; min-width: 7rem;">{{ product.name }}</td>
-          <td
-            style="width: 35%; min-width: 8rem;">{{ product.price | currency:'USD' }}
+          <td class=" border border-gray-300">
+            {{ ticket.trip?.route?.origin?.name }} →
+            {{ ticket.trip?.route?.destination?.name }}
           </td>
-          <td style="width: 15%;">
-            <button pButton pRipple type="button" icon="pi pi-search"
-                    class="p-button p-component p-button-text p-button-icon-only"></button>
+          <td class="border border-gray-300">
+            <span
+              [ngClass]="{
+                'text-green-500 font-semibold': ticket.status?.name === 'Boarded',
+                'text-yellow-500 font-semibold': ticket.status?.name === 'Pending',
+                'text-red-500 font-semibold': ticket.status?.name === 'Cancelled'
+              }"
+            >
+              {{ ticket.status?.name }}
+            </span>
+          <td class=" border border-gray-300">
+            {{ ticket.purchaseTime | date: 'short' }}
           </td>
         </tr>
       </ng-template>
     </p-table>
-
   </div>
+
 
   <!-- Sales Overview Chart -->
   <div class="bg-white border rounded-lg p-6 w-full">
@@ -105,7 +107,8 @@
   </div>
 </div>
 
-<!-- Notifications -->
+<!--
+&lt;!&ndash; Notifications &ndash;&gt;
 <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 p-6">
   <div class="bg-white border rounded-lg p-6">
     <h4 class="text-lg font-bold mb-4">Notifications</h4>
@@ -156,6 +159,6 @@
 
     </ul>
   </div>
-</div>
+-->
 
 

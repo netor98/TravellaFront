@@ -1,0 +1,11 @@
+.scanner {
+  width: 100%;
+  height: 300px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  margin: auto;
+}
+
+p-dialog {
+  text-align: center;
+}

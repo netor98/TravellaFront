@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import {BusService} from "../../../../services/bus.service";
 import {SeatMapService} from "../../../../services/seat-map.service";
+import {SeatServiceService} from "../../../../services/seat-service.service";
 
 @Component({
   selector: 'app-seat-map',
@@ -29,6 +30,7 @@ export class SeatMapComponent implements OnInit, OnChanges {
   newTrip: number = 0;
 
   constructor(private busService: BusService,
+              private seatService: SeatServiceService,
               private seatMapService: SeatMapService) {
   }
 
@@ -40,11 +42,16 @@ export class SeatMapComponent implements OnInit, OnChanges {
   }
 
 
-  //BUG: AFTER FINISHING THE SEAT SELECTION IN A RETURN TRIP
-  // THE SEAT SELECTION CHARGE THE SEAT MAP OF THE PREVIOUS RETURN TRIP
+
   ngOnInit(): void {
-    console.log(this.tripId, this.isRoundedTrip, this.isReturnTrip, this.newTrip);
     this.loadSeatData(this.tripId);
+    this.seatService.startConnection();
+
+    this.seatService.addSeatStatusListener((tripId, seatNumber, status) => {
+      if (tripId === this.tripId) {
+        this.updateSeatStatus(seatNumber, status);
+      }
+    });
 
     this.seatMapService.seatMapUpdate$.subscribe((tripId) => {
       if (tripId !== this.tripId && this.isRoundedTrip && this.newTrip === 1) {
@@ -55,8 +62,23 @@ export class SeatMapComponent implements OnInit, OnChanges {
       }
     });
 
+
+
     this.newTrip = 1;
   }
+
+
+  updateSeatStatus(seatNumber: number, status: string): void {
+    const seat = this.seats.find(s => s.number === seatNumber);
+    if (seat) {
+      if (seatNumber === this.selectedSeat.number) {
+        this.seatSelected.emit(undefined);
+        this.selectedSeat = null;
+      }
+      seat.status = status;
+    }
+  }
+
 
   updateReservedSeats(): void {
     if (this.seats) {

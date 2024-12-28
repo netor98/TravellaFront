@@ -4,4 +4,5 @@ export interface TopRoutesDto {
   destination: string;
   ticketCount: number;
   price: number;
+  imageUrl? : string;
 }

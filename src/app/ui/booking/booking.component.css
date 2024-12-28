@@ -1,0 +1,97 @@
+.p-checkbox-lg .p-checkbox-box {
+  width: 24px;
+  height: 24px;
+}
+.p-checkbox-lg .p-checkbox-icon {
+  font-size: 16px;
+}
+/* Ajusta el color y estilo de los bordes */
+.border {
+  border-width: 2px; /* Grosor del borde */
+}
+
+.shadow-sm {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* Sombras suaves */
+}
+
+.rounded-md {
+  border-radius: 8px; /* Bordes redondeados */
+}
+
+.p-checkbox-lg .p-checkbox-box {
+  width: 24px;
+  height: 24px;
+}
+
+.p-checkbox-lg .p-checkbox-icon {
+  font-size: 16px;
+}
+
+::ng-deep .dropdown-selected .p-dropdown {
+  background-color: #f3f4f6; /* Light gray background for selected state */
+  border-radius: 0.25rem;
+  border: 1px solid #d1d5db;
+}
+
+
+/*Main Label*/
+::ng-deep .dropdown-selected .p-dropdown .p-dropdown-label {
+  font-weight: 400;
+}
+
+::ng-deep .dropdown-selected .p-dropdown {
+  background-color: white; /* Default white background */
+  border-radius: 0.25rem;
+  border: 1px solid #d1d5db;
+}
+
+::ng-deep .dropdown-selected.selected-item .p-dropdown {
+  background-color: #f3f4f6; /* Gray background when an item is selected */
+}
+
+/* Main Label */
+::ng-deep .dropdown-selected .p-dropdown .p-dropdown-label {
+  font-weight: 400;
+  color: #1f2937;
+}
+
+::ng-deep .p-multiselect {
+  background: #f3f4f6;
+}
+
+::ng-deep .dropdown-selected.selected-item .p-dropdown {
+  background-color: #f3f4f6; /* Gray background when an item is selected */
+}
+
+::ng-deep .dropdown-selected .p-dropdown-item.p-highlight {
+  background-color: #d3e3fd; /* Change to your desired background color */
+}
+
+::ng-deep .dropdown-selected .p-dropdown-filter {
+  background-color: #f0f8ff; /* Change background color */
+  color: #333; /* Change text color */
+  border: 1px solid #007acc; /* Customize border color */
+  border-radius: 4px; /* Round the corners */
+  padding: 8px;
+}
+
+
+::ng-deep .calendar .p-inputtext {
+  background-color: #ffffff; /* Change background color */
+  border: 1px solid #d1d5db; /* Customize border color */
+  padding: 12px;
+  border-radius: 4px; /* Optional: Rounded corners */
+}
+
+::ng-deep .calendar .p-datepicker-trigger {
+  color: #ffffff;
+  background-color: #000000; /* Set your desired background color */
+  padding: 0.25rem;
+  border-radius: 4px; /* Optional: Rounded corners */
+}
+
+
+.bordered-dropdown .p-dropdown {
+  border: 1px solid #d1d5db; /* Customize the border color and width */
+  border-radius: 4px; /* Optional: Rounded corners */
+}

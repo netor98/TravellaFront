@@ -1,0 +1,146 @@
+<p-toast></p-toast>
+<button
+  pButton
+  type="button"
+  label="Scan QR Code"
+  icon="pi pi-camera"
+  (click)="openScanner()"
+  class="p-button-primary"
+></button>
+
+
+<p-dialog
+  [(visible)]="isScannerVisible"
+  [modal]="true"
+  [closable]="true"
+  header="Escaneando QR"
+  [style]="{ width: '400px' }"
+  [contentStyle]="{ 'text-align': 'center' }"
+  [baseZIndex]="10000"
+>
+  <div>
+    <zxing-scanner
+      [formats]="[BarcodeFormat.QR_CODE]"
+      (scanSuccess)="onScanSuccess($event)"
+      class="scanner"
+    ></zxing-scanner>
+  </div>
+  <div class="p-d-flex p-jc-center p-mt-3">
+
+  </div>
+</p-dialog>
+<div *ngIf="scannedResult" class="scanned-result">
+  <p class="font-bold">Scanned Code:</p>
+  <span>{{ scannedResult }}</span>
+</div>
+
+
+
+<div class="bg-white border rounded-lg shadow-lg p-6">
+  <h4 class="text-2xl font-bold mb-4 text-gray-800">Ticket Management</h4>
+
+  <!-- Filter Section -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+    <div>
+      <label for="startDate" class="block text-sm font-medium text-gray-700">Start Date</label>
+      <input
+        type="date"
+        id="startDate"
+        class="w-full border rounded-lg px-3 py-2"
+        [(ngModel)]="filters.startDate"
+      />
+    </div>
+    <div>
+      <label for="endDate" class="block text-sm font-medium text-gray-700">End Date</label>
+      <input
+        type="date"
+        id="endDate"
+        class="w-full border rounded-lg px-3 py-2"
+        [(ngModel)]="filters.endDate"
+      />
+    </div>
+    <div>
+      <label for="statusId" class="block text-sm font-medium text-gray-700">Status</label>
+      <input
+        type="text"
+        id="statusId"
+        class="w-full border rounded-lg px-3 py-2"
+        placeholder="Enter Status ID"
+        [(ngModel)]="filters.statusId"
+      />
+    </div>
+    <div class="flex items-end">
+      <button
+        class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg"
+        (click)="applyFilters()"
+      >
+        Apply Filters
+      </button>
+    </div>
+  </div>
+
+  <!-- Tickets Table -->
+  <div class="overflow-x-auto">
+    <table class="table-auto w-full text-left border-collapse border border-gray-300">
+      <thead>
+      <tr class="bg-gray-100 text-gray-700 uppercase text-sm leading-normal">
+        <th class="py-3 px-6 border border-gray-300">Passenger Name</th>
+        <th class="py-3 px-6 border border-gray-300">Route</th>
+        <th class="py-3 px-6 border border-gray-300">Status</th>
+        <th class="py-3 px-6 border border-gray-300">Date</th>
+        <th class="py-3 px-6 border border-gray-300">Actions</th>
+      </tr>
+      </thead>
+      <tbody class="text-gray-600 text-sm font-medium">
+      <tr
+        *ngFor="let ticket of tickets"
+        class="hover:bg-gray-50 transition duration-200"
+      >
+        <td class="py-3 px-6 border border-gray-300">
+          {{ ticket.user?.fullName || 'Guest' }}
+        </td>
+        <td class="py-3 px-6 border border-gray-300">
+          {{ ticket.trip?.route?.origin?.name }} →
+          {{ ticket.trip?.route?.destination?.name }}
+        </td>
+        <td class="py-3 px-6 border border-gray-300">
+            <span
+              [ngClass]="{
+                'text-green-500 font-semibold': ticket.status?.name === 'Completed',
+                'text-yellow-500 font-semibold': ticket.status?.name === 'Pending',
+                'text-red-500 font-semibold': ticket.status?.name === 'Cancelled'
+              }"
+            >
+              {{ ticket.status?.name }}
+            </span>
+        </td>
+        <td class="py-3 px-6 border border-gray-300">
+          {{ ticket.purchaseTime | date: 'medium' }}
+        </td>
+        <td class="py-3 px-6 border border-gray-300">
+          <button
+            pButton
+            type="button"
+            label="Scan"
+            icon="pi pi-qrcode"
+            (click)="openScanner()"
+            class="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-4 rounded-lg"
+          ></button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <p-paginator
+    [rows]="pageSize"
+    [totalRecords]="totalTickets"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    (onPageChange)="onPageChange($event)"
+    class="mt-4"
+  ></p-paginator>
+</div>
+
+
+

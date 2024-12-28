@@ -1,1 +1,96 @@
-<p>maintenance works!</p>
+<div class="p-4 bg-white shadow-md rounded-lg">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-xl font-bold">Maintenance Records</h2>
+    <div class="flex space-x-4">
+      <button
+        (click)="openModal()"
+        class="bg-green-500 text-white font-bold py-2 px-4 rounded-md hover:bg-green-600 flex items-center"
+      >
+        <i class="pi pi-plus mr-2"></i> New
+      </button>
+    </div>
+  </div>
+
+  <p-table [value]="maintenances" [paginator]="true" [rows]="5"
+           [rowsPerPageOptions]="[5, 10, 20]"
+           [responsiveLayout]="'scroll'"
+           class="text-sm border border-gray-300 shadow-lg rounded-lg"
+  >
+    <ng-template pTemplate="header">
+
+      <tr class="bg-gray-200">
+
+        <th pSortableColumn="vehicleId"
+            class="border-b border-gray-300 ">
+          Vehicle
+          <p-sortIcon field="vehicleId"></p-sortIcon>
+        </th>
+
+        <th pSortableColumn="date"
+            class="border-b border-gray-300 ">
+          Date
+          <p-sortIcon field="date"></p-sortIcon>
+        </th>
+
+        <th pSortableColumn="cost"
+            class="border-b border-gray-300 ">
+          Costs
+          <p-sortIcon field="cost"></p-sortIcon>
+        </th>
+
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-maintenance>
+
+      <tr class="hover:bg-gray-100 border-t border-gray-300">
+        <td>{{ maintenance.vehicle.licencePlate }}</td>
+        <td>{{ maintenance.maintenanceDate | date }}</td>
+        <td>{{ maintenance.maintenanceCosts | currency }}</td>
+        <td>{{ maintenance.maintenanceDescription }}</td>
+        <td>
+          <button
+            (click)="deleteMaintenance(maintenance.id)"
+
+            class="bg-red-500 text-white h-12 w-12 rounded-full hover:bg-red-600"
+          >
+
+            <i class="pi pi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-dialog [(visible)]="displayModal" header="Add Maintenance" [modal]="true">
+    <form [formGroup]="form">
+      <div class="mb-4">
+        <label for="vehicle">Vehicle</label>
+        <select formControlName="vehicleId" class="w-full">
+          <option *ngFor="let vehicle of availableVehicles" [value]="vehicle.id">
+            {{ vehicle.licencePlate }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label for="date">Date</label>
+        <input type="date" formControlName="date" class="w-full" />
+      </div>
+      <div class="mb-4">
+        <label for="costs">Costs</label>
+        <input type="number" formControlName="costs" class="w-full" />
+      </div>
+      <div class="mb-4">
+        <label for="description">Description</label>
+        <textarea formControlName="description" class="w-full"></textarea>
+      </div>
+      <button
+        (click)="addMaintenance()"
+        class="bg-blue-500 text-white px-4 py-2 rounded-md"
+      >
+        Save
+      </button>
+    </form>
+  </p-dialog>
+</div>

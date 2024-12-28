@@ -8,6 +8,7 @@ import {BookingComponent} from "./booking.component";
 import {LandingPageModule} from "../landing-page/landing-page.module";
 import {SharedModule} from "../../shared/shared.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {CheckboxModule} from "primeng/checkbox";
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     LandingPageModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CheckboxModule
   ]
 })
 export class BookingModule {

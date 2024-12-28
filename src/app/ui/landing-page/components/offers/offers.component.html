@@ -1,20 +1,11 @@
-<div class="">
-  <div class="flex items-center justify-between mb-4">
-    <h2 class="text-xl font-bold">Exclusive flight deals just for you!</h2>
-    <a
-      [routerLink]="'/deals'"
-      class="text-sm font-semibold text-gray-500 hover:text-gray-700 transition flex items-center"
-    >
-      See All <i class="pi pi-angle-right ml-2"></i>
-    </a>
-  </div>
-
+<div class="mb-24 mt-10 p-2 px-4">
   <!-- Cards Container -->
+  <h2 class="text-3xl mb-4">Deals just for you!</h2>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     <!-- Card 1 -->
     <div
-      class="relative bg-cover bg-center rounded-lg shadow-md overflow-hidden"
-      style="background-image: url('https://via.placeholder.com/400');"
+      class="relative bg-cover bg-no-repeat bg-center rounded-lg shadow-md overflow-hidden h-48"
+      style="background-image: url('assets/student.png');"
     >
       <div class="absolute inset-0 bg-black bg-opacity-30"></div>
       <div class="relative z-10 p-4">
@@ -22,23 +13,21 @@
           <span
             class="bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded"
           >
-            Exclusive
+            Discount
           </span>
         </div>
-        <h3 class="text-white font-bold text-lg">Exclusive Travel Offers Just
-          For You!</h3>
-        <p class="text-white text-3xl font-extrabold mt-2">30%</p>
+        <h3 class="text-white font-bold text-lg">Student Discount</h3>
+        <p class="text-white text-3xl font-extrabold mt-2">20%</p>
+
         <p class="text-white text-xs mt-1">*with Terms and Condition</p>
-        <p class="text-gray-200 text-xs mt-4">
-          Valid only on 2 Jan - 24 Jan 2024
-        </p>
+
       </div>
     </div>
 
     <!-- Card 2 -->
     <div
       class="relative bg-cover bg-center rounded-lg shadow-md overflow-hidden"
-      style="background-image: url('https://via.placeholder.com/400');"
+      style="background-image: url('assets/children.png');"
     >
       <div class="absolute inset-0 bg-black bg-opacity-30"></div>
       <div class="relative z-10 p-4">
@@ -46,16 +35,33 @@
           <span
             class="bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded"
           >
-            Cashback
+            Discount
           </span>
         </div>
-        <h3 class="text-white font-bold text-lg">Enjoy Cashback on Your
-          Journey</h3>
-        <p class="text-white text-3xl font-extrabold mt-2">Up to 500k</p>
+        <h3 class="text-white font-bold text-lg">Children Discount</h3>
+        <p class="text-white text-3xl font-extrabold mt-2">15%</p>
         <p class="text-white text-xs mt-1">*with Terms and Condition</p>
-        <p class="text-gray-200 text-xs mt-4">
-          Valid only on 10 Jan - 10 Feb 2024
-        </p>
+      </div>
+    </div>
+
+
+    <!-- Card 2 -->
+    <div
+      class="relative bg-cover bg-center rounded-lg shadow-md overflow-hidden"
+      style="background-image: url('assets/oldmen.png');"
+    >
+      <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+      <div class="relative z-10 p-4">
+        <div class="flex items-center mb-2">
+          <span
+            class="bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded"
+          >
+            Discount
+          </span>
+        </div>
+        <h3 class="text-white font-bold text-lg">Senior Citizen Discount</h3>
+        <p class="text-white text-3xl font-extrabold mt-2">15%</p>
+        <p class="text-white text-xs mt-1">*with Terms and Condition</p>
       </div>
     </div>
   </div>

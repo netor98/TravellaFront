@@ -11,7 +11,7 @@ import {Route, Router} from "@angular/router";
 export class ChangeLanguageComponent {
   public selectedLanguage = 'en';
   public languages: string[] = [
-    'en', 'es', 'fr'
+    'en', 'es'
   ];
   public isLanguageMenuOpen: boolean = false
 

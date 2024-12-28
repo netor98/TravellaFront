@@ -4,6 +4,7 @@ import {CitiesService} from "../../../../../services/cities.service";
 import {
   environment
 } from "../../../../../../environments/environment.development";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-cities',
@@ -18,9 +19,12 @@ export class CitiesComponent implements OnInit {
   editMode: boolean = false;
   selectedCityId: string | null = null;
   selectedFile: File | null = null;
+  cityToDeleteId: string | null = null; // Store city ID to delete
+  displayDeleteConfirm: boolean = false; // Flag for delete confirmation dialog
+
 
   baseUrl: string = 'http://localhost:5289';
-  constructor(private citiesService: CitiesService, private fb: FormBuilder) {
+  constructor(private citiesService: CitiesService, private fb: FormBuilder, private messageService: MessageService) {
     this.form = this.fb.group({
       name: ['', Validators.required],
       code: ['', Validators.required],
@@ -62,10 +66,31 @@ export class CitiesComponent implements OnInit {
     this.form.reset();
   }
 
-  deleteCity(id: string): void {
-    if (confirm('Are you sure you want to delete this city?')) {
-      this.citiesService.deleteCity(id).subscribe(() => this.fetchCities());
+  confirmDeleteCity(id: string): void {
+    this.cityToDeleteId = id;
+    this.displayDeleteConfirm = true; // Show the delete confirmation dialog
+  }
+  deleteCity(): void {
+    if (this.cityToDeleteId) {
+      this.citiesService.deleteCity(this.cityToDeleteId).subscribe({
+        next: () => {
+          this.fetchCities();
+          this.cityToDeleteId = null;
+          this.displayDeleteConfirm = false; // Hide the confirmation dialog
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Deleted',
+            detail: 'City deleted successfully.',
+          });
+        },
+        error: (err) => console.error('Error deleting city:', err),
+      });
     }
+  }
+
+  cancelDelete(): void {
+    this.cityToDeleteId = null;
+    this.displayDeleteConfirm = false; // Hide the confirmation dialog
   }
 
   onSubmit(): void {
@@ -75,11 +100,22 @@ export class CitiesComponent implements OnInit {
         this.citiesService.updateCity(this.selectedCityId, city).subscribe(() => {
           this.fetchCities();
           this.closeModal();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Updated',
+            detail: 'City updated successfully.',
+          });
         });
       } else {
+        console.log('Form submitted:', city);
         this.citiesService.addCity(city).subscribe(() => {
           this.fetchCities();
           this.closeModal();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Created',
+            detail: 'City added successfully.',
+          });
         });
       }
     }

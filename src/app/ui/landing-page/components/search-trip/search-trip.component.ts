@@ -45,6 +45,7 @@ export class SearchTripComponent implements OnInit {
   scrolled: boolean = false;
   returnDate: Date | null = null;
   isRoundTrip: boolean = false;
+  minDate: Date = new Date();
 
   statusActive = 'abcd223d-0bb6-4867-9185-07bb4b661048';
 

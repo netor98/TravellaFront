@@ -1,1 +1,164 @@
-<p>routes works!</p>
+<div class="p-4 bg-white shadow-md rounded-lg">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-xl font-bold">Manage Routes</h2>
+    <div class="flex space-x-4">
+      <button
+        (click)="openModal()"
+        class="bg-green-500 text-white font-bold py-2 px-4 rounded-md hover:bg-green-600 flex items-center"
+      >
+        <i class="pi pi-plus mr-2"></i> New
+      </button>
+    </div>
+  </div>
+
+
+  <p-table
+    [value]="routesTableData"
+    [paginator]="true"
+    [rows]="5"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [sortMode]="'single'"
+    class="text-sm border border-gray-300 shadow-lg rounded-lg"
+  >
+    <ng-template pTemplate="header">
+      <tr class="bg-gray-50">
+        <th pSortableColumn="originName" class="border-b border-gray-300">
+          Origin
+          <p-sortIcon field="originName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="destinationName" class="border-b border-gray-300">
+          Destination
+          <p-sortIcon field="destinationName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="distance" class="border-b border-gray-300">
+          Distance
+          <p-sortIcon field="distance"></p-sortIcon>
+        </th>
+        <th pSortableColumn="duration" class="border-b border-gray-300">
+          Duration
+          <p-sortIcon field="duration"></p-sortIcon>
+        </th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-route>
+      <tr class="hover:bg-gray-100 border-t border-gray-300">
+        <td>{{ route.originName }}</td>
+        <td>{{ route.destinationName }}</td>
+        <td>{{ route.distance }}</td>
+        <td>{{ route.duration }}</td>
+        <td>
+
+          <button
+            (click)="editRoute(route)"
+            class="bg-green-500 text-white h-12 w-12 mx-2 rounded-full hover:bg-green-600"
+          >
+            <i class="pi pi-pencil"></i>
+          </button>
+          <button
+            (click)="deleteRoute(route.id)"
+
+            class="bg-red-500 text-white h-12 w-12 rounded-full hover:bg-red-600"
+          >
+
+            <i class="pi pi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+
+  <p-dialog
+    [(visible)]="displayModal"
+    [modal]="true"
+    [closable]="true"
+    header="{{ editMode ? 'Edit Route' : 'Add New Route' }}"
+    [style]="{ width: '500px' }"
+  >
+    <form [formGroup]="form" (ngSubmit)="saveRoute()">
+      <!-- Origin City -->
+      <div class="mb-4">
+        <label for="originCityId" class="block text-sm font-medium text-gray-700">
+          Origin City
+        </label>
+        <select
+          id="originCityId"
+          formControlName="originId"
+          class="w-full border rounded-md p-2"
+        >
+          <option *ngFor="let city of cities" [value]="city.id">
+            {{ city.name }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Destination City -->
+      <div class="mb-4">
+        <label
+          for="destinationCityId"
+          class="block text-sm font-medium text-gray-700"
+        >
+          Destination City
+        </label>
+        <select
+          id="destinationCityId"
+          formControlName="destinationId"
+          class="w-full border rounded-md p-2"
+        >
+          <option *ngFor="let city of cities" [value]="city.id">
+            {{ city.name }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Distance -->
+      <div class="mb-4">
+        <label for="distance" class="block text-sm font-medium text-gray-700">
+          Distance (in km)
+        </label>
+        <input
+          type="number"
+          id="distance"
+          formControlName="distance"
+          class="w-full border rounded-md p-2"
+        />
+      </div>
+
+      <!-- Estimated Travel Time -->
+      <div class="mb-4">
+        <label
+          for="duration"
+          class="block text-sm font-medium text-gray-700"
+        >
+          Estimated Travel Time
+        </label>
+        <input
+          type="number"
+          id="duration"
+          formControlName="duration"
+          class="w-full border rounded-md p-2"
+          placeholder="HH"
+        />
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex justify-end space-x-2">
+        <button
+          type="button"
+          (click)="displayModal = false"
+          class="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </p-dialog>
+</div>

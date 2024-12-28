@@ -141,7 +141,7 @@
             [(ngModel)]="departureDate"
             [showIcon]="true"
             dateFormat="dd/mm/yy"
-
+            [minDate]="minDate"
             placeholder="Select a date"
             styleClass="w-full text-black text-md">
 
@@ -157,6 +157,7 @@
             [(ngModel)]="returnDate"
             [showIcon]="true"
             dateFormat="dd/mm/yy"
+            [minDate]="minDate"
             placeholder="Select a return date"
             styleClass="w-full text-black text-md">
           </p-calendar>

@@ -1,5 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import { CitiesService } from '../../../../services/cities.service';
+import {CitiesModel} from "../../../../domain/models/cities.model";
 
 @Component({
   selector: 'app-destination-link',
@@ -27,34 +29,25 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
     ]),
   ],
 })
-export class DestinationLinkComponent {
+export class DestinationLinkComponent implements OnInit{
   showAll: boolean = false;
+  destinations: CitiesModel[] = [];
+  constructor(private citiesService: CitiesService) {
+  }
+
+  ngOnInit(): void {
+    this.citiesService.getCities().subscribe({
+      next: (cities) => {
+        this.destinations = cities;
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
+    }
 
 
-  destinations: string[] = [
-    'Ciudad de México',
-    'Bali',
-    'Bandung',
-    'Yogyakarta',
-    'Surabaya',
-    'Medan',
-    'Semarang',
-    'Makassar',
-    'Palembang',
-    'Manado',
-    'Malang',
-    'Bogor',
-    'Batam',
-    'Pontianak',
-    'Balikpapan',
-    'Samarinda',
-    'Padang',
-    'Bandar Lampung',
-    'Banjarmasin',
-    'Ambon',
-  ];
-
-  get visibleDestinations(): string[] {
+  get visibleDestinations(): CitiesModel[] {
     return this.showAll ? this.destinations : this.destinations.slice(0, 4);
   }
 

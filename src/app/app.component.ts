@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        const isDashboard = event.url === '/dashboard';
+        const isDashboard = event.url.includes('dashboard');
         this.toggleDashboardStyles(isDashboard);
       }
     })
@@ -52,12 +52,16 @@ export class AppComponent implements OnInit {
   public toggleDashboardStyles(enable: boolean): void {
     const themeId = 'theme-css';
     let themeLink = document.getElementById(themeId) as HTMLLinkElement;
-    const defaultTheme = 'assets/layout/styles/theme/lara-light-indigo/theme.css';
+    const defaultTheme = 'assets/layout/styles/theme/bootstrap4-light-purple/theme.css';
 
-
-    if (defaultTheme !== themeLink.getAttribute('href')) {
-      themeLink.setAttribute('href', defaultTheme);
-      console.log(themeLink)
+    if (enable) {
+      if (themeLink.getAttribute('href') !== defaultTheme) {
+        themeLink.setAttribute('href', defaultTheme);
+        console.log('Dashboard theme applied.');
+      }
+    } else {
+      themeLink.setAttribute('href', 'assets/layout/styles/theme/lara-light-purple/theme.css'); // Reset to no theme or default
+      console.log('Dashboard theme removed.');
     }
   }
 

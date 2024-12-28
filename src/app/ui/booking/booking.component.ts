@@ -46,13 +46,22 @@ export class BookingComponent implements OnInit {
       name: 'Select passenger'
     },
   ]
+  passengerTypes = [
+    { label: 'Senior Citizens (60+)', value: 'senior' },
+    { label: 'Adult (18-59)', value: 'adult' },
+    { label: 'Child (0-17)', value: 'child' }
+  ];
+  isAdult = false;
+  isStudent: boolean = false; // Controls the switch
   public reservedSeats: number[] = [];
   @Output() seatReserved: EventEmitter<number | null> = new EventEmitter<number | null>();
 
   public form = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
     fullName: ['', [Validators.required, Validators.minLength(6)]],
-    seats: [0, [Validators.required, Validators.min(1)]]
+    seats: [0, [Validators.required, Validators.min(1)]],
+    passengerType: [null, Validators.required],
+    isStudent: [{ value: false, disabled: true }]
   });
 
   constructor(
@@ -65,10 +74,23 @@ export class BookingComponent implements OnInit {
   ) {
   }
 
+  onPassengerTypeChange(event: any): void {
+    this.isAdult = event.value.value === 'adult';
+    const isStudentControl = this.form.get('isStudent');
+    if (this.isAdult) {
+      isStudentControl?.enable(); // Enable checkbox if "Adult" is selected
+    } else {
+      isStudentControl?.disable(); // Disable checkbox for other types
+      isStudentControl?.setValue(false); // Reset the value when disabled
+    }
+  }
+
 
   ngOnInit(): void {
     this.isLoading = true;
     this.selectedUser = this.authService.currentUser()();
+
+
 
     const bookingDetails = this.bookingService.getBookingDetails();
     if (bookingDetails) {
@@ -118,9 +140,30 @@ export class BookingComponent implements OnInit {
 
       this.isLoading = false;
     }, 1500)
+
+    this.form.get('passengerType')?.valueChanges.subscribe((value) => {
+      this.isAdult = value === 'adult';
+      if (!this.isAdult) {
+        this.isStudent = false; // Reset the switch if not Adult
+      }
+    });
   }
 
+
+
+
   public async submitBooking() {
+
+    const feeCategoryMap: { [key: string]: number } = {
+      senior: 4,
+      adult: 1,
+      child: 3,
+      student: 2
+    };
+    // @ts-ignore
+    const passengerType = this.form.value.passengerType.value!;
+    const feeCategoryId = passengerType ?  feeCategoryMap[passengerType] || 2 : 2; // Default to 2 if not found
+
     const bookingDetails = this.bookingService.getBookingDetails();
     const userId = this.selectedUser?.id || 'guest';
 
@@ -150,7 +193,7 @@ export class BookingComponent implements OnInit {
       statusId: this.statusActive,
       userId,
       orderId: bookingDetails.orderId || uuidv4(),
-      feeCategoryId: 2,
+      feeCategoryId,
       contactInfo: passengerDetails.email,
     };
 
@@ -177,7 +220,7 @@ export class BookingComponent implements OnInit {
       this.form.reset(); // Reset the form for the next passenger
       this.form.patchValue({email: passengerDetails.email}); // Keep email consistent
 
-      this.showAlert('Passenger Added', `Passenger ${this.currentPassengerIndex + 1} of ${this.passengerCount} added.`, 'success');
+      this.showAlert('Passenger Added', `Passenger ${this.currentPassengerIndex } of ${this.passengerCount} added.`, 'success');
 
 
     } else if (!this.completedOutbound && this.isRoundTrip) {
@@ -200,7 +243,6 @@ export class BookingComponent implements OnInit {
         contactInfo: passengerDetails.email,
         statusId: this.statusPending,
         purchaseTime: new Date().toISOString(),
-        feeCategoryId: 2,
         tickets: this.passengers.flatMap((p) => {
           const tickets = [];
           if (p.outboundTicket) tickets.push(p.outboundTicket);
@@ -230,28 +272,12 @@ export class BookingComponent implements OnInit {
         window.location.href = response.sessionUrl;
       },
       (error) => {
+        console.log(error);
         this.showAlert('Booking Failed', `${error}. Please try again.`, 'error');
       }
     );
 
-/*
-    this.bookingService.createOrder(orderDto).subscribe(
-      (response) => {
-        this.showAlert('Booking Complete', 'Your trip has been booked successfully!', 'success');
-        this.router.navigate(['/confirmation'], {state: {order: response}});
-      },
-      (error) => {
-        this.showAlert('Booking Failed', `${error}. Please try again.`, 'error');
-      }
-    );
-*/
   }
-
-  /*
-         }
-       }
-     }*/
-
 
   public onSeatSelection(seatNumber: number): void {
     this.form.patchValue({seats: seatNumber});
@@ -262,17 +288,6 @@ export class BookingComponent implements OnInit {
     menuPanel.toggle(event);
   }
 
-
-  public selectOption(option: any): void {
-    console.log(option)
-    if (option.id === 1) {
-      this.isCreatingNewUser = true;
-      this.selectedOption = 1;
-    } else {
-      this.isCreatingNewUser = false;
-      this.selectedOption = 0;
-    }
-  }
 
   public updateSeatMap(): void {
     if (this.tripDetails?.id) {

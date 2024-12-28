@@ -77,6 +77,7 @@ export class TopRoutesComponent implements OnInit {
   ngOnInit(): void {
     this.routesService.getTopRoutes().subscribe((topRoutes) => {
       this.routes = topRoutes;
+      console.log(this.routes)
     });
   }
 }

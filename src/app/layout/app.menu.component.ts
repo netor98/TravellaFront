@@ -24,14 +24,19 @@ export class AppMenuComponent implements OnInit {
             routerLink: ['/dashboard']
           },
           {
-            label: 'Trips',
-            icon: 'pi pi-receipt',
-            routerLink: ['/dashboard/trips']
-          },
-          {
             label: 'Routes',
             icon: 'pi pi-map',
             routerLink: ['/dashboard/routes']
+          },
+          {
+            label: 'Reports',
+            icon: 'pi pi-chart-line',
+            routerLink: ['/dashboard/reports']
+          },
+          {
+            label: 'Sales',
+            icon: 'pi pi-receipt',
+            routerLink: ['/dashboard/sales']
           },
           {
             label: 'Cities',
@@ -47,26 +52,6 @@ export class AppMenuComponent implements OnInit {
             label: 'Complaints',
             icon: 'pi pi-thumbs-down',
             routerLink: ['/dashboard/complaints']
-          },
-          {
-            label: 'Users', icon: 'pi pi-users',
-            items: [
-              {
-                label: 'Drivers',
-                icon: 'pi pi-fw pi-bookmark',
-                routerLink: ['/dashboard/drivers']
-              },
-              {
-                label: 'Admins',
-                icon: 'pi pi-shield',
-                routerLink: ['/dashboard/admins']
-              },
-              {
-                label: 'Customers',
-                icon: 'pi pi-ticket',
-                routerLink: ['/dashboard/customers']
-              },
-            ]
           },
         ]
       },

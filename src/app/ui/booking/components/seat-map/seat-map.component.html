@@ -2,7 +2,7 @@
 
   <h2 class="text-2xl font-bold mb-4">Select your seat</h2>
   <!-- Seat Map Grid -->
-  <div class="grid grid-cols-4 gap-4 max-h-96 overflow-y-scroll">
+  <div class="grid grid-cols-4 gap-4 max-h-96 overflow-y-scroll bg-gray-200 rounded-md p-3">
     <div
       *ngFor="let seat of currentSeats"
       [ngClass]="{

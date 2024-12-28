@@ -1,1 +1,21 @@
-<p>reports works!</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <!-- Revenue Chart -->
+  <div class="bg-white border rounded-lg p-6 w-full">
+    <h4 class="text-lg font-bold mb-4">Monthly Revenue</h4>
+    <p-chart
+      type="line"
+      [data]="revenueChartData"
+      [options]="chartOptions"
+    ></p-chart>
+  </div>
+
+  <!-- Tickets Sold Chart -->
+  <div class="bg-white border rounded-lg p-6 w-full">
+    <h4 class="text-lg font-bold mb-4">Tickets Sold</h4>
+    <p-chart
+      type="bar"
+      [data]="ticketChartData"
+      [options]="chartOptions"
+    ></p-chart>
+  </div>
+</div>
