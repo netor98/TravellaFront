@@ -7,6 +7,7 @@ import {isNotAuthenticatedGuard} from "./guards/is-not-authenticated.guard";
 import {
   TicketDetailsComponent
 } from "./ui/ticket-details/ticket-details.component";
+import {adminAccessGuard} from "./guards/admin-access.guard";
 
 
 const routes: Routes = [
@@ -30,7 +31,7 @@ const routes: Routes = [
         canActivate: [roleGuard],
     */
     path: 'dashboard',
-    canActivate: [isAuthenticatedGuard],
+    canActivate: [adminAccessGuard],
     loadChildren: () => import('./ui/admin/admin.module')
       .then(m => m.AdminModule)
   },
@@ -56,11 +57,6 @@ const routes: Routes = [
     loadChildren: () => import('./ui/my-complaints/my-complaints.module')
       .then(m => m.MyComplaintsModule),
     canActivate: [isAuthenticatedGuard]
-  },
-  {
-    path: 'dashboard',
-    loadChildren: () => import('./ui/admin/admin.module')
-      .then(m => m.AdminModule),
   },
   {
     path: '**',

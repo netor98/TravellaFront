@@ -26,6 +26,7 @@ import {
 } from './ui/ticket-details/ticket-details.component';
 import {QRCodeModule} from "angularx-qrcode";
 import {MessageService} from "primeng/api";
+import {AuthService} from "./services/auth.service";
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import {MessageService} from "primeng/api";
   ],
   providers: [
     MessageService,
+    AuthService,
     provideHttpClient(),
     {
       provide: HTTP_INTERCEPTORS,

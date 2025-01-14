@@ -43,7 +43,13 @@ export class LoginPageComponent {
     this.authService.login(email!, password!)
       .subscribe({
         next: () => {
-          this.router.navigate(['/']);
+          console.log(this.authService.currentUser()())
+          if (this.authService.currentUser()()?.role == 'Admin') {
+            this.router.navigate(['/dashboard']);
+          } else {
+
+            this.router.navigate(['/']);
+          }
           this.authService.hideLoadingSpinner();
         },
         error: (err) => {
