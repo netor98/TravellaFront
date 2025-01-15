@@ -22,6 +22,7 @@ export class TicketDetailsComponent implements OnInit {
   loading = true;
   geminiResponseHtml: string = '<p>Loading recommendations...</p>';
   geminiResponse: string | null = null;
+  baseUrl = environment.BASE_URL;
 
   constructor(
     private route: ActivatedRoute,
@@ -40,7 +41,7 @@ export class TicketDetailsComponent implements OnInit {
   }
 
   fetchOrderDetails(orderId: string): void {
-    this.http.get(`http://localhost:5289/api/Orders/${orderId}`).subscribe(
+    this.http.get(`${this.baseUrl}/Orders/${orderId}`).subscribe(
       (data) => {
         this.order = data;
         this.responseGemini();
