@@ -1,27 +1,18 @@
-# Travella
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.6.
+# 🚌 Frontend - Sistema de Gestión de Transporte de Pasajeros
 
-## Development server
+Este es el frontend del sistema de gestión para una empresa de transporte de pasajeros, desarrollado con **Angular**, **TailwindCSS** y **PrimeNG**. Permite a los usuarios gestionar reservas, pagos, reportes y monitorear operaciones en tiempo real con una experiencia de usuario moderna y responsiva.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 🚀 Tecnologías Utilizadas
 
-## Code scaffolding
+- [Angular](https://angular.io/) – Framework SPA para la construcción de interfaces dinámicas
+- [TailwindCSS](https://tailwindcss.com/) – Framework de utilidades para estilos modernos y responsive
+- [PrimeNG](https://primeng.org/) – Componentes ricos y accesibles para Angular
+- [SignalR](https://learn.microsoft.com/aspnet/core/signalr) – Comunicación en tiempo real (integrado con backend)
+- [Stripe](https://stripe.com/) – Integración de pagos online
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## 📦 Requisitos Previos
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Node.js v16+
+- Angular CLI (`npm install -g @angular/cli`)
+- Backend en ASP.NET corriendo (para APIs, SignalR, y pagos)
